@@ -12,6 +12,7 @@
   "artifacts": {
     "controlled": "results\\controlled_semantic_overselection_artifact.json",
     "learned": "results\\learned_vla_artifact.json",
+    "optional_vla_inference_probe": "results\\optional_vla\\inference_probe.json",
     "optional_vla_status": "results\\optional_vla\\adapter_status.json",
     "rendered_visual_simulator": "results\\rendered_visual_simulator_artifact.json",
     "repair": "results\\repair_artifact.json",
@@ -33,7 +34,7 @@
   ],
   "mc_trials": 120,
   "mode": "full",
-  "optional_vla_status": "SKIPPED_WITH_REASON",
+  "optional_vla_status": "READY_TO_ATTEMPT",
   "seeds": [
     1,
     2,

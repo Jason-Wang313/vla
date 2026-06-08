@@ -24,6 +24,8 @@
   Evidence: docs/benchmark_plan.md marks benchmark validation as future work.
 - **SUPPORTED** `optional VLA adapter status claims`: Optional SmoLVLA/real-VLA adapter status is recorded with run-or-skip reason.
   Evidence: results\optional_vla\adapter_status.json
+- **SUPPORTED** `optional VLA inference probe claims`: Cached SmoLVLA can be loaded locally and emit an action chunk from synthetic visual/state/language input.
+  Evidence: results\optional_vla\inference_probe.json
 - **UNSUPPORTED** `unsupported future robotics claims`: Real-robot validation is established.
   Evidence: No real-robot adapter or hardware results are included.
 - **SUPPORTED** `forbidden/overclaim claims`: Forbidden universal or real-robot claims are absent from README, docs, and paper skeleton.
@@ -45,5 +47,6 @@
 - rendered_visual_simulator_artifact_exists: True
 - robustness_artifact_exists: True
 - optional_vla_status_exists: True
+- optional_vla_inference_probe_passes: True
 - no_real_robot_claim_unless_implemented: True
 - no_universal_training_recipe_claim: True

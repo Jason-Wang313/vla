@@ -18,10 +18,11 @@ Available Python packages from inspection:
 - `PIL`
 - `sapien`
 - `robosuite`
+- `lerobot`
+- `num2words`
 
 Not importable at inspection time:
 
-- `lerobot`
 - `libero`
 
 Cached local model folders exist:
@@ -39,7 +40,7 @@ Cached local model folders exist:
 5. Heavier PyTorch visual-language-action scorer.
 6. Optional guarded SmoLVLA/real-VLA adapter.
 
-Items 1-5 now have implemented artifacts. Item 6 has a guarded status adapter and skip artifact. Actual real-VLA inference remains future work.
+Items 1-5 now have implemented artifacts. Item 6 now has both a guarded readiness artifact and a heavyweight synthetic CPU inference probe: cached SmoLVLA loads through LeRobot and emits a finite action chunk from synthetic visual/state/language input. Actual benchmark evaluation remains future work.
 
 ## Acceptance Criteria For V2
 
@@ -47,11 +48,11 @@ Items 1-5 now have implemented artifacts. Item 6 has a guarded status adapter an
 - At least one simulator-computed utility artifact reproduces selected semantic score rising while physical utility drops or saturates.
 - Noisy verifier experiments show repair is not assumed perfect.
 - Calibration stress tests show label-budget and label-noise tradeoffs.
-- Optional SmoLVLA adapter either runs or writes an exact skip reason.
+- Optional SmoLVLA adapter either runs a synthetic action probe or writes an exact skip reason.
 - Claim audit keeps real-robot validation unsupported unless actual hardware evidence exists.
 
 ## Why SmoLVLA Is Troublesome, Not Impossible
 
-Weights and configs appear to be cached, but `lerobot` is not currently importable. Loading `model.safetensors` directly would require reconstructing the LeRobot/SmoLVLA architecture, preprocessing, action normalization, camera/state schema, and postprocessing. That is software integration risk, not a hardware impossibility.
+The first blocker was software integration, not hardware impossibility. Installing `lerobot`, pinning `transformers` to the compatible 4.x line, and adding `num2words` allowed cached SmoLVLA to load on CPU and produce an action chunk. The probe uses the LeRobot policy class, tokenizer/processor path, camera/state schema, and cached model weights.
 
-The adapter should be attempted aggressively, but it should not be required for the core `run_all.sh` until it is proven reliable.
+This still does not close the benchmark gap. `libero` is not importable, and no real task environment or physical utility evaluator is connected to SmoLVLA actions. The adapter should remain optional and should not be required for the core `run_all.sh` until a reliable benchmark wrapper exists.

@@ -73,6 +73,12 @@
       "status": "SUPPORTED"
     },
     {
+      "category": "optional VLA inference probe claims",
+      "claim": "Cached SmoLVLA can be loaded locally and emit an action chunk from synthetic visual/state/language input.",
+      "evidence": "results\\optional_vla\\inference_probe.json",
+      "status": "SUPPORTED"
+    },
+    {
       "category": "unsupported future robotics claims",
       "claim": "Real-robot validation is established.",
       "evidence": "No real-robot adapter or hardware results are included.",
@@ -91,6 +97,7 @@
     "no_real_robot_claim_unless_implemented": true,
     "no_universal_training_recipe_claim": true,
     "object_distractor_reachability_collision_failures_represented": true,
+    "optional_vla_inference_probe_passes": true,
     "optional_vla_status_exists": true,
     "physical_utility_evaluated_separately": true,
     "rendered_visual_simulator_artifact_exists": true,
@@ -107,7 +114,7 @@
   "summary": {
     "all_required_supported": true,
     "partial": 0,
-    "supported": 12,
+    "supported": 13,
     "unsupported": 2
   }
 }

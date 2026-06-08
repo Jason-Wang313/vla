@@ -55,6 +55,10 @@ def audit(results_dir: Path) -> tuple[list[dict], dict]:
     optional_vla_status = (
         json.loads(optional_vla_status_path.read_text(encoding="utf-8")) if optional_vla_status_path.exists() else {}
     )
+    optional_vla_probe_path = results_dir / "optional_vla" / "inference_probe.json"
+    optional_vla_probe = (
+        json.loads(optional_vla_probe_path.read_text(encoding="utf-8")) if optional_vla_probe_path.exists() else {}
+    )
 
     claims: list[dict] = []
 
@@ -254,6 +258,17 @@ def audit(results_dir: Path) -> tuple[list[dict], dict]:
     )
     claims.append(
         {
+            "category": "optional VLA inference probe claims",
+            "claim": "Cached SmoLVLA can be loaded locally and emit an action chunk from synthetic visual/state/language input.",
+            "status": _status(
+                optional_vla_probe_path.exists() and optional_vla_probe.get("status") == "INFERENCE_PROBE_PASS",
+                partial=optional_vla_status.get("status") == "READY_TO_ATTEMPT",
+            ),
+            "evidence": str(optional_vla_probe_path),
+        }
+    )
+    claims.append(
+        {
             "category": "unsupported future robotics claims",
             "claim": "Real-robot validation is established.",
             "status": "UNSUPPORTED",
@@ -285,6 +300,7 @@ def audit(results_dir: Path) -> tuple[list[dict], dict]:
         "rendered_visual_simulator_artifact_exists": (results_dir / "rendered_visual_simulator_artifact.json").exists(),
         "robustness_artifact_exists": (results_dir / "robustness_artifact.json").exists(),
         "optional_vla_status_exists": optional_vla_status_path.exists(),
+        "optional_vla_inference_probe_passes": optional_vla_probe.get("status") == "INFERENCE_PROBE_PASS",
         "no_real_robot_claim_unless_implemented": True,
         "no_universal_training_recipe_claim": True,
     }
@@ -320,7 +336,11 @@ def write_outputs(results_dir: Path, claims: list[dict], not_clone: dict) -> Non
                 c["status"] == "SUPPORTED"
                 for c in claims
                 if c["category"]
-                not in {"optional benchmark claims", "unsupported future robotics claims"}
+                not in {
+                    "optional benchmark claims",
+                    "optional VLA inference probe claims",
+                    "unsupported future robotics claims",
+                }
             ),
         },
     }
@@ -348,7 +368,12 @@ def main() -> None:
         c
         for c in claims
         if c["status"] != "SUPPORTED"
-        and c["category"] not in {"optional benchmark claims", "unsupported future robotics claims"}
+        and c["category"]
+        not in {
+            "optional benchmark claims",
+            "optional VLA inference probe claims",
+            "unsupported future robotics claims",
+        }
     ]
     if args.fail_on_error and bad:
         for claim in bad:

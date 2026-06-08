@@ -234,6 +234,12 @@ def run(mode: str, results_dir: Path, seeds: list[int], states: int, candidates:
         montage = create_render_montage(montage_inputs, results_dir / "figures" / "figure7_rendered_scene_examples.png")
         figure_paths.append(str(montage))
     optional_vla_status = write_optional_vla_status(results_dir)
+    optional_artifacts = {
+        "optional_vla_status": str(results_dir / "optional_vla" / "adapter_status.json"),
+    }
+    optional_probe_path = results_dir / "optional_vla" / "inference_probe.json"
+    if optional_probe_path.exists():
+        optional_artifacts["optional_vla_inference_probe"] = str(optional_probe_path)
     manifest = {
         "mode": mode,
         "N_values": ns,
@@ -249,7 +255,7 @@ def run(mode: str, results_dir: Path, seeds: list[int], states: int, candidates:
             "repair": str(results_dir / "repair_artifact.json"),
             "rendered_visual_simulator": str(results_dir / "rendered_visual_simulator_artifact.json"),
             "robustness": str(results_dir / "robustness_artifact.json"),
-            "optional_vla_status": str(results_dir / "optional_vla" / "adapter_status.json"),
+            **optional_artifacts,
         },
         "optional_vla_status": optional_vla_status["status"],
     }
