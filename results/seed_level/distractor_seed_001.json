@@ -1,0 +1,326 @@
+{
+  "experiment": "distractor",
+  "rows": [
+    {
+      "N": 1,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "grounded_combined",
+      "seed": 1,
+      "selected_real_utility": 0.403759765625,
+      "violation_rate": 0.3505859375
+    },
+    {
+      "N": 2,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "grounded_combined",
+      "seed": 1,
+      "selected_real_utility": 0.5083373062253937,
+      "violation_rate": 0.2416646161417323
+    },
+    {
+      "N": 4,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "grounded_combined",
+      "seed": 1,
+      "selected_real_utility": 0.6675334938601425,
+      "violation_rate": 0.1946804344769404
+    },
+    {
+      "N": 8,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "grounded_combined",
+      "seed": 1,
+      "selected_real_utility": 0.8566068598298728,
+      "violation_rate": 0.12833695632785344
+    },
+    {
+      "N": 16,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "grounded_combined",
+      "seed": 1,
+      "selected_real_utility": 0.9726522865912416,
+      "violation_rate": 0.036168998857851534
+    },
+    {
+      "N": 32,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "grounded_combined",
+      "seed": 1,
+      "selected_real_utility": 0.9989738485798376,
+      "violation_rate": 0.0018144010686172575
+    },
+    {
+      "N": 64,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "grounded_combined",
+      "seed": 1,
+      "selected_real_utility": 0.9999995444019907,
+      "violation_rate": 9.452222535353619e-07
+    },
+    {
+      "N": 128,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "grounded_combined",
+      "seed": 1,
+      "selected_real_utility": 1.0,
+      "violation_rate": 0.0
+    },
+    {
+      "N": 1,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "oracle",
+      "seed": 1,
+      "selected_real_utility": 0.403759765625,
+      "violation_rate": 0.3505859375
+    },
+    {
+      "N": 2,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "oracle",
+      "seed": 1,
+      "selected_real_utility": 0.6024976675278872,
+      "violation_rate": 0.2279389148622047
+    },
+    {
+      "N": 4,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "oracle",
+      "seed": 1,
+      "selected_real_utility": 0.8006419390935509,
+      "violation_rate": 0.148082213356143
+    },
+    {
+      "N": 8,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "oracle",
+      "seed": 1,
+      "selected_real_utility": 0.9360231111576408,
+      "violation_rate": 0.04912322604989831
+    },
+    {
+      "N": 16,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "oracle",
+      "seed": 1,
+      "selected_real_utility": 0.9897329748296142,
+      "violation_rate": 0.004347918519793747
+    },
+    {
+      "N": 32,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "oracle",
+      "seed": 1,
+      "selected_real_utility": 0.9996424712290993,
+      "violation_rate": 0.00010498966295250654
+    },
+    {
+      "N": 64,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "oracle",
+      "seed": 1,
+      "selected_real_utility": 0.9999998306559466,
+      "violation_rate": 1.4171898081901338e-08
+    },
+    {
+      "N": 128,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "oracle",
+      "seed": 1,
+      "selected_real_utility": 1.0,
+      "violation_rate": 0.0
+    },
+    {
+      "N": 1,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "random",
+      "seed": 1,
+      "selected_real_utility": 0.403759765625,
+      "violation_rate": 0.3505859375
+    },
+    {
+      "N": 2,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "random",
+      "seed": 1,
+      "selected_real_utility": 0.4042645792322835,
+      "violation_rate": 0.3568528543307087
+    },
+    {
+      "N": 4,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "random",
+      "seed": 1,
+      "selected_real_utility": 0.39918294256186726,
+      "violation_rate": 0.36900010545556805
+    },
+    {
+      "N": 8,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "random",
+      "seed": 1,
+      "selected_real_utility": 0.3850775252475674,
+      "violation_rate": 0.3967305668849894
+    },
+    {
+      "N": 16,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "random",
+      "seed": 1,
+      "selected_real_utility": 0.3539794484741372,
+      "violation_rate": 0.44448040891875945
+    },
+    {
+      "N": 32,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "random",
+      "seed": 1,
+      "selected_real_utility": 0.30858217092327533,
+      "violation_rate": 0.5282744465155176
+    },
+    {
+      "N": 64,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "random",
+      "seed": 1,
+      "selected_real_utility": 0.27744854667189744,
+      "violation_rate": 0.6450744142559057
+    },
+    {
+      "N": 128,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "random",
+      "seed": 1,
+      "selected_real_utility": 0.2895833333333333,
+      "violation_rate": 0.75
+    },
+    {
+      "N": 1,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "raw_semantic",
+      "seed": 1,
+      "selected_real_utility": 0.403759765625,
+      "violation_rate": 0.3505859375
+    },
+    {
+      "N": 2,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "raw_semantic",
+      "seed": 1,
+      "selected_real_utility": 0.38891383694225723,
+      "violation_rate": 0.4972933070866141
+    },
+    {
+      "N": 4,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "raw_semantic",
+      "seed": 1,
+      "selected_real_utility": 0.3559458592090051,
+      "violation_rate": 0.71284772215973
+    },
+    {
+      "N": 8,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "raw_semantic",
+      "seed": 1,
+      "selected_real_utility": 0.2928122369531442,
+      "violation_rate": 0.8957228706186844
+    },
+    {
+      "N": 16,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "raw_semantic",
+      "seed": 1,
+      "selected_real_utility": 0.25048409670737537,
+      "violation_rate": 0.9605362507646685
+    },
+    {
+      "N": 32,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "raw_semantic",
+      "seed": 1,
+      "selected_real_utility": 0.2540956882006033,
+      "violation_rate": 0.944908707116039
+    },
+    {
+      "N": 64,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "raw_semantic",
+      "seed": 1,
+      "selected_real_utility": 0.2757833301800632,
+      "violation_rate": 0.9060038668646528
+    },
+    {
+      "N": 128,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "raw_semantic",
+      "seed": 1,
+      "selected_real_utility": 0.26458333333333334,
+      "violation_rate": 0.875
+    },
+    {
+      "N": 1,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "semantic_plus_physical",
+      "seed": 1,
+      "selected_real_utility": 0.403759765625,
+      "violation_rate": 0.3505859375
+    },
+    {
+      "N": 2,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "semantic_plus_physical",
+      "seed": 1,
+      "selected_real_utility": 0.4758343073326772,
+      "violation_rate": 0.1408556840551181
+    },
+    {
+      "N": 4,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "semantic_plus_physical",
+      "seed": 1,
+      "selected_real_utility": 0.5428813874828147,
+      "violation_rate": 0.028205790682414696
+    },
+    {
+      "N": 8,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "semantic_plus_physical",
+      "seed": 1,
+      "selected_real_utility": 0.6158686735829422,
+      "violation_rate": 0.002439711475508346
+    },
+    {
+      "N": 16,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "semantic_plus_physical",
+      "seed": 1,
+      "selected_real_utility": 0.6782386332592283,
+      "violation_rate": 5.587495209537616e-05
+    },
+    {
+      "N": 32,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "semantic_plus_physical",
+      "seed": 1,
+      "selected_real_utility": 0.7205041201132498,
+      "violation_rate": 3.17423009768175e-08
+    },
+    {
+      "N": 64,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "semantic_plus_physical",
+      "seed": 1,
+      "selected_real_utility": 0.7382585362559684,
+      "violation_rate": 8.942692464876835e-18
+    },
+    {
+      "N": 128,
+      "experiment": "semantic_distractors_object_binding",
+      "method": "semantic_plus_physical",
+      "seed": 1,
+      "selected_real_utility": 0.7875,
+      "violation_rate": 0.0
+    }
+  ],
+  "seed": 1
+}

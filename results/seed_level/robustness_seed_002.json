@@ -1,0 +1,710 @@
+{
+  "experiment": "robustness",
+  "rows": [
+    {
+      "N": 1,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_10pct_noise20",
+      "seed": 2,
+      "selected_real_utility": 0.57599609375,
+      "violation_rate": 0.666015625
+    },
+    {
+      "N": 2,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_10pct_noise20",
+      "seed": 2,
+      "selected_real_utility": 0.7336418860728346,
+      "violation_rate": 0.5195543184055118
+    },
+    {
+      "N": 4,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_10pct_noise20",
+      "seed": 2,
+      "selected_real_utility": 0.8517155918010249,
+      "violation_rate": 0.39557183281777275
+    },
+    {
+      "N": 8,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_10pct_noise20",
+      "seed": 2,
+      "selected_real_utility": 0.8945016631187137,
+      "violation_rate": 0.3729164569577985
+    },
+    {
+      "N": 16,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_10pct_noise20",
+      "seed": 2,
+      "selected_real_utility": 0.8881499967018232,
+      "violation_rate": 0.4372066642014046
+    },
+    {
+      "N": 32,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_10pct_noise20",
+      "seed": 2,
+      "selected_real_utility": 0.865529866543055,
+      "violation_rate": 0.5497298513973561
+    },
+    {
+      "N": 64,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_10pct_noise20",
+      "seed": 2,
+      "selected_real_utility": 0.8433109312723702,
+      "violation_rate": 0.6692021850322962
+    },
+    {
+      "N": 128,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_10pct_noise20",
+      "seed": 2,
+      "selected_real_utility": 0.8361686730888969,
+      "violation_rate": 0.7146676600835309
+    },
+    {
+      "N": 1,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_1pct_noise0",
+      "seed": 2,
+      "selected_real_utility": 0.57599609375,
+      "violation_rate": 0.666015625
+    },
+    {
+      "N": 2,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_1pct_noise0",
+      "seed": 2,
+      "selected_real_utility": 0.7394231360728347,
+      "violation_rate": 0.4685346948818898
+    },
+    {
+      "N": 4,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_1pct_noise0",
+      "seed": 2,
+      "selected_real_utility": 0.8719896719160105,
+      "violation_rate": 0.23023808352080988
+    },
+    {
+      "N": 8,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_1pct_noise0",
+      "seed": 2,
+      "selected_real_utility": 0.9377257110925179,
+      "violation_rate": 0.05671148951087307
+    },
+    {
+      "N": 16,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_1pct_noise0",
+      "seed": 2,
+      "selected_real_utility": 0.943161750747004,
+      "violation_rate": 0.003833789120087704
+    },
+    {
+      "N": 32,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_1pct_noise0",
+      "seed": 2,
+      "selected_real_utility": 0.9286250264810942,
+      "violation_rate": 1.645142764156331e-05
+    },
+    {
+      "N": 64,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_1pct_noise0",
+      "seed": 2,
+      "selected_real_utility": 0.9144271954167311,
+      "violation_rate": 1.077525380028346e-11
+    },
+    {
+      "N": 128,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_1pct_noise0",
+      "seed": 2,
+      "selected_real_utility": 0.9000000000000001,
+      "violation_rate": 0.0
+    },
+    {
+      "N": 1,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_2pct_noise5",
+      "seed": 2,
+      "selected_real_utility": 0.57599609375,
+      "violation_rate": 0.666015625
+    },
+    {
+      "N": 2,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_2pct_noise5",
+      "seed": 2,
+      "selected_real_utility": 0.7468272484005907,
+      "violation_rate": 0.46619709645669294
+    },
+    {
+      "N": 4,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_2pct_noise5",
+      "seed": 2,
+      "selected_real_utility": 0.8917749293154763,
+      "violation_rate": 0.22926178758905136
+    },
+    {
+      "N": 8,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_2pct_noise5",
+      "seed": 2,
+      "selected_real_utility": 0.9734442660903415,
+      "violation_rate": 0.05664828149776048
+    },
+    {
+      "N": 16,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_2pct_noise5",
+      "seed": 2,
+      "selected_real_utility": 0.9974973069721402,
+      "violation_rate": 0.003833574995992902
+    },
+    {
+      "N": 32,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_2pct_noise5",
+      "seed": 2,
+      "selected_real_utility": 0.9999649284620986,
+      "violation_rate": 1.64514274912485e-05
+    },
+    {
+      "N": 64,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_2pct_noise5",
+      "seed": 2,
+      "selected_real_utility": 0.9999999986301484,
+      "violation_rate": 1.0775253800283459e-11
+    },
+    {
+      "N": 128,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_2pct_noise5",
+      "seed": 2,
+      "selected_real_utility": 1.0,
+      "violation_rate": 0.0
+    },
+    {
+      "N": 1,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_5pct_noise10",
+      "seed": 2,
+      "selected_real_utility": 0.57599609375,
+      "violation_rate": 0.666015625
+    },
+    {
+      "N": 2,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_5pct_noise10",
+      "seed": 2,
+      "selected_real_utility": 0.721386334276575,
+      "violation_rate": 0.5183778297244095
+    },
+    {
+      "N": 4,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_5pct_noise10",
+      "seed": 2,
+      "selected_real_utility": 0.8222407314515373,
+      "violation_rate": 0.4078099221972254
+    },
+    {
+      "N": 8,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_5pct_noise10",
+      "seed": 2,
+      "selected_real_utility": 0.840795165960895,
+      "violation_rate": 0.4371597444138589
+    },
+    {
+      "N": 16,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_5pct_noise10",
+      "seed": 2,
+      "selected_real_utility": 0.8065917114904689,
+      "violation_rate": 0.5705197971540494
+    },
+    {
+      "N": 32,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_5pct_noise10",
+      "seed": 2,
+      "selected_real_utility": 0.762359389373791,
+      "violation_rate": 0.7299544150564294
+    },
+    {
+      "N": 64,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_5pct_noise10",
+      "seed": 2,
+      "selected_real_utility": 0.7361676014079106,
+      "violation_rate": 0.8796791843266875
+    },
+    {
+      "N": 128,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "calib_5pct_noise10",
+      "seed": 2,
+      "selected_real_utility": 0.7441157407407408,
+      "violation_rate": 0.9444444444444444
+    },
+    {
+      "N": 1,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "grounded_combined",
+      "seed": 2,
+      "selected_real_utility": 0.57599609375,
+      "violation_rate": 0.666015625
+    },
+    {
+      "N": 2,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "grounded_combined",
+      "seed": 2,
+      "selected_real_utility": 0.7170026451771654,
+      "violation_rate": 0.4485882135826772
+    },
+    {
+      "N": 4,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "grounded_combined",
+      "seed": 2,
+      "selected_real_utility": 0.8600241674868767,
+      "violation_rate": 0.20981991704161979
+    },
+    {
+      "N": 8,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "grounded_combined",
+      "seed": 2,
+      "selected_real_utility": 0.9609119648658893,
+      "violation_rate": 0.05050615689006048
+    },
+    {
+      "N": 16,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "grounded_combined",
+      "seed": 2,
+      "selected_real_utility": 0.9963947075236883,
+      "violation_rate": 0.003547823135667
+    },
+    {
+      "N": 32,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "grounded_combined",
+      "seed": 2,
+      "selected_real_utility": 0.9999591675148625,
+      "violation_rate": 1.6248246990732877e-05
+    },
+    {
+      "N": 64,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "grounded_combined",
+      "seed": 2,
+      "selected_real_utility": 0.9999999986252316,
+      "violation_rate": 1.077510227553211e-11
+    },
+    {
+      "N": 128,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "grounded_combined",
+      "seed": 2,
+      "selected_real_utility": 1.0,
+      "violation_rate": 0.0
+    },
+    {
+      "N": 1,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "ideal_verifier",
+      "seed": 2,
+      "selected_real_utility": 0.57599609375,
+      "violation_rate": 0.666015625
+    },
+    {
+      "N": 2,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "ideal_verifier",
+      "seed": 2,
+      "selected_real_utility": 0.715601470226378,
+      "violation_rate": 0.4484959399606299
+    },
+    {
+      "N": 4,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "ideal_verifier",
+      "seed": 2,
+      "selected_real_utility": 0.857020094734252,
+      "violation_rate": 0.2096524653168354
+    },
+    {
+      "N": 8,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "ideal_verifier",
+      "seed": 2,
+      "selected_real_utility": 0.9550580037196643,
+      "violation_rate": 0.05043973570077291
+    },
+    {
+      "N": 16,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "ideal_verifier",
+      "seed": 2,
+      "selected_real_utility": 0.9891635869476141,
+      "violation_rate": 0.0035463386949220023
+    },
+    {
+      "N": 32,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "ideal_verifier",
+      "seed": 2,
+      "selected_real_utility": 0.993327255621081,
+      "violation_rate": 1.624821527188506e-05
+    },
+    {
+      "N": 64,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "ideal_verifier",
+      "seed": 2,
+      "selected_real_utility": 0.9966785637623392,
+      "violation_rate": 1.0775102275532106e-11
+    },
+    {
+      "N": 128,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "ideal_verifier",
+      "seed": 2,
+      "selected_real_utility": 1.0,
+      "violation_rate": 0.0
+    },
+    {
+      "N": 1,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "noisy_verifier_harsh",
+      "seed": 2,
+      "selected_real_utility": 0.57599609375,
+      "violation_rate": 0.666015625
+    },
+    {
+      "N": 2,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "noisy_verifier_harsh",
+      "seed": 2,
+      "selected_real_utility": 0.6359728715551182,
+      "violation_rate": 0.567651943897638
+    },
+    {
+      "N": 4,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "noisy_verifier_harsh",
+      "seed": 2,
+      "selected_real_utility": 0.6715534356252344,
+      "violation_rate": 0.5234815101237346
+    },
+    {
+      "N": 8,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "noisy_verifier_harsh",
+      "seed": 2,
+      "selected_real_utility": 0.6686188598348544,
+      "violation_rate": 0.5586004022895839
+    },
+    {
+      "N": 16,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "noisy_verifier_harsh",
+      "seed": 2,
+      "selected_real_utility": 0.6314799562306013,
+      "violation_rate": 0.6531114044687605
+    },
+    {
+      "N": 32,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "noisy_verifier_harsh",
+      "seed": 2,
+      "selected_real_utility": 0.5474416727061405,
+      "violation_rate": 0.807790983065168
+    },
+    {
+      "N": 64,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "noisy_verifier_harsh",
+      "seed": 2,
+      "selected_real_utility": 0.4548056509146092,
+      "violation_rate": 0.957080098981471
+    },
+    {
+      "N": 128,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "noisy_verifier_harsh",
+      "seed": 2,
+      "selected_real_utility": 0.45875000000000005,
+      "violation_rate": 1.0
+    },
+    {
+      "N": 1,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "noisy_verifier_mild",
+      "seed": 2,
+      "selected_real_utility": 0.57599609375,
+      "violation_rate": 0.666015625
+    },
+    {
+      "N": 2,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "noisy_verifier_mild",
+      "seed": 2,
+      "selected_real_utility": 0.6716214013287403,
+      "violation_rate": 0.5102423720472442
+    },
+    {
+      "N": 4,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "noisy_verifier_mild",
+      "seed": 2,
+      "selected_real_utility": 0.7586261370453693,
+      "violation_rate": 0.37878078130858645
+    },
+    {
+      "N": 8,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "noisy_verifier_mild",
+      "seed": 2,
+      "selected_real_utility": 0.8088204009980352,
+      "violation_rate": 0.3197700075231042
+    },
+    {
+      "N": 16,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "noisy_verifier_mild",
+      "seed": 2,
+      "selected_real_utility": 0.8152576686473016,
+      "violation_rate": 0.3261129909150706
+    },
+    {
+      "N": 32,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "noisy_verifier_mild",
+      "seed": 2,
+      "selected_real_utility": 0.7802097673473554,
+      "violation_rate": 0.39745367219827654
+    },
+    {
+      "N": 64,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "noisy_verifier_mild",
+      "seed": 2,
+      "selected_real_utility": 0.7245053949733458,
+      "violation_rate": 0.5169397434834785
+    },
+    {
+      "N": 128,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "noisy_verifier_mild",
+      "seed": 2,
+      "selected_real_utility": 0.6937500000000001,
+      "violation_rate": 0.625
+    },
+    {
+      "N": 1,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "oracle",
+      "seed": 2,
+      "selected_real_utility": 0.57599609375,
+      "violation_rate": 0.666015625
+    },
+    {
+      "N": 2,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "oracle",
+      "seed": 2,
+      "selected_real_utility": 0.7561448080708661,
+      "violation_rate": 0.4585153174212598
+    },
+    {
+      "N": 4,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "oracle",
+      "seed": 2,
+      "selected_real_utility": 0.8988053813976378,
+      "violation_rate": 0.2265415651168604
+    },
+    {
+      "N": 8,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "oracle",
+      "seed": 2,
+      "selected_real_utility": 0.9755989949288895,
+      "violation_rate": 0.0583828897893601
+    },
+    {
+      "N": 16,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "oracle",
+      "seed": 2,
+      "selected_real_utility": 0.997680196079795,
+      "violation_rate": 0.004365298174377493
+    },
+    {
+      "N": 32,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "oracle",
+      "seed": 2,
+      "selected_real_utility": 0.9999656427695797,
+      "violation_rate": 3.1890676334846094e-05
+    },
+    {
+      "N": 64,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "oracle",
+      "seed": 2,
+      "selected_real_utility": 0.9999999986303344,
+      "violation_rate": 7.813232142377505e-10
+    },
+    {
+      "N": 128,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "oracle",
+      "seed": 2,
+      "selected_real_utility": 1.0,
+      "violation_rate": 0.0
+    },
+    {
+      "N": 1,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "random",
+      "seed": 2,
+      "selected_real_utility": 0.57599609375,
+      "violation_rate": 0.666015625
+    },
+    {
+      "N": 2,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "random",
+      "seed": 2,
+      "selected_real_utility": 0.5754855130413387,
+      "violation_rate": 0.6674458661417323
+    },
+    {
+      "N": 4,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "random",
+      "seed": 2,
+      "selected_real_utility": 0.5702221091113611,
+      "violation_rate": 0.6773953529246345
+    },
+    {
+      "N": 8,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "random",
+      "seed": 2,
+      "selected_real_utility": 0.5638531309805557,
+      "violation_rate": 0.6942425937202347
+    },
+    {
+      "N": 16,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "random",
+      "seed": 2,
+      "selected_real_utility": 0.5498116301439429,
+      "violation_rate": 0.7364515633617807
+    },
+    {
+      "N": 32,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "random",
+      "seed": 2,
+      "selected_real_utility": 0.5187552286640958,
+      "violation_rate": 0.8080177197523766
+    },
+    {
+      "N": 64,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "random",
+      "seed": 2,
+      "selected_real_utility": 0.46495494526257575,
+      "violation_rate": 0.8968820384495273
+    },
+    {
+      "N": 128,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "random",
+      "seed": 2,
+      "selected_real_utility": 0.35125000000000006,
+      "violation_rate": 1.0
+    },
+    {
+      "N": 1,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "raw_semantic",
+      "seed": 2,
+      "selected_real_utility": 0.57599609375,
+      "violation_rate": 0.666015625
+    },
+    {
+      "N": 2,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "raw_semantic",
+      "seed": 2,
+      "selected_real_utility": 0.5637855253444882,
+      "violation_rate": 0.7476624015748031
+    },
+    {
+      "N": 4,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "raw_semantic",
+      "seed": 2,
+      "selected_real_utility": 0.5064876336942258,
+      "violation_rate": 0.8914981603862018
+    },
+    {
+      "N": 8,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "raw_semantic",
+      "seed": 2,
+      "selected_real_utility": 0.45234229756513344,
+      "violation_rate": 0.9844872961965941
+    },
+    {
+      "N": 16,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "raw_semantic",
+      "seed": 2,
+      "selected_real_utility": 0.4349159957992139,
+      "violation_rate": 0.999746169907535
+    },
+    {
+      "N": 32,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "raw_semantic",
+      "seed": 2,
+      "selected_real_utility": 0.4323164782974064,
+      "violation_rate": 0.9999999716028267
+    },
+    {
+      "N": 64,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "raw_semantic",
+      "seed": 2,
+      "selected_real_utility": 0.43187177334154647,
+      "violation_rate": 1.0
+    },
+    {
+      "N": 128,
+      "experiment": "noisy_verifier_calibration_robustness",
+      "method": "raw_semantic",
+      "seed": 2,
+      "selected_real_utility": 0.41375000000000006,
+      "violation_rate": 1.0
+    }
+  ],
+  "seed": 2
+}

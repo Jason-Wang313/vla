@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "best-of-n-vla"
+version = "0.1.0"
+description = "Best-of-N selection diagnostics for VLA-style robot action candidates."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.23",
+  "pandas>=1.5",
+  "matplotlib>=3.7",
+  "Pillow>=10",
+  "torch>=2.0",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+v2 = [
+  "torch>=2.0",
+  "transformers>=4.40",
+  "accelerate>=0.30",
+  "safetensors>=0.4",
+  "Pillow>=10",
+  "opencv-python>=4.8",
+  "gymnasium>=0.29",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "."]

@@ -1,0 +1,326 @@
+{
+  "experiment": "controlled",
+  "rows": [
+    {
+      "N": 1,
+      "experiment": "controlled_semantic_overselection",
+      "method": "grounded_combined",
+      "seed": 2,
+      "selected_real_utility": 0.4575439453125,
+      "violation_rate": 0.4580078125
+    },
+    {
+      "N": 2,
+      "experiment": "controlled_semantic_overselection",
+      "method": "grounded_combined",
+      "seed": 2,
+      "selected_real_utility": 0.6069857539780183,
+      "violation_rate": 0.32175812007874016
+    },
+    {
+      "N": 4,
+      "experiment": "controlled_semantic_overselection",
+      "method": "grounded_combined",
+      "seed": 2,
+      "selected_real_utility": 0.7856091427048182,
+      "violation_rate": 0.20312796447319087
+    },
+    {
+      "N": 8,
+      "experiment": "controlled_semantic_overselection",
+      "method": "grounded_combined",
+      "seed": 2,
+      "selected_real_utility": 0.9355358390942592,
+      "violation_rate": 0.08196962343115397
+    },
+    {
+      "N": 16,
+      "experiment": "controlled_semantic_overselection",
+      "method": "grounded_combined",
+      "seed": 2,
+      "selected_real_utility": 0.9931003964372898,
+      "violation_rate": 0.011284522997066043
+    },
+    {
+      "N": 32,
+      "experiment": "controlled_semantic_overselection",
+      "method": "grounded_combined",
+      "seed": 2,
+      "selected_real_utility": 0.9999020026073272,
+      "violation_rate": 0.00020108112795888777
+    },
+    {
+      "N": 64,
+      "experiment": "controlled_semantic_overselection",
+      "method": "grounded_combined",
+      "seed": 2,
+      "selected_real_utility": 0.9999999966989452,
+      "violation_rate": 8.54469301120117e-09
+    },
+    {
+      "N": 128,
+      "experiment": "controlled_semantic_overselection",
+      "method": "grounded_combined",
+      "seed": 2,
+      "selected_real_utility": 1.0,
+      "violation_rate": 0.0
+    },
+    {
+      "N": 1,
+      "experiment": "controlled_semantic_overselection",
+      "method": "oracle",
+      "seed": 2,
+      "selected_real_utility": 0.4575439453125,
+      "violation_rate": 0.4580078125
+    },
+    {
+      "N": 2,
+      "experiment": "controlled_semantic_overselection",
+      "method": "oracle",
+      "seed": 2,
+      "selected_real_utility": 0.676918394233924,
+      "violation_rate": 0.2772976131889764
+    },
+    {
+      "N": 4,
+      "experiment": "controlled_semantic_overselection",
+      "method": "oracle",
+      "seed": 2,
+      "selected_real_utility": 0.8679970787831208,
+      "violation_rate": 0.13250511752437194
+    },
+    {
+      "N": 8,
+      "experiment": "controlled_semantic_overselection",
+      "method": "oracle",
+      "seed": 2,
+      "selected_real_utility": 0.9702501280846082,
+      "violation_rate": 0.031879984511314234
+    },
+    {
+      "N": 16,
+      "experiment": "controlled_semantic_overselection",
+      "method": "oracle",
+      "seed": 2,
+      "selected_real_utility": 0.99743933249314,
+      "violation_rate": 0.002463954969050535
+    },
+    {
+      "N": 32,
+      "experiment": "controlled_semantic_overselection",
+      "method": "oracle",
+      "seed": 2,
+      "selected_real_utility": 0.9999717431362195,
+      "violation_rate": 4.504215019706908e-05
+    },
+    {
+      "N": 64,
+      "experiment": "controlled_semantic_overselection",
+      "method": "oracle",
+      "seed": 2,
+      "selected_real_utility": 0.9999999995668831,
+      "violation_rate": 2.074137858022201e-09
+    },
+    {
+      "N": 128,
+      "experiment": "controlled_semantic_overselection",
+      "method": "oracle",
+      "seed": 2,
+      "selected_real_utility": 1.0,
+      "violation_rate": 0.0
+    },
+    {
+      "N": 1,
+      "experiment": "controlled_semantic_overselection",
+      "method": "random",
+      "seed": 2,
+      "selected_real_utility": 0.4575439453125,
+      "violation_rate": 0.4580078125
+    },
+    {
+      "N": 2,
+      "experiment": "controlled_semantic_overselection",
+      "method": "random",
+      "seed": 2,
+      "selected_real_utility": 0.45185713480150924,
+      "violation_rate": 0.4608298474409449
+    },
+    {
+      "N": 4,
+      "experiment": "controlled_semantic_overselection",
+      "method": "random",
+      "seed": 2,
+      "selected_real_utility": 0.4430162158441132,
+      "violation_rate": 0.45985803337082864
+    },
+    {
+      "N": 8,
+      "experiment": "controlled_semantic_overselection",
+      "method": "random",
+      "seed": 2,
+      "selected_real_utility": 0.43532371946360604,
+      "violation_rate": 0.45540234274118774
+    },
+    {
+      "N": 16,
+      "experiment": "controlled_semantic_overselection",
+      "method": "random",
+      "seed": 2,
+      "selected_real_utility": 0.4212195642015807,
+      "violation_rate": 0.4561000713693956
+    },
+    {
+      "N": 32,
+      "experiment": "controlled_semantic_overselection",
+      "method": "random",
+      "seed": 2,
+      "selected_real_utility": 0.39429145492143003,
+      "violation_rate": 0.45561273760719834
+    },
+    {
+      "N": 64,
+      "experiment": "controlled_semantic_overselection",
+      "method": "random",
+      "seed": 2,
+      "selected_real_utility": 0.3575325857687899,
+      "violation_rate": 0.438297706512274
+    },
+    {
+      "N": 128,
+      "experiment": "controlled_semantic_overselection",
+      "method": "random",
+      "seed": 2,
+      "selected_real_utility": 0.2625,
+      "violation_rate": 0.375
+    },
+    {
+      "N": 1,
+      "experiment": "controlled_semantic_overselection",
+      "method": "raw_semantic",
+      "seed": 2,
+      "selected_real_utility": 0.4575439453125,
+      "violation_rate": 0.4580078125
+    },
+    {
+      "N": 2,
+      "experiment": "controlled_semantic_overselection",
+      "method": "raw_semantic",
+      "seed": 2,
+      "selected_real_utility": 0.39662624569389765,
+      "violation_rate": 0.641240157480315
+    },
+    {
+      "N": 4,
+      "experiment": "controlled_semantic_overselection",
+      "method": "raw_semantic",
+      "seed": 2,
+      "selected_real_utility": 0.2885936572381578,
+      "violation_rate": 0.8541528637045369
+    },
+    {
+      "N": 8,
+      "experiment": "controlled_semantic_overselection",
+      "method": "raw_semantic",
+      "seed": 2,
+      "selected_real_utility": 0.20330149063375927,
+      "violation_rate": 0.9702036215629428
+    },
+    {
+      "N": 16,
+      "experiment": "controlled_semantic_overselection",
+      "method": "raw_semantic",
+      "seed": 2,
+      "selected_real_utility": 0.17816256669778588,
+      "violation_rate": 0.994140421303491
+    },
+    {
+      "N": 32,
+      "experiment": "controlled_semantic_overselection",
+      "method": "raw_semantic",
+      "seed": 2,
+      "selected_real_utility": 0.1746120670325375,
+      "violation_rate": 0.9986885850147438
+    },
+    {
+      "N": 64,
+      "experiment": "controlled_semantic_overselection",
+      "method": "raw_semantic",
+      "seed": 2,
+      "selected_real_utility": 0.1628609603175373,
+      "violation_rate": 0.9999791002570715
+    },
+    {
+      "N": 128,
+      "experiment": "controlled_semantic_overselection",
+      "method": "raw_semantic",
+      "seed": 2,
+      "selected_real_utility": 0.10624999999999997,
+      "violation_rate": 1.0
+    },
+    {
+      "N": 1,
+      "experiment": "controlled_semantic_overselection",
+      "method": "semantic_plus_physical",
+      "seed": 2,
+      "selected_real_utility": 0.4575439453125,
+      "violation_rate": 0.4580078125
+    },
+    {
+      "N": 2,
+      "experiment": "controlled_semantic_overselection",
+      "method": "semantic_plus_physical",
+      "seed": 2,
+      "selected_real_utility": 0.5992984641568242,
+      "violation_rate": 0.22430179625984253
+    },
+    {
+      "N": 4,
+      "experiment": "controlled_semantic_overselection",
+      "method": "semantic_plus_physical",
+      "seed": 2,
+      "selected_real_utility": 0.7218922744031997,
+      "violation_rate": 0.05851403730783652
+    },
+    {
+      "N": 8,
+      "experiment": "controlled_semantic_overselection",
+      "method": "semantic_plus_physical",
+      "seed": 2,
+      "selected_real_utility": 0.805964120412334,
+      "violation_rate": 0.005701016903369774
+    },
+    {
+      "N": 16,
+      "experiment": "controlled_semantic_overselection",
+      "method": "semantic_plus_physical",
+      "seed": 2,
+      "selected_real_utility": 0.8430425000095045,
+      "violation_rate": 8.37714767118756e-05
+    },
+    {
+      "N": 32,
+      "experiment": "controlled_semantic_overselection",
+      "method": "semantic_plus_physical",
+      "seed": 2,
+      "selected_real_utility": 0.84840254187511,
+      "violation_rate": 8.310896373187896e-09
+    },
+    {
+      "N": 64,
+      "experiment": "controlled_semantic_overselection",
+      "method": "semantic_plus_physical",
+      "seed": 2,
+      "selected_real_utility": 0.869220184312282,
+      "violation_rate": 1.3323076068914313e-20
+    },
+    {
+      "N": 128,
+      "experiment": "controlled_semantic_overselection",
+      "method": "semantic_plus_physical",
+      "seed": 2,
+      "selected_real_utility": 0.89375,
+      "violation_rate": 0.0
+    }
+  ],
+  "seed": 2
+}

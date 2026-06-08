@@ -1,0 +1,113 @@
+{
+  "claims": [
+    {
+      "category": "theorem claims",
+      "claim": "Exact finite tie-aware Best-of-N law is implemented and documented.",
+      "evidence": "src/vla_best_of_n/theory.py; docs/theory.md; tests/test_theory.py",
+      "status": "SUPPORTED"
+    },
+    {
+      "category": "controlled VLA-style toy claims",
+      "claim": "Controlled VLA-style experiment shows semantic score improves while real utility saturates or drops and violations rise.",
+      "evidence": "results\\controlled_summary.csv",
+      "status": "SUPPORTED"
+    },
+    {
+      "category": "learned VLA-style claims",
+      "claim": "Learned language-conditioned VLA-style scorer exists and exhibits selected-tail regret growth.",
+      "evidence": "results\\learned_summary.csv",
+      "status": "SUPPORTED"
+    },
+    {
+      "category": "PyTorch learned VLA-style claims",
+      "claim": "A heavier PyTorch language/visual/action scorer is trained on semantic labels and evaluated separately from real utility.",
+      "evidence": "results\\learned_summary.csv",
+      "status": "SUPPORTED"
+    },
+    {
+      "category": "semantic distractor/object-binding claims",
+      "claim": "Distractor/object-binding setup measures wrong-object, wrong-target, unreachable, and collision failures.",
+      "evidence": "results\\distractor_summary.csv",
+      "status": "SUPPORTED"
+    },
+    {
+      "category": "grounding/calibration repair claims",
+      "claim": "Grounded or calibrated scorer improves high-N real utility and lowers violations over raw semantic selection.",
+      "evidence": "results\\repair_summary.csv",
+      "status": "SUPPORTED"
+    },
+    {
+      "category": "rendered visual simulator claims",
+      "claim": "Rendered visual scenes with simulator-style physical utility reproduce selected-tail semantic over-selection.",
+      "evidence": "results\\rendered_summary.csv",
+      "status": "SUPPORTED"
+    },
+    {
+      "category": "noisy verifier robustness claims",
+      "claim": "Noisy physical verifiers improve selected-tail utility without being treated as perfect repair.",
+      "evidence": "results\\robustness_summary.csv",
+      "status": "SUPPORTED"
+    },
+    {
+      "category": "calibration budget/noise claims",
+      "claim": "Pilot-label calibration is stress-tested across label budgets and label noise.",
+      "evidence": "results\\robustness_summary.csv",
+      "status": "SUPPORTED"
+    },
+    {
+      "category": "paper-critical figures",
+      "claim": "At least eight paper-critical or v2 figures exist.",
+      "evidence": "results\\figures\\figure1_semantic_overselection.png, results\\figures\\figure2_repair_comparison.png, results\\figures\\figure3_tail_diagnostics.png, results\\figures\\figure4_failure_decomposition.png, results\\figures\\figure5_exact_law_validation.png, results\\figures\\figure6_rendered_visual_simulator.png, results\\figures\\figure8_robustness_repairs.png, results\\figures\\figure9_calibration_budget_noise.png, results\\figures\\figure10_learned_scorer_comparison.png, results\\figures\\figure7_rendered_scene_examples.png",
+      "status": "SUPPORTED"
+    },
+    {
+      "category": "optional benchmark claims",
+      "claim": "Real VLA benchmark validation is implemented.",
+      "evidence": "docs/benchmark_plan.md marks benchmark validation as future work.",
+      "status": "UNSUPPORTED"
+    },
+    {
+      "category": "optional VLA adapter status claims",
+      "claim": "Optional SmoLVLA/real-VLA adapter status is recorded with run-or-skip reason.",
+      "evidence": "results\\optional_vla\\adapter_status.json",
+      "status": "SUPPORTED"
+    },
+    {
+      "category": "unsupported future robotics claims",
+      "claim": "Real-robot validation is established.",
+      "evidence": "No real-robot adapter or hardware results are included.",
+      "status": "UNSUPPORTED"
+    },
+    {
+      "category": "forbidden/overclaim claims",
+      "claim": "Forbidden universal or real-robot claims are absent from README, docs, and paper skeleton.",
+      "evidence": "Text scan over README.md, docs/*.md, paper/*.md.",
+      "status": "SUPPORTED"
+    }
+  ],
+  "not_clone_audit": {
+    "learned_language_conditioned_model_exists": true,
+    "learned_vla_artifact_exists": true,
+    "no_real_robot_claim_unless_implemented": true,
+    "no_universal_training_recipe_claim": true,
+    "object_distractor_reachability_collision_failures_represented": true,
+    "optional_vla_status_exists": true,
+    "physical_utility_evaluated_separately": true,
+    "rendered_visual_simulator_artifact_exists": true,
+    "repair_artifact_exists": true,
+    "robustness_artifact_exists": true,
+    "semantic_score_separate_from_real_utility": true,
+    "this_is_not_EBM_clone": true,
+    "this_is_not_JEPA_clone": true,
+    "this_is_not_WAM_clone": true,
+    "this_is_not_diffusion_clone": true,
+    "torch_vla_methods_exist": true,
+    "visual_object_observation_input_exists": true
+  },
+  "summary": {
+    "all_required_supported": true,
+    "partial": 0,
+    "supported": 12,
+    "unsupported": 2
+  }
+}
