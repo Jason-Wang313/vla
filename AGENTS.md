@@ -17,7 +17,7 @@ Best-of-N VLA action selection can amplify semantic/affordance ranking errors. A
 - Initial checkpoint commit: `7a8cc45`.
 - The folder name intentionally contains spaces; keep shell scripts quoted/path-safe.
 - Real-robot validation is unsupported.
-- Optional real-VLA/SmoLVLA status is implemented as a guarded artifact; actual inference is skipped until the LeRobot runtime is importable.
+- Optional real-VLA/SmoLVLA status is implemented as a guarded artifact. Cached SmoLVLA now loads on CPU and emits a synthetic action chunk via `bash scripts/run_optional_vla.sh --attempt-inference`; LIBERO/real benchmark validation is still unsupported.
 
 ## Required Commands
 

@@ -16,7 +16,7 @@ Make the worktree resumable in a new thread and push the VLA Best-of-N repositor
 - v1 generated artifacts exist under `results/`, including summary CSVs, seed-level files, claim status files, and five figures.
 - v2 rendered visual/simulator artifacts now exist under `results/rendered/`, `results/rendered_summary.csv`, and `results/rendered_visual_metadata.csv`.
 - v2 noisy verifier and calibration robustness artifacts now exist under `results/robustness_summary.csv` and `results/robustness_artifact.json`.
-- Optional SmoLVLA adapter status exists under `results/optional_vla/adapter_status.json` and `.md`.
+- Optional SmoLVLA adapter status exists under `results/optional_vla/adapter_status.json` and `.md`; the heavyweight synthetic inference probe exists under `results/optional_vla/inference_probe.json` and `.md`.
 - PyTorch learned scorer artifacts are included as `torch_semantic` and `torch_calibrated` methods in `results/learned_summary.csv` and `results/rendered_summary.csv`.
 - Required v1 scripts exist:
   - `scripts/run_smoke.sh`
@@ -64,9 +64,13 @@ Robustness stress artifact:
 Optional VLA adapter status:
 
 - path: `results/optional_vla/adapter_status.json`
-- status: `SKIPPED_WITH_REASON`
-- reason: cached SmoLVLA config/weights and core runtime are present, but `lerobot` is not importable.
-- this does not support real VLA benchmark validation.
+- status: `READY_TO_ATTEMPT`
+- `lerobot` and `num2words` are importable; `libero` is not importable.
+- cached `models--lerobot--smolvla_base` has config and weights.
+- optional synthetic CPU inference probe status: `INFERENCE_PROBE_PASS`
+- inference probe action shape: `[1, 50, 6]`
+- inference probe parameter count: `450,046,176`
+- this supports real SmoLVLA plumbing only, not real VLA benchmark validation.
 
 PyTorch learned scorer artifact:
 
@@ -96,6 +100,7 @@ PyTorch learned scorer artifact:
 - Added optional VLA runner `experiments/run_optional_vla.py` and `scripts/run_optional_vla.sh`.
 - Added `tests/test_optional_vla.py`.
 - Added `docs/optional_real_vla_adapter.md`.
+- Extended optional VLA runner with `--attempt-inference`, which loads cached SmoLVLA on CPU and writes `results/optional_vla/inference_probe.json`.
 - Added PyTorch scorer `src/vla_best_of_n/torch_vla.py`.
 - Added `tests/test_torch_vla.py`.
 - Added `docs/torch_learned_scorer.md`.
@@ -137,22 +142,36 @@ PyTorch learned scorer artifact:
 - Initialized git repository and committed current verified state: `7a8cc45`.
 - Verified `git status --short`: clean after initial checkpoint.
 - After git handoff/final-audit doc update, ran `bash scripts/run_claim_audit.sh`: PASS, runtime 7.06 s.
+- Installed `lerobot==0.4.4`, pinned `transformers` back to 4.x compatibility, and installed `num2words`.
+- Ran `pytest tests/test_optional_vla.py -q`: PASS, 4 passed, runtime 2.54 s.
+- Ran `bash scripts/run_optional_vla.sh --attempt-inference`: PASS, runtime 186.18 s, status `INFERENCE_PROBE_PASS`.
+- Ran `bash scripts/run_optional_vla.sh`: PASS, runtime 6.67 s, status `READY_TO_ATTEMPT`.
+- Final verification after optional inference implementation, ran `pytest`: PASS, 23 passed, runtime 56.38 s.
+- Final verification after optional inference implementation, ran `bash scripts/run_smoke.sh`: PASS, runtime 235.04 s.
+- Final verification after optional inference implementation, ran `bash scripts/run_all.sh`: PASS, runtime 491.46 s.
+- Final verification after optional inference implementation, ran `bash scripts/run_claim_audit.sh`: PASS, runtime 20.19 s.
+- Post-doc-update claim audit, ran `bash scripts/run_claim_audit.sh`: PASS, runtime 24.65 s.
+- Final verification after manifest update, ran `pytest`: PASS, 23 passed, runtime 53.50 s.
+- Final verification after manifest update, ran `bash scripts/run_smoke.sh`: PASS, runtime 132.68 s.
+- Final verification after manifest update, ran `bash scripts/run_all.sh`: PASS, runtime 570.88 s.
+- Final verification after manifest update, ran `bash scripts/run_claim_audit.sh`: PASS, runtime 10.32 s.
 
 ## Known Failures Or Bugs
 
-- `lerobot` and `libero` were not importable in the previous environment inspection.
-- Optional SmoLVLA/real-VLA adapter is not implemented.
+- `libero` is not importable, so no LIBERO benchmark can be claimed.
+- `pip check` reports unrelated global-environment dependency conflicts around NumPy/protobuf; use an isolated environment for real benchmark work.
+- Optional SmoLVLA/real-VLA benchmark evaluation is not implemented.
 - Real-robot validation is unsupported.
 
 ## Open Questions
 
-- UNKNOWN: Whether installing `lerobot` is acceptable in this environment.
-- UNKNOWN: Whether cached SmoLVLA weights can be loaded without the full LeRobot runtime.
+- RESOLVED: `lerobot` installed and cached SmoLVLA weights load on CPU.
+- RESOLVED: cached SmoLVLA emits a finite action chunk from synthetic image/state/language input.
 - UNKNOWN: Whether `robosuite`/`sapien` should be used for v2 or whether a pure Gymnasium 2D simulator is preferable.
 
 ## Next Recommended Steps
 
-1. Consider installing/using LeRobot runtime to move optional VLA status from `SKIPPED_WITH_REASON` to real inference.
+1. Build a guarded LIBERO/LeRobot benchmark wrapper if dependency conflicts can be isolated.
 2. Re-run `pytest`, `bash scripts/run_claim_audit.sh`, `bash scripts/run_smoke.sh`, and `bash scripts/run_all.sh` after additional v2 code changes.
 
 Safe to clear after handoff is updated.

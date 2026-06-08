@@ -331,16 +331,17 @@
       ]
     }
   ],
-  "can_attempt_inference": false,
-  "reason": "Cannot run optional real-VLA adapter yet: missing importable lerobot runtime.",
+  "can_attempt_inference": true,
+  "reason": "Cached SmoLVLA files and LeRobot/core runtime modules are available; use --attempt-inference for a local synthetic action probe, but benchmark evidence still requires a real task wrapper and physical evaluation.",
   "runtime_modules": {
     "accelerate": true,
     "huggingface_hub": true,
-    "lerobot": false,
+    "lerobot": true,
     "libero": false,
+    "num2words": true,
     "safetensors": true,
     "torch": true,
     "transformers": true
   },
-  "status": "SKIPPED_WITH_REASON"
+  "status": "READY_TO_ATTEMPT"
 }

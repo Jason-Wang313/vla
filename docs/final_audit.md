@@ -8,11 +8,12 @@ Git checkpoint: `7a8cc45` (`Initial paper-quality VLA Best-of-N checkpoint`). Th
 
 | Command | Status | Runtime | Failing tests |
 |---|---:|---:|---|
-| `pytest` | PASS | 39.50 s | None, 22 passed |
-| `bash scripts/run_optional_vla.sh` | PASS | 12.28 s | Wrote `SKIPPED_WITH_REASON` status |
-| `bash scripts/run_smoke.sh` | PASS | 218.60 s | None |
-| `bash scripts/run_all.sh` | PASS | 561.28 s | None |
-| `bash scripts/run_claim_audit.sh` | PASS | 7.06 s | None |
+| `pytest` | PASS | 53.50 s | None, 23 passed |
+| `bash scripts/run_optional_vla.sh` | PASS | 6.67 s | Wrote `READY_TO_ATTEMPT` status |
+| `bash scripts/run_optional_vla.sh --attempt-inference` | PASS | 186.18 s | Wrote `INFERENCE_PROBE_PASS` synthetic SmoLVLA action probe |
+| `bash scripts/run_smoke.sh` | PASS | 132.68 s | None, 23 tests passed inside script |
+| `bash scripts/run_all.sh` | PASS | 570.88 s | None, 23 tests passed inside script |
+| `bash scripts/run_claim_audit.sh` | PASS | 10.32 s | None |
 
 Intermediate note: plain `pytest` initially failed because `scripts` was not importable from the standalone pytest path. This was fixed by adding `scripts/__init__.py` and setting `pythonpath = ["src", "."]` in `pyproject.toml`; the final standalone `pytest` pass above is from the fixed state.
 
@@ -29,6 +30,7 @@ Key JSON files:
 - `results/rendered_visual_simulator_artifact.json`
 - `results/robustness_artifact.json`
 - `results/optional_vla/adapter_status.json`
+- `results/optional_vla/inference_probe.json`
 - `results/claims_status.json`
 
 Key CSV files:
@@ -43,6 +45,7 @@ Key CSV files:
 - `results/robustness_seed_metrics.csv`
 - `results/robustness_seed_variance.csv`
 - `results/optional_vla/adapter_status.md`
+- `results/optional_vla/inference_probe.md`
 - `results/*_seed_metrics.csv`
 - `results/*_seed_variance.csv`
 
@@ -196,20 +199,21 @@ At `N=128`:
 
 Interpretation: v2 no longer treats grounding/calibration as automatically clean repair. Mild noisy verification helps but remains unsafe at high N; harsh noisy verification barely repairs the tail; calibration can succeed or fail depending on label budget/noise.
 
-## 6c. Optional Real-VLA Adapter Status
+## 6c. Optional Real-VLA / SmoLVLA Probe
 
-Path: `results/optional_vla/adapter_status.json` and `results/optional_vla/adapter_status.md`.
+Paths: `results/optional_vla/adapter_status.json`, `results/optional_vla/adapter_status.md`, `results/optional_vla/inference_probe.json`, and `results/optional_vla/inference_probe.md`.
 
-Status: `SKIPPED_WITH_REASON`.
+Adapter status: `READY_TO_ATTEMPT`.
 
-Reason: cached SmoLVLA files and core ML runtime are present, but `lerobot` is not importable. The adapter records:
+Reason: cached SmoLVLA files and the LeRobot/core runtime are available. The status records:
 
 - `torch`: True
 - `transformers`: True
 - `huggingface_hub`: True
 - `safetensors`: True
 - `accelerate`: True
-- `lerobot`: False
+- `num2words`: True
+- `lerobot`: True
 - `libero`: False
 
 Cached model folders detected:
@@ -218,7 +222,24 @@ Cached model folders detected:
 - `models--lerobot--smolvla_libero`: config present, weights absent.
 - `models--HuggingFaceVLA--smolvla_libero`: config and weights present.
 
-This closes the “unknown optional VLA status” gap but does not support real VLA benchmark validation.
+Inference probe status: `INFERENCE_PROBE_PASS`.
+
+Probe details:
+
+- model cache: `models--lerobot--smolvla_base`
+- model parameters: `450,046,176`
+- task: `put the red mug in the cabinet`
+- input type: synthetic visual tensors for three cameras, zero robot state, natural-language task
+- action chunk shape: `[1, 50, 6]`
+- action dtype: `torch.float32`
+- max absolute action value: `0.9026641845703125`
+- first action: `[0.05234574154019356, -0.0497642457485199, -0.03662483021616936, -0.0669940635561943, -0.04889203608036041, -0.3559389114379883]`
+- config load: `1.5228 s`
+- policy load: `70.31 s`
+- preprocessing: `0.0239 s`
+- inference: `56.7759 s`
+
+This closes the “LeRobot/SmoLVLA cannot run at all” gap. It does not support real VLA benchmark validation because no LIBERO/OpenVLA task environment, physical utility evaluator, or real robot is used for the SmoLVLA output.
 
 ## 6d. PyTorch Learned VLA-Style Scorer
 
@@ -238,11 +259,11 @@ Interpretation: a heavier learned semantic scorer reproduces the selected-tail s
 
 ## 7. Paper Readiness Judgment
 
-Judgment: paper-worthy v1 as a controlled diagnostic repository, but not yet a robotics benchmark paper.
+Judgment: paper-worthy v1 as a controlled diagnostic repository with optional real-SmoLVLA plumbing evidence, but not yet a robotics benchmark paper.
 
 - The exact law, diagnostics, learned VLA-style artifact, distractor artifact, and repair artifact are all present.
 - The evidence supports controlled and learned toy claims.
-- The paper still needs stronger experiments and real benchmark validation for a venue expecting real VLA or robot foundation model evidence.
+- The optional SmoLVLA probe shows real model loading/action emission, but the paper still needs benchmark validation for a venue expecting real VLA or robot foundation model evidence.
 - No redesign is required for the v1 thesis; v2 should add real benchmark adapters.
 
 ## 8. Top Remaining Weaknesses
@@ -250,6 +271,7 @@ Judgment: paper-worthy v1 as a controlled diagnostic repository, but not yet a r
 - The learned model is intentionally small and CPU-friendly.
 - The environment is synthetic and constructed.
 - No real robot or large VLA benchmark is evaluated.
+- The optional SmoLVLA probe uses synthetic inputs and does not measure physical success.
 - The calibrated scorer has access to clean pilot real-utility labels.
 - The physical verifier is idealized relative to real robotics.
 - Confidence intervals quantify Monte Carlo selection in the toy setting, not broad robotics uncertainty.
@@ -258,11 +280,11 @@ Judgment: paper-worthy v1 as a controlled diagnostic repository, but not yet a r
 
 ## 9. Exact Next Steps After This Pass
 
-1. Install or vendor the LeRobot runtime if allowed, then move optional SmoLVLA status from `SKIPPED_WITH_REASON` toward actual local inference.
-2. If LeRobot inference succeeds, add a guarded optional benchmark artifact under `results/optional_vla/` and update claim audit only to `PARTIAL` unless a real benchmark with physical evaluation runs.
+1. Add a guarded LIBERO or LeRobot task wrapper so SmoLVLA actions are evaluated by a real benchmark/simulator success signal rather than only synthetic action emission.
+2. Install or isolate `libero` in a compatible environment; the current global Python still lacks `libero` and has unrelated package-version conflicts outside this repo.
 3. Add broader shortcut ablations across color, category, receptacle, distractor salience, language prior, and hidden physical constraints.
-4. Convert the markdown paper skeleton into a conference-style draft using the now-supported rendered, simulator, robustness, and PyTorch evidence.
-5. Add external benchmark validation or real-robot validation only with actual runtime/hardware evidence; keep current claims unsupported otherwise.
+4. Convert the markdown paper skeleton into a conference-style draft using the now-supported rendered, simulator, robustness, PyTorch, and optional SmoLVLA plumbing evidence.
+5. Add real-robot validation only with actual hardware evidence; keep current real-robot claims unsupported otherwise.
 
 ## 10. Current Git State
 

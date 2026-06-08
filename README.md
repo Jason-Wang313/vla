@@ -48,6 +48,14 @@ pytest
 
 The full run writes results to `results/`. The smoke run writes to `results/smoke/`.
 
+Optional, heavyweight local SmoLVLA plumbing probe:
+
+```bash
+bash scripts/run_optional_vla.sh --attempt-inference
+```
+
+This probe loads cached SmoLVLA on CPU and emits an action chunk for synthetic visual/state/language input. It is not a benchmark or robot validation.
+
 ## Key Outputs
 
 - `results/controlled_summary.csv`
@@ -59,6 +67,7 @@ The full run writes results to `results/`. The smoke run writes to `results/smok
 - `results/robustness_summary.csv`
 - `results/claims_status.md`
 - `results/optional_vla/adapter_status.md`
+- `results/optional_vla/inference_probe.md` when the optional SmoLVLA probe is run
 - `docs/final_audit.md`
 
 Paper-critical figures:
@@ -124,8 +133,11 @@ Robustness stress test at `N=128`:
 Optional real-VLA/SmoLVLA status:
 
 - cached SmoLVLA config/weights are present locally.
-- core ML runtime modules are available.
-- `lerobot` is not importable, so optional real-VLA inference is skipped with a recorded reason.
+- core ML runtime modules and `lerobot` are available.
+- optional CPU SmoLVLA inference probe passes on synthetic visual/state/language input.
+- probe artifact: `results/optional_vla/inference_probe.json`.
+- probe model size: `450,046,176` parameters; action chunk shape: `1 x 50 x 6`.
+- `libero` is not importable, so LIBERO/OpenVLA-style benchmark validation is still not run.
 - this does not support real VLA benchmark or real-robot claims.
 
 PyTorch learned scorer at `N=128`:

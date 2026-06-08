@@ -20,12 +20,14 @@ dependencies = [
 test = ["pytest>=8"]
 v2 = [
   "torch>=2.0",
-  "transformers>=4.40",
+  "transformers>=4.40,<5",
   "accelerate>=0.30",
   "safetensors>=0.4",
   "Pillow>=10",
   "opencv-python>=4.8",
   "gymnasium>=0.29",
+  "lerobot>=0.4.4,<0.5",
+  "num2words>=0.5.14",
 ]
 
 [tool.setuptools.packages.find]
