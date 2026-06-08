@@ -13,10 +13,11 @@ Best-of-N VLA action selection can amplify semantic/affordance ranking errors. A
 ## Current State
 
 - v1 controlled and learned VLA-style experiments exist and pass.
-- The repo is not a git repository.
+- The repo is a git repository.
+- Initial checkpoint commit: `7a8cc45`.
 - The folder name intentionally contains spaces; keep shell scripts quoted/path-safe.
 - Real-robot validation is unsupported.
-- Optional real-VLA/SmoLVLA work is planned but not yet implemented as a passing artifact.
+- Optional real-VLA/SmoLVLA status is implemented as a guarded artifact; actual inference is skipped until the LeRobot runtime is importable.
 
 ## Required Commands
 

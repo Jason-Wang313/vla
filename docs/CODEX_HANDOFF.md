@@ -9,7 +9,8 @@ Make the worktree resumable in a new thread and push the VLA Best-of-N repositor
 - Current repository path: `C:\Users\wangz\best of n vla`.
 - The old path `C:\Users\wangz\vla-best-of-n` was renamed during this continuation.
 - No `AGENTS.md` existed before this update; one now exists.
-- The repo is not a git repository; `git status` reported `fatal: not a git repository`.
+- The repo is now a git repository.
+- Initial checkpoint commit: `7a8cc45` (`Initial paper-quality VLA Best-of-N checkpoint`).
 - Main Python package remains `src/vla_best_of_n`.
 - `pyproject.toml` project name is now `best-of-n-vla`.
 - v1 generated artifacts exist under `results/`, including summary CSVs, seed-level files, claim status files, and five figures.
@@ -99,6 +100,8 @@ PyTorch learned scorer artifact:
 - Added `tests/test_torch_vla.py`.
 - Added `docs/torch_learned_scorer.md`.
 - Updated experiments and plotting to include `torch_semantic`, `torch_calibrated`, and `figure10_learned_scorer_comparison.png`.
+- Added `.gitattributes`.
+- Initialized git and created initial checkpoint commit `7a8cc45`.
 
 ## Commands Run In This Continuation
 
@@ -131,6 +134,9 @@ PyTorch learned scorer artifact:
 - After PyTorch scorer implementation, ran `bash scripts/run_smoke.sh`: PASS, runtime 218.60 s.
 - After PyTorch scorer implementation, ran `bash scripts/run_all.sh`: PASS, runtime 561.28 s.
 - After PyTorch docs update, ran `bash scripts/run_claim_audit.sh`: PASS, runtime 6.62 s.
+- Initialized git repository and committed current verified state: `7a8cc45`.
+- Verified `git status --short`: clean after initial checkpoint.
+- After git handoff/final-audit doc update, ran `bash scripts/run_claim_audit.sh`: PASS, runtime 7.06 s.
 
 ## Known Failures Or Bugs
 

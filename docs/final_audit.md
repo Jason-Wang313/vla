@@ -2,6 +2,8 @@
 
 Repository path at latest audit: `C:\Users\wangz\best of n vla`.
 
+Git checkpoint: `7a8cc45` (`Initial paper-quality VLA Best-of-N checkpoint`). The repository was initialized during the resumability pass.
+
 ## 1. Exact Commands Run
 
 | Command | Status | Runtime | Failing tests |
@@ -10,7 +12,7 @@ Repository path at latest audit: `C:\Users\wangz\best of n vla`.
 | `bash scripts/run_optional_vla.sh` | PASS | 12.28 s | Wrote `SKIPPED_WITH_REASON` status |
 | `bash scripts/run_smoke.sh` | PASS | 218.60 s | None |
 | `bash scripts/run_all.sh` | PASS | 561.28 s | None |
-| `bash scripts/run_claim_audit.sh` | PASS | 6.62 s | None |
+| `bash scripts/run_claim_audit.sh` | PASS | 7.06 s | None |
 
 Intermediate note: plain `pytest` initially failed because `scripts` was not importable from the standalone pytest path. This was fixed by adding `scripts/__init__.py` and setting `pythonpath = ["src", "."]` in `pyproject.toml`; the final standalone `pytest` pass above is from the fixed state.
 
@@ -256,9 +258,14 @@ Judgment: paper-worthy v1 as a controlled diagnostic repository, but not yet a r
 
 ## 9. Exact Next Steps After This Pass
 
-1. Add a rendered visual-observation version of the toy scenes.
-2. Add a guarded LIBERO/OpenVLA-style adapter if local dependencies are available.
-3. Stress-test calibration with fewer and noisier pilot labels.
-4. Add verifier-error ablations to show when grounding fails.
-5. Expand learned scorer ablations across shortcut types: color, category, receptacle, distractor salience, and language prior.
-6. Convert the markdown paper skeleton into a conference-style draft after benchmark scope is chosen.
+1. Install or vendor the LeRobot runtime if allowed, then move optional SmoLVLA status from `SKIPPED_WITH_REASON` toward actual local inference.
+2. If LeRobot inference succeeds, add a guarded optional benchmark artifact under `results/optional_vla/` and update claim audit only to `PARTIAL` unless a real benchmark with physical evaluation runs.
+3. Add broader shortcut ablations across color, category, receptacle, distractor salience, language prior, and hidden physical constraints.
+4. Convert the markdown paper skeleton into a conference-style draft using the now-supported rendered, simulator, robustness, and PyTorch evidence.
+5. Add external benchmark validation or real-robot validation only with actual runtime/hardware evidence; keep current claims unsupported otherwise.
+
+## 10. Current Git State
+
+- Repository initialized: yes.
+- Initial checkpoint commit: `7a8cc45`.
+- Commit message: `Initial paper-quality VLA Best-of-N checkpoint`.
