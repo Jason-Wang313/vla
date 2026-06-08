@@ -1,0 +1,43 @@
+{
+  "N_values": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32,
+    64,
+    128
+  ],
+  "artifacts": {
+    "controlled": "results\\controlled_semantic_overselection_artifact.json",
+    "learned": "results\\learned_vla_artifact.json",
+    "optional_vla_status": "results\\optional_vla\\adapter_status.json",
+    "rendered_visual_simulator": "results\\rendered_visual_simulator_artifact.json",
+    "repair": "results\\repair_artifact.json",
+    "robustness": "results\\robustness_artifact.json"
+  },
+  "candidates_per_state": 128,
+  "epochs": 1,
+  "figures": [
+    "results\\figures\\figure1_semantic_overselection.png",
+    "results\\figures\\figure2_repair_comparison.png",
+    "results\\figures\\figure3_tail_diagnostics.png",
+    "results\\figures\\figure4_failure_decomposition.png",
+    "results\\figures\\figure5_exact_law_validation.png",
+    "results\\figures\\figure6_rendered_visual_simulator.png",
+    "results\\figures\\figure8_robustness_repairs.png",
+    "results\\figures\\figure9_calibration_budget_noise.png",
+    "results\\figures\\figure10_learned_scorer_comparison.png",
+    "results\\figures\\figure7_rendered_scene_examples.png"
+  ],
+  "mc_trials": 120,
+  "mode": "full",
+  "optional_vla_status": "SKIPPED_WITH_REASON",
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "states_per_seed": 8
+}
