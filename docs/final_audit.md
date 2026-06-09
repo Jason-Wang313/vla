@@ -4,6 +4,79 @@ Repository path at latest audit: `C:\Users\wangz\best of n vla`.
 
 Git checkpoint: `7a8cc45` (`Initial paper-quality VLA Best-of-N checkpoint`). The repository was initialized during the resumability pass.
 
+## V2 TailGuard Addendum
+
+Latest v2 pass upgrades the method to **Certified TailGuard-BoN** while retaining `TailGuard-BoN` as the implementation short name. The headline method is implemented in `src/vla_best_of_n/tailguard.py`; stress sweeps are implemented in `src/vla_best_of_n/stress.py`.
+
+Certified additions:
+
+- hard certificate predicates for reach envelope, swept collision, receptacle compatibility, stability margin, fragile/heavy handling, tool/object match, blocked-path constraints, and modeled hidden obstacles
+- public decision fields for certificate pass/failure types, certified candidate count, fallback, abstention, certified selected utility, and certified violation
+- expanded baselines and ablations in `results/tailguard_summary.csv` and `results/component_ablation_summary.csv`
+- adversarial stress families and certificate failure decomposition in `results/physics_stress_summary.csv`
+- failure-honesty regimes in `results/failure_honesty_summary.csv`
+- optional SmoLVLA rendered bridge fields `action_decode_supported: false` and `physical_success_claimed: false`
+
+Latest commands run after the Certified TailGuard implementation:
+
+| Command | Status | Runtime | Notes |
+|---|---:|---:|---|
+| `pytest -q` | PASS | 47.85 s test time | 36 tests passed |
+| `bash scripts/run_smoke.sh` | PASS | 418.8 s wall time | 36 tests passed inside script; wrote `results/smoke/`; emitted a non-fatal WSL/systemd warning after successful completion |
+| `bash scripts/run_all.sh` | PASS | 1009.1 s wall time | 36 tests passed inside script; wrote `results/` |
+| `bash scripts/run_claim_audit.sh` | PASS | 24.5 s wall time | 23 supported, 0 partial, 0 unsupported; benchmark/robot validation remain explicitly not claimed |
+
+Optional SmoLVLA CPU inference was not rerun in the Certified TailGuard pass summarized below. In the later evidence-strengthening pass, `bash scripts/run_optional_vla.sh --attempt-inference` completed and refreshed `results/optional_vla/inference_probe.json` with `INFERENCE_PROBE_PASS`; it remains optional model-plumbing evidence, not benchmark or physical-success evidence.
+
+New v2 artifacts:
+
+- `results/tailguard_summary.csv`
+- `results/tailguard_artifact.json`
+- `results/tailguard_gate_examples.csv`
+- `results/phase_diagram_summary.csv`
+- `results/calibration_sample_complexity.csv`
+- `results/physics_stress_summary.csv`
+- `results/component_ablation_summary.csv`
+- `results/failure_honesty_summary.csv`
+- `results/optional_vla/smolvla_rendered_bridge.json`
+- `results/optional_vla/libero_benchmark_status.json`
+
+New v2 figures:
+
+- `results/figures/figure11_tailguard_adaptive_n.png`
+- `results/figures/figure12_phase_diagram.png`
+- `results/figures/figure13_calibration_sample_complexity.png`
+- `results/figures/figure14_imperfect_verifier_map.png`
+- `results/figures/figure15_physics_failure_decomposition.png`
+- `results/figures/figure16_smolvla_rendered_bridge_status.png`
+- `results/figures/figure17_component_ablation.png`
+- `results/figures/figure18_failure_honesty.png`
+
+Latest claim-audit additions are designed to support Certified TailGuard method claims, component ablations, failure-honesty claims, phase diagram claims, calibration sample-complexity claims, first-principles physics claims, optional SmoLVLA rendered-bridge status claims, and explicit benchmark/robot boundary claims. `results/tailguard_gate_examples.csv` covers `allow_high_n`, `stop_early`, `collect_pilot_labels`, and `block_high_n`; real VLA benchmark validation and real-robot validation remain not implemented and not claimed.
+
+## External Benchmark Addendum
+
+Latest guarded external runner additions:
+
+- implementation: `src/vla_best_of_n/external_benchmark.py`
+- CLI: `experiments/run_external_benchmark.py`
+- shell wrapper: `scripts/run_external_benchmark.sh`
+- tests: `tests/test_external_benchmark.py`
+- artifacts: `results/external_benchmark_status.json`, `results/external_benchmark_summary.csv`, `results/external_benchmark_seed_level/`, and `results/figures/figure19_external_benchmark_status.png`
+
+Commands run in this pass:
+
+| Command | Status | Notes |
+|---|---:|---|
+| `bash scripts/run_external_benchmark.sh --status-only` | PASS | Wrote RoboCasa integration-only status. |
+| `bash scripts/run_external_benchmark.sh --attempt-robocasa --attempt-libero --timeout-seconds 10` | PASS | RoboCasa imports and target task registration are recorded; bounded reset/step attempt timed out before reward or success metrics; LIBERO import status is recorded without a reset/step wrapper. |
+
+Current external claim level: integration only. RoboCasa reset/step, reward traces, success metrics, physical outcomes, and TailGuard method outcomes remain unsupported.
+
+Optional SmoLVLA note for this pass: `bash scripts/run_optional_vla.sh --attempt-inference` completed and refreshed `results/optional_vla/inference_probe.json` at `INFERENCE_PROBE_PASS`. The refreshed probe loaded cached `models--lerobot--smolvla_base` on CPU, reported `450,046,176` parameters, emitted action shape `[1, 50, 6]`, and kept `benchmark_validation: false`.
+
+Component-ablation strengthening: `results/component_ablation_summary.csv` now includes the original joint adversarial stress plus six component-specific stress regimes. Each named removal (`no_physical_certificate`, `no_verifier_score`, `no_pilot_labels`, `no_empirical_lower_bound`, `no_adaptive_n`, and `no_abstention_fallback`) has at least one row failing the controlled acceptance threshold, while the corresponding full Certified TailGuard row passes.
+
 ## 1. Exact Commands Run
 
 | Command | Status | Runtime | Failing tests |

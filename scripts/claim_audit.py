@@ -22,6 +22,40 @@ FORBIDDEN_CLAIMS = [
     "This is not toy evidence",
 ]
 
+EXTERNAL_REQUIRED_FIELDS = {
+    "benchmark",
+    "env_id",
+    "python_executable",
+    "package_versions",
+    "asset_status",
+    "seed",
+    "reset_ok",
+    "step_ok",
+    "reward_trace",
+    "success_trace",
+    "action_space",
+    "observation_keys",
+    "policy_kind",
+    "tailguard_connected",
+    "physical_success_claimed",
+    "skip_reason",
+}
+
+EXTERNAL_SUCCESS_CLAIM_MARKERS = [
+    "external benchmark success",
+    "RoboCasa benchmark success",
+    "RoboCasa success rate",
+    "LIBERO benchmark success",
+    "external-sim-upgraded",
+]
+
+EXTERNAL_PHYSICAL_SUCCESS_CLAIM_MARKERS = [
+    "physical success on RoboCasa",
+    "TailGuard succeeds on RoboCasa",
+    "TailGuard improves RoboCasa success",
+    "real VLA benchmark validation is established",
+]
+
 
 def _load_csv(path: Path) -> pd.DataFrame:
     if not path.exists():
@@ -49,6 +83,13 @@ def audit(results_dir: Path) -> tuple[list[dict], dict]:
     distractor = _load_csv(results_dir / "distractor_summary.csv")
     rendered = _load_csv(results_dir / "rendered_summary.csv")
     robustness = _load_csv(results_dir / "robustness_summary.csv")
+    tailguard = _load_csv(results_dir / "tailguard_summary.csv")
+    tailguard_gate_examples = _load_csv(results_dir / "tailguard_gate_examples.csv")
+    phase = _load_csv(results_dir / "phase_diagram_summary.csv")
+    sample_complexity = _load_csv(results_dir / "calibration_sample_complexity.csv")
+    physics_stress = _load_csv(results_dir / "physics_stress_summary.csv")
+    component_ablation = _load_csv(results_dir / "component_ablation_summary.csv")
+    failure_honesty = _load_csv(results_dir / "failure_honesty_summary.csv")
     manifest_path = results_dir / "manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8")) if manifest_path.exists() else {}
     optional_vla_status_path = results_dir / "optional_vla" / "adapter_status.json"
@@ -59,6 +100,12 @@ def audit(results_dir: Path) -> tuple[list[dict], dict]:
     optional_vla_probe = (
         json.loads(optional_vla_probe_path.read_text(encoding="utf-8")) if optional_vla_probe_path.exists() else {}
     )
+    smolvla_bridge_path = results_dir / "optional_vla" / "smolvla_rendered_bridge.json"
+    smolvla_bridge = json.loads(smolvla_bridge_path.read_text(encoding="utf-8")) if smolvla_bridge_path.exists() else {}
+    libero_status_path = results_dir / "optional_vla" / "libero_benchmark_status.json"
+    libero_status = json.loads(libero_status_path.read_text(encoding="utf-8")) if libero_status_path.exists() else {}
+    external_status_path = results_dir / "external_benchmark_status.json"
+    external_status = json.loads(external_status_path.read_text(encoding="utf-8")) if external_status_path.exists() else {}
 
     claims: list[dict] = []
 
@@ -66,9 +113,36 @@ def audit(results_dir: Path) -> tuple[list[dict], dict]:
     claims.append(
         {
             "category": "theorem claims",
-            "claim": "Exact finite tie-aware Best-of-N law is implemented and documented.",
+            "claim": "Exact finite tie-aware Best-of-N law, selected-tail principle, and semantic-score no-free-lunch examples are implemented and documented.",
             "status": _status(has_theory_docs and Path("src/vla_best_of_n/theory.py").exists()),
             "evidence": "src/vla_best_of_n/theory.py; docs/theory.md; tests/test_theory.py",
+        }
+    )
+
+    exact_law_supported = False
+    exact_frames = [controlled, learned, distractor, repair, rendered, robustness]
+    needed_exact_columns = {
+        "exact_selected_utility",
+        "mc_selected_utility_mean",
+        "mc_ci_low",
+        "mc_ci_high",
+        "exact_law_prediction_error",
+    }
+    if all(not frame.empty and needed_exact_columns.issubset(frame.columns) for frame in exact_frames):
+        combined_exact = pd.concat(exact_frames, ignore_index=True)
+        exact_law_supported = (
+            len(combined_exact) >= 100
+            and float(combined_exact["exact_law_prediction_error"].mean()) <= 0.01
+            and float(combined_exact["exact_law_prediction_error"].max()) <= 0.05
+            and bool((combined_exact["mc_ci_low"] <= combined_exact["mc_selected_utility_mean"]).all())
+            and bool((combined_exact["mc_selected_utility_mean"] <= combined_exact["mc_ci_high"]).all())
+        )
+    claims.append(
+        {
+            "category": "exact-law validation claims",
+            "claim": "Every main experiment compares exact finite-law selected utility with Monte Carlo estimates and confidence intervals.",
+            "status": _status(exact_law_supported),
+            "evidence": "controlled/learned/distractor/repair/rendered/robustness summary CSVs.",
         }
     )
 
@@ -230,6 +304,248 @@ def audit(results_dir: Path) -> tuple[list[dict], dict]:
         }
     )
 
+    tailguard_supported = False
+    if not tailguard.empty and "certified_tailguard_bon" in set(tailguard.get("method", pd.Series(dtype=str))):
+        required_methods = {
+            "raw_fixed_high_n",
+            "n1_baseline",
+            "random_high_n",
+            "verifier_filtered_high_n",
+            "calibrated_high_n_no_certificates",
+            "certificate_only_filtering_without_tail_calibration",
+            "tailguard_without_lower_confidence_bound",
+            "tailguard_without_random_baseline_check",
+            "tailguard_without_n1_baseline_check",
+            "certified_tailguard_bon",
+            "oracle_high_n",
+        }
+        high_raw = tailguard[tailguard["method"] == "raw_fixed_high_n"]
+        tg = tailguard[tailguard["method"] == "certified_tailguard_bon"]
+        if not high_raw.empty and not tg.empty:
+            utility_gain = float(tg.iloc[0]["selected_real_utility"]) - float(high_raw.iloc[0]["selected_real_utility"])
+            violation_drop = float(high_raw.iloc[0].get("violation_rate", 0.0)) - float(tg.iloc[0].get("violation_rate", 0.0))
+            controlled_acceptance = (
+                float(tg.iloc[0]["selected_real_utility"]) >= 0.98
+                and float(tg.iloc[0].get("violation_rate", 0.0)) <= 0.01
+                and float(high_raw.iloc[0].get("violation_rate", 0.0)) >= 0.40
+            )
+            gate_examples_ok = False
+            if not tailguard_gate_examples.empty:
+                gates = set(tailguard_gate_examples.get("gate_decision", pd.Series(dtype=str)))
+                verified_col = tailguard_gate_examples.get("expected_behavior_verified", pd.Series(dtype=bool))
+                expected_verified = bool(verified_col.map(lambda value: str(value).lower() == "true").all())
+                gate_examples_ok = gates == {"allow_high_n", "stop_early", "collect_pilot_labels", "block_high_n"} and expected_verified
+            artifact_fields_ok = False
+            summary_fields_ok = False
+            artifact_path = results_dir / "tailguard_artifact.json"
+            if artifact_path.exists():
+                try:
+                    artifact = json.loads(artifact_path.read_text(encoding="utf-8"))
+                    decisions = artifact.get("decisions") or []
+                    result_fields = {
+                        "certificate_pass",
+                        "certificate_failure_types",
+                        "certified_candidate_count",
+                        "fallback_used",
+                        "abstention_reason",
+                        "certified_selected_utility",
+                        "certified_violation_rate",
+                    }
+                    summary_fields = {
+                        "certificate_pass",
+                        "certified_candidate_count",
+                        "fallback_used",
+                        "abstention_rate",
+                        "certified_selected_utility",
+                        "certified_violation_rate",
+                    }
+                    artifact_fields_ok = {
+                        "method",
+                        "implementation_short_name",
+                        "certificate_failure_decomposition",
+                        "decisions",
+                    }.issubset(artifact) and decisions and all(result_fields.issubset(decision) for decision in decisions)
+                    summary_fields_ok = summary_fields.issubset(tailguard.columns)
+                except Exception:
+                    artifact_fields_ok = False
+                    summary_fields_ok = False
+            tailguard_supported = (
+                required_methods.issubset(set(tailguard["method"].tolist()))
+                and utility_gain >= 0.25
+                and violation_drop >= 0.50
+                and controlled_acceptance
+                and str(tg.iloc[0]["gate_decision"])
+                in {"allow_high_n", "stop_early", "collect_pilot_labels", "block_high_n"}
+                and artifact_fields_ok
+                and summary_fields_ok
+                and gate_examples_ok
+            )
+    claims.append(
+        {
+            "category": "Certified TailGuard method claims",
+            "claim": "Certified TailGuard-BoN uses hard physical certificates, tail lower bounds, fallback/abstention metadata, and reaches >=0.98 utility with <=0.01 violation in controlled stress.",
+            "status": _status(tailguard_supported),
+            "evidence": f"{results_dir / 'tailguard_summary.csv'}; {results_dir / 'tailguard_artifact.json'}; {results_dir / 'tailguard_gate_examples.csv'}",
+        }
+    )
+
+    ablation_supported = False
+    if not component_ablation.empty:
+        required = {
+            "full_certified_tailguard",
+            "no_physical_certificate",
+            "no_verifier_score",
+            "no_pilot_labels",
+            "no_empirical_lower_bound",
+            "no_adaptive_n",
+            "no_abstention_fallback",
+        }
+        methods = set(component_ablation.get("method", pd.Series(dtype=str)))
+        if required.issubset(methods):
+            full_rows = component_ablation[component_ablation["method"] == "full_certified_tailguard"]
+            ablated = component_ablation[component_ablation["method"] != "full_certified_tailguard"]
+            full_ok = bool(
+                (
+                    (full_rows["selected_real_utility"] >= 0.98)
+                    & (full_rows["violation_rate"] <= 0.01)
+                    & full_rows["passes_controlled_acceptance"].map(lambda value: str(value).lower() == "true")
+                ).all()
+            )
+            ablation_methods = required - {"full_certified_tailguard"}
+            per_component_failure = {
+                method: bool(
+                    (
+                        (ablated[ablated["method"] == method]["selected_real_utility"] < 0.98)
+                        | (ablated[ablated["method"] == method]["violation_rate"] > 0.01)
+                        | ~ablated[ablated["method"] == method]["passes_controlled_acceptance"].map(
+                            lambda value: str(value).lower() == "true"
+                        )
+                    ).any()
+                )
+                for method in ablation_methods
+            }
+            component_metadata_ok = {"component_under_test", "supporting_failure_mode"}.issubset(component_ablation.columns)
+            if component_metadata_ok:
+                tested_components = set(
+                    component_ablation.loc[
+                        component_ablation["component_under_test"].astype(str).isin(ablation_methods),
+                        "component_under_test",
+                    ].astype(str)
+                )
+                component_metadata_ok = ablation_methods.issubset(tested_components)
+            ablation_supported = (
+                full_ok
+                and all(per_component_failure.values())
+                and component_metadata_ok
+                and component_ablation["ablation_regime"].nunique() >= len(ablation_methods) + 1
+            )
+    claims.append(
+        {
+            "category": "Certified TailGuard ablation claims",
+            "claim": "Component ablations cover certificates, verifier score, pilot labels, empirical lower bound, adaptive N, and abstention/fallback, with each named removal failing controlled acceptance in at least one stress regime.",
+            "status": _status(ablation_supported),
+            "evidence": str(results_dir / "component_ablation_summary.csv"),
+        }
+    )
+
+    phase_supported = False
+    if not phase.empty:
+        phase_supported = (
+            phase["semantic_physical_misalignment"].nunique() >= 4
+            and phase["distractor_salience"].nunique() >= 3
+            and phase["tailguard_gain_over_raw"].notna().all()
+            and float(phase["tailguard_gain_over_raw"].mean()) >= 0.20
+            and float(phase["raw_high_n_utility"].min()) <= 0.05
+            and float(phase.get("certified_tailguard_utility", phase["tailguard_utility"]).mean()) >= 0.75
+        )
+    claims.append(
+        {
+            "category": "phase diagram claims",
+            "claim": "Semantic/physical misalignment and distractor salience phase diagrams are generated with TailGuard outcomes.",
+            "status": _status(phase_supported),
+            "evidence": str(results_dir / "phase_diagram_summary.csv"),
+        }
+    )
+
+    sample_complexity_supported = False
+    if not sample_complexity.empty:
+        budgets = sorted(sample_complexity["label_budget_fraction"].unique().tolist())
+        noises = sorted(sample_complexity["label_noise"].unique().tolist())
+        low = sample_complexity[sample_complexity["label_budget_fraction"] == min(budgets)]
+        high = sample_complexity[sample_complexity["label_budget_fraction"] == max(budgets)]
+        scarce = sample_complexity[sample_complexity["label_budget_fraction"] <= sorted(budgets)[2]]
+        has_collect = (
+            "collect_pilot_labels_rate" in sample_complexity.columns
+            and float(scarce["collect_pilot_labels_rate"].mean()) >= 0.50
+            and "collect_pilot_labels" in set(sample_complexity.get("tailguard_gate", pd.Series(dtype=str)))
+        )
+        sample_complexity_supported = (
+            len(budgets) >= 6
+            and len(noises) >= 4
+            and float(high["confidence_radius"].mean()) <= float(low["confidence_radius"].mean()) + 0.02
+            and has_collect
+        )
+    claims.append(
+        {
+            "category": "calibration sample complexity claims",
+            "claim": "Tail calibration sample-complexity curves cover label budgets and label noise, lower bounds tighten as labels increase, and scarce selected-tail evidence triggers pilot-label collection.",
+            "status": _status(sample_complexity_supported),
+            "evidence": str(results_dir / "calibration_sample_complexity.csv"),
+        }
+    )
+
+    physics_supported = False
+    if not physics_stress.empty:
+        required = {
+            "reach_envelope",
+            "swept_collision",
+            "receptacle_compatibility",
+            "stability_margin",
+            "fragile_heavy_handling",
+            "blocked_path",
+            "hidden_obstacles",
+            "verifier_false_positives_semantic_tail",
+            "partial_observation",
+            "object_identity_spoofing",
+            "wrong_receptacle_high_plausibility",
+            "fragile_heavy_ambiguity",
+            "correlated_pilot_label_noise",
+            "train_pilot_test_distribution_shift",
+            "low_certified_candidate_count",
+        }
+        physics_supported = required.issubset(set(physics_stress.get("stress_family", pd.Series(dtype=str))))
+        if physics_supported:
+            positive_reductions = int((physics_stress["focus_failure_reduction"] > 0.05).sum())
+            raw_bad = float(physics_stress["raw_high_n_utility"].mean()) <= 0.15
+            tail_good = float(
+                physics_stress.get("certified_tailguard_utility", physics_stress["tailguard_utility"]).mean()
+            ) >= 0.75
+            has_decomposition = any(col.startswith("certificate_failure_") for col in physics_stress.columns)
+            physics_supported = positive_reductions >= 8 and raw_bad and tail_good and has_decomposition
+    claims.append(
+        {
+            "category": "first-principles physics claims",
+            "claim": "Geometry-based certificates and adversarial full-scene stress families are evaluated with utility, violation, fallback/abstention, and certificate failure decomposition.",
+            "status": _status(physics_supported),
+            "evidence": str(results_dir / "physics_stress_summary.csv"),
+        }
+    )
+
+    honesty_supported = False
+    if not failure_honesty.empty:
+        honesty_supported = (
+            {"stress_family", "abstention_rate", "fallback_rate", "honesty_status"}.issubset(failure_honesty.columns)
+            and bool(((failure_honesty["abstention_rate"] > 0.0) | (failure_honesty["fallback_rate"] > 0.0)).any())
+        )
+    claims.append(
+        {
+            "category": "failure honesty claims",
+            "claim": "Stress artifacts include regimes where Certified TailGuard abstains or falls back instead of pretending to repair unsafe high-N selection.",
+            "status": _status(honesty_supported),
+            "evidence": str(results_dir / "failure_honesty_summary.csv"),
+        }
+    )
+
     figures = [Path(p) for p in manifest.get("figures", [])]
     claims.append(
         {
@@ -242,10 +558,49 @@ def audit(results_dir: Path) -> tuple[list[dict], dict]:
 
     claims.append(
         {
-            "category": "optional benchmark claims",
-            "claim": "Real VLA benchmark validation is implemented.",
-            "status": "UNSUPPORTED",
-            "evidence": "docs/benchmark_plan.md marks benchmark validation as future work.",
+            "category": "optional benchmark boundary claims",
+            "claim": "Real VLA benchmark validation is not implemented and is not claimed.",
+            "status": _status(
+                libero_status_path.exists()
+                and libero_status.get("benchmark_validation") is False
+                and not optional_vla_probe.get("benchmark_validation", False)
+                and not external_status.get("physical_success_claimed", False)
+            ),
+            "evidence": f"docs/benchmark_plan.md marks benchmark validation as future work; {libero_status_path} status={libero_status.get('status')}.",
+        }
+    )
+    external_runs = external_status.get("runs", [])
+    external_required_fields_ok = (
+        not external_status_path.exists()
+        or bool(external_runs)
+        and all(EXTERNAL_REQUIRED_FIELDS.issubset(set(run.keys())) for run in external_runs)
+    )
+    external_step_reward_ok = any(
+        run.get("reset_ok") is True and run.get("step_ok") is True and bool(run.get("reward_trace"))
+        for run in external_runs
+    )
+    external_success_metric_ok = any(
+        run.get("reset_ok") is True
+        and run.get("step_ok") is True
+        and bool(run.get("reward_trace"))
+        and any(item is not None for item in (run.get("success_trace") or []))
+        for run in external_runs
+    )
+    external_success_claimed_in_text = text_contains_any(EXTERNAL_SUCCESS_CLAIM_MARKERS)
+    external_physical_claimed_in_text = text_contains_any(EXTERNAL_PHYSICAL_SUCCESS_CLAIM_MARKERS)
+    external_gate_ok = external_required_fields_ok
+    external_gate_ok = external_gate_ok and (
+        not external_success_claimed_in_text or (external_step_reward_ok and external_success_metric_ok)
+    )
+    external_gate_ok = external_gate_ok and (
+        not external_physical_claimed_in_text or external_status.get("physical_success_claimed") is True
+    )
+    claims.append(
+        {
+            "category": "external benchmark artifact gate claims",
+            "claim": "External simulator claims are artifact-gated: integration, reset/step/reward, exposed success metric, physical success, and TailGuard method success are separate claim levels.",
+            "status": _status(external_gate_ok),
+            "evidence": f"{external_status_path} exists={external_status_path.exists()}, reset_step_reward={external_step_reward_ok}, success_metric={external_success_metric_ok}, physical_success_claimed={external_status.get('physical_success_claimed')}.",
         }
     )
     claims.append(
@@ -269,9 +624,24 @@ def audit(results_dir: Path) -> tuple[list[dict], dict]:
     )
     claims.append(
         {
-            "category": "unsupported future robotics claims",
-            "claim": "Real-robot validation is established.",
-            "status": "UNSUPPORTED",
+            "category": "optional SmoLVLA rendered bridge claims",
+            "claim": "Optional SmoLVLA rendered-input bridge status is recorded, without claiming decoded physical success.",
+            "status": _status(
+                smolvla_bridge_path.exists()
+                and bool(smolvla_bridge.get("status"))
+                and smolvla_bridge.get("benchmark_validation") is False
+                and smolvla_bridge.get("decoded_physical_success") is False
+                and smolvla_bridge.get("action_decode_supported") is False
+                and smolvla_bridge.get("physical_success_claimed") is False
+            ),
+            "evidence": str(smolvla_bridge_path),
+        }
+    )
+    claims.append(
+        {
+            "category": "unsupported future robotics boundary claims",
+            "claim": "Real-robot validation is not established and is not claimed.",
+            "status": _status(libero_status.get("real_robot_validation") is False),
             "evidence": "No real-robot adapter or hardware results are included.",
         }
     )
@@ -299,8 +669,20 @@ def audit(results_dir: Path) -> tuple[list[dict], dict]:
         "repair_artifact_exists": (results_dir / "repair_artifact.json").exists(),
         "rendered_visual_simulator_artifact_exists": (results_dir / "rendered_visual_simulator_artifact.json").exists(),
         "robustness_artifact_exists": (results_dir / "robustness_artifact.json").exists(),
+        "tailguard_artifact_exists": (results_dir / "tailguard_artifact.json").exists(),
+        "phase_diagram_exists": (results_dir / "phase_diagram_summary.csv").exists(),
+        "calibration_sample_complexity_exists": (results_dir / "calibration_sample_complexity.csv").exists(),
+        "physics_stress_exists": (results_dir / "physics_stress_summary.csv").exists(),
+        "component_ablation_exists": (results_dir / "component_ablation_summary.csv").exists(),
+        "failure_honesty_exists": (results_dir / "failure_honesty_summary.csv").exists(),
         "optional_vla_status_exists": optional_vla_status_path.exists(),
         "optional_vla_inference_probe_passes": optional_vla_probe.get("status") == "INFERENCE_PROBE_PASS",
+        "optional_smolvla_rendered_bridge_status_exists": smolvla_bridge_path.exists(),
+        "optional_libero_benchmark_status_exists": libero_status_path.exists(),
+        "external_benchmark_status_exists": external_status_path.exists(),
+        "external_benchmark_step_reward_artifact_exists": external_step_reward_ok,
+        "external_success_metric_artifact_exists": external_success_metric_ok,
+        "external_physical_success_claimed": external_status.get("physical_success_claimed", False),
         "no_real_robot_claim_unless_implemented": True,
         "no_universal_training_recipe_claim": True,
     }
@@ -308,6 +690,10 @@ def audit(results_dir: Path) -> tuple[list[dict], dict]:
 
 
 def no_forbidden_claims() -> bool:
+    return not text_contains_any(FORBIDDEN_CLAIMS)
+
+
+def text_contains_any(markers: list[str]) -> bool:
     paths = [Path("README.md")]
     paths.extend(Path("docs").glob("*.md"))
     paths.extend(Path("paper").glob("*.md"))
@@ -317,10 +703,10 @@ def no_forbidden_claims() -> bool:
         if not path.exists():
             continue
         text = path.read_text(encoding="utf-8")
-        for claim in FORBIDDEN_CLAIMS:
+        for claim in markers:
             if claim in text and "Forbidden claims" not in text and "forbidden" not in path.name:
-                return False
-    return True
+                return True
+    return False
 
 
 def write_outputs(results_dir: Path, claims: list[dict], not_clone: dict) -> None:
@@ -337,9 +723,7 @@ def write_outputs(results_dir: Path, claims: list[dict], not_clone: dict) -> Non
                 for c in claims
                 if c["category"]
                 not in {
-                    "optional benchmark claims",
                     "optional VLA inference probe claims",
-                    "unsupported future robotics claims",
                 }
             ),
         },
@@ -370,9 +754,7 @@ def main() -> None:
         if c["status"] != "SUPPORTED"
         and c["category"]
         not in {
-            "optional benchmark claims",
             "optional VLA inference probe claims",
-            "unsupported future robotics claims",
         }
     ]
     if args.fail_on_error and bad:

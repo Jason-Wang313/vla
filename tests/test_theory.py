@@ -32,6 +32,20 @@ def test_anti_aligned_score_decreases():
     assert values[-1] < values[0]
 
 
+def test_semantic_scores_alone_cannot_certify_tail_utility():
+    scores = [0.1, 0.4, 0.8, 1.0]
+    good_tail_utility = [0.0, 0.2, 0.7, 1.0]
+    bad_tail_utility = [1.0, 0.7, 0.2, 0.0]
+    semantic_only_law = tie_aware_selection_probabilities(scores, 4)
+
+    good_selected = expected_selected_value(scores, good_tail_utility, 4)
+    bad_selected = expected_selected_value(scores, bad_tail_utility, 4)
+
+    assert semantic_only_law.probabilities.tolist() == [0.0, 0.0, 0.0, 1.0]
+    assert good_selected == pytest.approx(1.0)
+    assert bad_selected == pytest.approx(0.0)
+
+
 def test_binary_expected_success_matches_value_law():
     scores = [0.1, 0.9, 0.8]
     success = [1, 0, 1]

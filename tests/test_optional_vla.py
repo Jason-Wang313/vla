@@ -4,7 +4,9 @@ from vla_best_of_n.optional_vla import (
     assess_optional_vla,
     attempt_smolvla_cpu_inference_probe,
     discover_cached_models,
+    write_libero_benchmark_status,
     write_optional_vla_status,
+    write_smolvla_rendered_bridge_status,
 )
 
 
@@ -18,6 +20,8 @@ def test_optional_vla_writes_status_artifacts(tmp_path: Path):
     data = write_optional_vla_status(tmp_path, cache_root=tmp_path / "empty_cache")
     assert (tmp_path / "optional_vla" / "adapter_status.json").exists()
     assert (tmp_path / "optional_vla" / "adapter_status.md").exists()
+    assert (tmp_path / "optional_vla" / "smolvla_rendered_bridge.json").exists()
+    assert (tmp_path / "optional_vla" / "libero_benchmark_status.json").exists()
     assert "status" in data
 
 
@@ -33,3 +37,12 @@ def test_optional_vla_inference_probe_skips_without_cache(tmp_path: Path):
     assert data["benchmark_validation"] is False
     assert (tmp_path / "optional_vla" / "inference_probe.json").exists()
     assert (tmp_path / "optional_vla" / "inference_probe.md").exists()
+
+
+def test_optional_bridge_and_benchmark_statuses_do_not_claim_success(tmp_path: Path):
+    bridge = write_smolvla_rendered_bridge_status(tmp_path)
+    benchmark = write_libero_benchmark_status(tmp_path)
+    assert bridge["benchmark_validation"] is False
+    assert bridge["decoded_physical_success"] is False
+    assert benchmark["benchmark_validation"] is False
+    assert benchmark["real_robot_validation"] is False

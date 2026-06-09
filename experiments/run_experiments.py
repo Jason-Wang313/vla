@@ -24,6 +24,15 @@ from vla_best_of_n.scorers import (
     semantic_plus_physical_score,
 )
 from vla_best_of_n.simulator import simulate_pool
+from vla_best_of_n.stress import (
+    calibration_sample_complexity_summary,
+    component_ablation_summary,
+    failure_honesty_summary,
+    phase_diagram_summary,
+    physics_stress_summary,
+    tailguard_adaptive_summary,
+    tailguard_gate_examples_summary,
+)
 from vla_best_of_n.torch_vla import TorchVLAScorer, torch_available
 from vla_best_of_n.vla_env import CandidatePool, generate_pools
 
@@ -174,11 +183,12 @@ def run(mode: str, results_dir: Path, seeds: list[int], states: int, candidates:
     write_csv(results_dir / "rendered_seed_variance.csv", seed_variance(rendered_eval.seed_level))
     _write_seed_files(results_dir, "rendered", rendered_eval.seed_level)
 
+    visual_pilot_scores = LearnedVLAScorer(seed=17, epochs=epochs).fit(visual_train).score_pools(visual_pilot)
     robustness_score_dict = robustness_scores(
         rendered_sim,
         rendered_scores["raw_semantic"],
         visual_pilot,
-        LearnedVLAScorer(seed=17, epochs=epochs).fit(visual_train).score_pools(visual_pilot),
+        visual_pilot_scores,
     )
     robustness_eval = evaluate_selection(
         "noisy_verifier_calibration_robustness",
@@ -228,18 +238,47 @@ def run(mode: str, results_dir: Path, seeds: list[int], states: int, candidates:
     }
     write_json(results_dir / "robustness_artifact.json", robustness_artifact)
 
+    tailguard_summary, tailguard_artifact = tailguard_adaptive_summary(
+        rendered_sim,
+        rendered_scores["raw_semantic"],
+        visual_pilot,
+        visual_pilot_scores,
+        ns,
+    )
+    write_csv(results_dir / "tailguard_summary.csv", tailguard_summary)
+    write_json(results_dir / "tailguard_artifact.json", tailguard_artifact)
+    tailguard_gate_examples = tailguard_gate_examples_summary()
+    write_csv(results_dir / "tailguard_gate_examples.csv", tailguard_gate_examples)
+
+    stress_candidates = min(candidates, 64)
+    stress_states = max(3, states // 2)
+    stress_ns = _ns_for(stress_candidates)
+    phase_summary = phase_diagram_summary(seeds, stress_states, stress_candidates, stress_ns)
+    calibration_summary = calibration_sample_complexity_summary(seeds, stress_states, stress_candidates, stress_ns)
+    physics_summary = physics_stress_summary(seeds, stress_states, stress_candidates, stress_ns)
+    ablation_summary = component_ablation_summary(seeds, stress_states, stress_candidates, stress_ns)
+    honesty_summary = failure_honesty_summary(physics_summary)
+    write_csv(results_dir / "phase_diagram_summary.csv", phase_summary)
+    write_csv(results_dir / "calibration_sample_complexity.csv", calibration_summary)
+    write_csv(results_dir / "physics_stress_summary.csv", physics_summary)
+    write_csv(results_dir / "component_ablation_summary.csv", ablation_summary)
+    write_csv(results_dir / "failure_honesty_summary.csv", honesty_summary)
+
+    optional_vla_status = write_optional_vla_status(results_dir)
+    optional_artifacts = {
+        "optional_vla_status": str(results_dir / "optional_vla" / "adapter_status.json"),
+        "optional_smolvla_rendered_bridge": str(results_dir / "optional_vla" / "smolvla_rendered_bridge.json"),
+        "optional_libero_benchmark_status": str(results_dir / "optional_vla" / "libero_benchmark_status.json"),
+    }
+    optional_probe_path = results_dir / "optional_vla" / "inference_probe.json"
+    if optional_probe_path.exists():
+        optional_artifacts["optional_vla_inference_probe"] = str(optional_probe_path)
+
     figure_paths = create_figures(results_dir)
     montage_inputs = [p for p in rendered_metadata["render_path"].dropna().tolist() if p][:8]
     if montage_inputs:
         montage = create_render_montage(montage_inputs, results_dir / "figures" / "figure7_rendered_scene_examples.png")
         figure_paths.append(str(montage))
-    optional_vla_status = write_optional_vla_status(results_dir)
-    optional_artifacts = {
-        "optional_vla_status": str(results_dir / "optional_vla" / "adapter_status.json"),
-    }
-    optional_probe_path = results_dir / "optional_vla" / "inference_probe.json"
-    if optional_probe_path.exists():
-        optional_artifacts["optional_vla_inference_probe"] = str(optional_probe_path)
     manifest = {
         "mode": mode,
         "N_values": ns,
@@ -255,6 +294,13 @@ def run(mode: str, results_dir: Path, seeds: list[int], states: int, candidates:
             "repair": str(results_dir / "repair_artifact.json"),
             "rendered_visual_simulator": str(results_dir / "rendered_visual_simulator_artifact.json"),
             "robustness": str(results_dir / "robustness_artifact.json"),
+            "tailguard": str(results_dir / "tailguard_artifact.json"),
+            "tailguard_gate_examples": str(results_dir / "tailguard_gate_examples.csv"),
+            "phase_diagram": str(results_dir / "phase_diagram_summary.csv"),
+            "calibration_sample_complexity": str(results_dir / "calibration_sample_complexity.csv"),
+            "physics_stress": str(results_dir / "physics_stress_summary.csv"),
+            "component_ablation": str(results_dir / "component_ablation_summary.csv"),
+            "failure_honesty": str(results_dir / "failure_honesty_summary.csv"),
             **optional_artifacts,
         },
         "optional_vla_status": optional_vla_status["status"],

@@ -65,7 +65,7 @@ Optional VLA adapter status:
 
 - path: `results/optional_vla/adapter_status.json`
 - status: `READY_TO_ATTEMPT`
-- `lerobot` and `num2words` are importable; `libero` is not importable.
+- `lerobot` and `num2words` are importable in the core optional path; `libero` is not importable there. A later isolated external benchmark pass found `libero` importable in `external_benchmarks/.venvs/libero310`, but no LIBERO reset/step wrapper is implemented.
 - cached `models--lerobot--smolvla_base` has config and weights.
 - optional synthetic CPU inference probe status: `INFERENCE_PROBE_PASS`
 - inference probe action shape: `[1, 50, 6]`
@@ -158,7 +158,7 @@ PyTorch learned scorer artifact:
 
 ## Known Failures Or Bugs
 
-- `libero` is not importable, so no LIBERO benchmark can be claimed.
+- `libero` is not importable in the core optional path. The isolated external `libero310` environment imports `libero`, but no LIBERO benchmark reset/step or success artifact exists, so no LIBERO benchmark outcome can be claimed.
 - `pip check` reports unrelated global-environment dependency conflicts around NumPy/protobuf; use an isolated environment for real benchmark work.
 - Optional SmoLVLA/real-VLA benchmark evaluation is not implemented.
 - Real-robot validation is unsupported.

@@ -7,7 +7,7 @@
       "method": "grounded_combined",
       "seed": 1,
       "selected_real_utility": 0.4658447265625,
-      "violation_rate": 0.447265625
+      "violation_rate": 0.7412109375
     },
     {
       "N": 2,
@@ -15,7 +15,7 @@
       "method": "grounded_combined",
       "seed": 1,
       "selected_real_utility": 0.614787552801017,
-      "violation_rate": 0.3146069143700787
+      "violation_rate": 0.5494894192913387
     },
     {
       "N": 4,
@@ -23,7 +23,7 @@
       "method": "grounded_combined",
       "seed": 1,
       "selected_real_utility": 0.7936186387346114,
-      "violation_rate": 0.19718727737157854
+      "violation_rate": 0.3021644520997375
     },
     {
       "N": 8,
@@ -31,7 +31,7 @@
       "method": "grounded_combined",
       "seed": 1,
       "selected_real_utility": 0.9428615639931296,
-      "violation_rate": 0.0756332685422246
+      "violation_rate": 0.0915660066538952
     },
     {
       "N": 16,
@@ -39,7 +39,7 @@
       "method": "grounded_combined",
       "seed": 1,
       "selected_real_utility": 0.9955980488358657,
-      "violation_rate": 0.008002872989693627
+      "violation_rate": 0.00840609251131999
     },
     {
       "N": 32,
@@ -47,7 +47,7 @@
       "method": "grounded_combined",
       "seed": 1,
       "selected_real_utility": 0.999974114425844,
-      "violation_rate": 6.044418603315959e-05
+      "violation_rate": 6.13233199576406e-05
     },
     {
       "N": 64,
@@ -55,7 +55,7 @@
       "method": "grounded_combined",
       "seed": 1,
       "selected_real_utility": 0.999999999825221,
-      "violation_rate": 3.709266084061579e-10
+      "violation_rate": 3.7102995070240987e-10
     },
     {
       "N": 128,
@@ -71,7 +71,7 @@
       "method": "oracle",
       "seed": 1,
       "selected_real_utility": 0.4658447265625,
-      "violation_rate": 0.447265625
+      "violation_rate": 0.7412109375
     },
     {
       "N": 2,
@@ -79,7 +79,7 @@
       "method": "oracle",
       "seed": 1,
       "selected_real_utility": 0.6877992484826116,
-      "violation_rate": 0.25658218503937014
+      "violation_rate": 0.5492125984251969
     },
     {
       "N": 4,
@@ -87,7 +87,7 @@
       "method": "oracle",
       "seed": 1,
       "selected_real_utility": 0.8774171816413574,
-      "violation_rate": 0.10918797162073492
+      "violation_rate": 0.30143329349456316
     },
     {
       "N": 8,
@@ -95,7 +95,7 @@
       "method": "oracle",
       "seed": 1,
       "selected_real_utility": 0.9746877241212618,
-      "violation_rate": 0.020229264490021152
+      "violation_rate": 0.09150723492924046
     },
     {
       "N": 16,
@@ -103,7 +103,7 @@
       "method": "oracle",
       "seed": 1,
       "selected_real_utility": 0.9983617412500123,
-      "violation_rate": 0.0009142438555282779
+      "violation_rate": 0.011146687449095454
     },
     {
       "N": 32,
@@ -111,7 +111,7 @@
       "method": "oracle",
       "seed": 1,
       "selected_real_utility": 0.9999940595402841,
-      "violation_rate": 5.478094682217731e-06
+      "violation_rate": 0.004063045427728363
     },
     {
       "N": 64,
@@ -119,7 +119,7 @@
       "method": "oracle",
       "seed": 1,
       "selected_real_utility": 0.999999999998181,
-      "violation_rate": 4.907143058655503e-12
+      "violation_rate": 0.00403225807960209
     },
     {
       "N": 128,
@@ -127,7 +127,7 @@
       "method": "oracle",
       "seed": 1,
       "selected_real_utility": 1.0,
-      "violation_rate": 0.0
+      "violation_rate": 0.004032258064516129
     },
     {
       "N": 1,
@@ -135,7 +135,7 @@
       "method": "random",
       "seed": 1,
       "selected_real_utility": 0.4658447265625,
-      "violation_rate": 0.447265625
+      "violation_rate": 0.7412109375
     },
     {
       "N": 2,
@@ -143,7 +143,7 @@
       "method": "random",
       "seed": 1,
       "selected_real_utility": 0.4689358288221785,
-      "violation_rate": 0.4346856545275591
+      "violation_rate": 0.733283095472441
     },
     {
       "N": 4,
@@ -151,7 +151,7 @@
       "method": "random",
       "seed": 1,
       "selected_real_utility": 0.46256760248718914,
-      "violation_rate": 0.43545402137232847
+      "violation_rate": 0.7395337457817774
     },
     {
       "N": 8,
@@ -159,7 +159,7 @@
       "method": "random",
       "seed": 1,
       "selected_real_utility": 0.45158383302236604,
-      "violation_rate": 0.44860833529805305
+      "violation_rate": 0.7493589685705195
     },
     {
       "N": 16,
@@ -167,7 +167,7 @@
       "method": "random",
       "seed": 1,
       "selected_real_utility": 0.42487383219265173,
-      "violation_rate": 0.47836256204295513
+      "violation_rate": 0.7612965226408104
     },
     {
       "N": 32,
@@ -175,7 +175,7 @@
       "method": "random",
       "seed": 1,
       "selected_real_utility": 0.3946294287020852,
-      "violation_rate": 0.5004056938927711
+      "violation_rate": 0.7580087081439433
     },
     {
       "N": 64,
@@ -183,7 +183,7 @@
       "method": "random",
       "seed": 1,
       "selected_real_utility": 0.4218302394524721,
-      "violation_rate": 0.4457352615018739
+      "violation_rate": 0.7056374313493703
     },
     {
       "N": 128,
@@ -191,7 +191,7 @@
       "method": "random",
       "seed": 1,
       "selected_real_utility": 0.621875,
-      "violation_rate": 0.25
+      "violation_rate": 0.5
     },
     {
       "N": 1,
@@ -199,7 +199,7 @@
       "method": "raw_semantic",
       "seed": 1,
       "selected_real_utility": 0.4658447265625,
-      "violation_rate": 0.447265625
+      "violation_rate": 0.7412109375
     },
     {
       "N": 2,
@@ -207,7 +207,7 @@
       "method": "raw_semantic",
       "seed": 1,
       "selected_real_utility": 0.397847076976706,
-      "violation_rate": 0.6379183070866141
+      "violation_rate": 0.7668245570866142
     },
     {
       "N": 4,
@@ -215,7 +215,7 @@
       "method": "raw_semantic",
       "seed": 1,
       "selected_real_utility": 0.29349054616870807,
-      "violation_rate": 0.8513344113235846
+      "violation_rate": 0.8852948654855644
     },
     {
       "N": 8,
@@ -223,7 +223,7 @@
       "method": "raw_semantic",
       "seed": 1,
       "selected_real_utility": 0.2173171744184176,
-      "violation_rate": 0.9677575029778095
+      "violation_rate": 0.9721798135063389
     },
     {
       "N": 16,
@@ -231,7 +231,7 @@
       "method": "raw_semantic",
       "seed": 1,
       "selected_real_utility": 0.2021564279795942,
-      "violation_rate": 0.9844296753128516
+      "violation_rate": 0.9845750228800103
     },
     {
       "N": 32,
@@ -239,7 +239,7 @@
       "method": "raw_semantic",
       "seed": 1,
       "selected_real_utility": 0.212866560048047,
-      "violation_rate": 0.9763301449643498
+      "violation_rate": 0.9763304063861238
     },
     {
       "N": 64,
@@ -247,7 +247,7 @@
       "method": "raw_semantic",
       "seed": 1,
       "selected_real_utility": 0.23034372877516318,
-      "violation_rate": 0.9685039353870173
+      "violation_rate": 0.9685039353870208
     },
     {
       "N": 128,
@@ -263,7 +263,7 @@
       "method": "semantic_plus_physical",
       "seed": 1,
       "selected_real_utility": 0.4658447265625,
-      "violation_rate": 0.447265625
+      "violation_rate": 0.7412109375
     },
     {
       "N": 2,
@@ -271,7 +271,7 @@
       "method": "semantic_plus_physical",
       "seed": 1,
       "selected_real_utility": 0.6102944681963582,
-      "violation_rate": 0.21613558070866143
+      "violation_rate": 0.5691590797244095
     },
     {
       "N": 4,
@@ -279,7 +279,7 @@
       "method": "semantic_plus_physical",
       "seed": 1,
       "selected_real_utility": 0.7302509048185384,
-      "violation_rate": 0.05733802024746906
+      "violation_rate": 0.37388992782152236
     },
     {
       "N": 8,
@@ -287,7 +287,7 @@
       "method": "semantic_plus_physical",
       "seed": 1,
       "selected_real_utility": 0.8107324474408353,
-      "violation_rate": 0.007123875307937423
+      "violation_rate": 0.23227579585581176
     },
     {
       "N": 16,
@@ -295,7 +295,7 @@
       "method": "semantic_plus_physical",
       "seed": 1,
       "selected_real_utility": 0.8519381812336784,
-      "violation_rate": 0.00023393673131692018
+      "violation_rate": 0.17445779539051143
     },
     {
       "N": 32,
@@ -303,7 +303,7 @@
       "method": "semantic_plus_physical",
       "seed": 1,
       "selected_real_utility": 0.8779122381626343,
-      "violation_rate": 1.5663128221484587e-07
+      "violation_rate": 0.1436329227715319
     },
     {
       "N": 64,
@@ -311,7 +311,7 @@
       "method": "semantic_plus_physical",
       "seed": 1,
       "selected_real_utility": 0.9262072172518632,
-      "violation_rate": 1.2599038523098393e-16
+      "violation_rate": 0.08681503852722261
     },
     {
       "N": 128,

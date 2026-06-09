@@ -336,9 +336,25 @@ def flags_from_features(features: np.ndarray) -> dict[str, np.ndarray]:
     collision = 1.0 - features[:, idx["collision_free"]]
     unstable = 1.0 - features[:, idx["stable_placement"]]
     fragile = 1.0 - features[:, idx["fragile_safe"]]
+    heavy_failure = 1.0 - features[:, idx["heavy_safe"]]
+    tool_mismatch = 1.0 - features[:, idx["tool_match"]]
     wrong_object = 1.0 - features[:, idx["correct_object"]]
     wrong_target = 1.0 - features[:, idx["correct_receptacle"]]
-    violation = np.maximum.reduce([unreachable, collision, unstable, fragile])
+    blocked_path = features[:, idx["blocked_path"]]
+    receptacle_incompatible = wrong_target
+    violation = np.maximum.reduce(
+        [
+            unreachable,
+            collision,
+            unstable,
+            fragile,
+            heavy_failure,
+            tool_mismatch,
+            wrong_object,
+            receptacle_incompatible,
+            blocked_path,
+        ]
+    )
     return {
         "violation": violation,
         "wrong_object": wrong_object,
@@ -347,6 +363,10 @@ def flags_from_features(features: np.ndarray) -> dict[str, np.ndarray]:
         "collision": collision,
         "fragile": fragile,
         "stability_failure": unstable,
+        "heavy_failure": heavy_failure,
+        "tool_mismatch": tool_mismatch,
+        "blocked_path": blocked_path,
+        "receptacle_incompatible": receptacle_incompatible,
     }
 
 

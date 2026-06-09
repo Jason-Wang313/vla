@@ -1,0 +1,8 @@
+{
+  "benchmark_validation": false,
+  "libero_importable": false,
+  "real_robot_validation": false,
+  "reason": "libero is not importable, so the guarded LIBERO/OpenVLA-style benchmark wrapper is skipped.",
+  "status": "SKIPPED_WITH_REASON",
+  "wrapper_skeleton": "guarded_optional_status_only"
+}

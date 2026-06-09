@@ -37,7 +37,7 @@
     },
     "semantic_real_tail_gap": -0.15719001414466763,
     "tail_rank_correlation": -0.03294039229342061,
-    "violation_rate": 0.0
+    "violation_rate": 0.05833333333333333
   },
   "calibrated_ci": [
     0.9982904085047087,
@@ -91,5 +91,5 @@
     "violation_rate": 0.9583333333333334
   },
   "real_utility_improvement": 0.8469328703703703,
-  "violation_reduction": 0.9583333333333334
+  "violation_reduction": 0.9
 }

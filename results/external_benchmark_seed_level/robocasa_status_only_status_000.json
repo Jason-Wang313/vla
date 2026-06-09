@@ -1,0 +1,34 @@
+{
+  "action_space": {},
+  "asset_status": {
+    "libero_package_dir_exists": false,
+    "repo_root": "C:\\Users\\wangz\\external_benchmarks\\robocasa",
+    "repo_root_exists": true,
+    "robocasa_assets_dir_exists": true,
+    "robocasa_macros_private_exists": true
+  },
+  "benchmark": "robocasa",
+  "env_id": "robocasa/PickPlaceCounterToCabinet",
+  "observation_keys": [],
+  "package_versions": {
+    "gymnasium": "0.29.1",
+    "lerobot": "0.3.3",
+    "libero": "UNAVAILABLE:PackageNotFoundError",
+    "robocasa": "1.0.1",
+    "robosuite": "1.5.2",
+    "torch": "2.7.1",
+    "transformers": "4.57.3"
+  },
+  "physical_success_claimed": false,
+  "policy_kind": "status_only",
+  "python_executable": "C:\\Users\\wangz\\external_benchmarks\\.venvs\\robocasa\\Scripts\\python.exe",
+  "reset_ok": false,
+  "reward_trace": [],
+  "seed": null,
+  "skip_reason": "status-only run; reset and step not attempted",
+  "step_ok": false,
+  "success_trace": [],
+  "tailguard_connected": false,
+  "termination_trace": [],
+  "truncation_trace": []
+}

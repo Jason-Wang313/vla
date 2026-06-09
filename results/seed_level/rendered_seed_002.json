@@ -6,56 +6,56 @@
       "experiment": "rendered_visual_simulator",
       "method": "calibrated",
       "seed": 2,
-      "selected_real_utility": 0.57599609375,
-      "violation_rate": 0.666015625
+      "selected_real_utility": 0.5566894531250001,
+      "violation_rate": 0.75
     },
     {
       "N": 2,
       "experiment": "rendered_visual_simulator",
       "method": "calibrated",
       "seed": 2,
-      "selected_real_utility": 0.7537776820866142,
-      "violation_rate": 0.46675073818897644
+      "selected_real_utility": 0.7263184362696851,
+      "violation_rate": 0.5635765255905512
     },
     {
       "N": 4,
       "experiment": "rendered_visual_simulator",
       "method": "calibrated",
       "seed": 2,
-      "selected_real_utility": 0.8969935137795276,
-      "violation_rate": 0.23068377390326208
+      "selected_real_utility": 0.8727834145341207,
+      "violation_rate": 0.3202137935883015
     },
     {
       "N": 8,
       "experiment": "rendered_visual_simulator",
       "method": "calibrated",
       "seed": 2,
-      "selected_real_utility": 0.9748254356111131,
-      "violation_rate": 0.05824466374482681
+      "selected_real_utility": 0.9653926156884329,
+      "violation_rate": 0.106197924142041
     },
     {
       "N": 16,
       "experiment": "rendered_visual_simulator",
       "method": "calibrated",
       "seed": 2,
-      "selected_real_utility": 0.9975629250849523,
-      "violation_rate": 0.0044917290015186444
+      "selected_real_utility": 0.9964125537464701,
+      "violation_rate": 0.012912128624482174
     },
     {
       "N": 32,
       "experiment": "rendered_visual_simulator",
       "method": "calibrated",
       "seed": 2,
-      "selected_real_utility": 0.9999635750827041,
-      "violation_rate": 4.909519813336813e-05
+      "selected_real_utility": 0.9999461533478032,
+      "violation_rate": 0.00021264144678748932
     },
     {
       "N": 64,
       "experiment": "rendered_visual_simulator",
       "method": "calibrated",
       "seed": 2,
-      "selected_real_utility": 0.9999999985286807,
-      "violation_rate": 2.036544561812582e-09
+      "selected_real_utility": 0.9999999981475252,
+      "violation_rate": 8.560336954662497e-09
     },
     {
       "N": 128,
@@ -70,56 +70,56 @@
       "experiment": "rendered_visual_simulator",
       "method": "grounded_combined",
       "seed": 2,
-      "selected_real_utility": 0.57599609375,
-      "violation_rate": 0.666015625
+      "selected_real_utility": 0.5566894531250001,
+      "violation_rate": 0.75
     },
     {
       "N": 2,
       "experiment": "rendered_visual_simulator",
       "method": "grounded_combined",
       "seed": 2,
-      "selected_real_utility": 0.7170026451771654,
-      "violation_rate": 0.4485882135826772
+      "selected_real_utility": 0.682230253444882,
+      "violation_rate": 0.5635765255905512
     },
     {
       "N": 4,
       "experiment": "rendered_visual_simulator",
       "method": "grounded_combined",
       "seed": 2,
-      "selected_real_utility": 0.8600241674868767,
-      "violation_rate": 0.20981991704161979
+      "selected_real_utility": 0.8272438074146982,
+      "violation_rate": 0.3202137935883015
     },
     {
       "N": 8,
       "experiment": "rendered_visual_simulator",
       "method": "grounded_combined",
       "seed": 2,
-      "selected_real_utility": 0.9609119648658893,
-      "violation_rate": 0.05050615689006048
+      "selected_real_utility": 0.942382552728205,
+      "violation_rate": 0.106197924142041
     },
     {
       "N": 16,
       "experiment": "rendered_visual_simulator",
       "method": "grounded_combined",
       "seed": 2,
-      "selected_real_utility": 0.9963947075236883,
-      "violation_rate": 0.003547823135667
+      "selected_real_utility": 0.9927811616549052,
+      "violation_rate": 0.01291212862448217
     },
     {
       "N": 32,
       "experiment": "rendered_visual_simulator",
       "method": "grounded_combined",
       "seed": 2,
-      "selected_real_utility": 0.9999591675148625,
-      "violation_rate": 1.6248246990732877e-05
+      "selected_real_utility": 0.9998831593880053,
+      "violation_rate": 0.00021264144678748932
     },
     {
       "N": 64,
       "experiment": "rendered_visual_simulator",
       "method": "grounded_combined",
       "seed": 2,
-      "selected_real_utility": 0.9999999986252316,
-      "violation_rate": 1.077510227553211e-11
+      "selected_real_utility": 0.9999999955153616,
+      "violation_rate": 8.560336954662495e-09
     },
     {
       "N": 128,
@@ -134,56 +134,56 @@
       "experiment": "rendered_visual_simulator",
       "method": "oracle",
       "seed": 2,
-      "selected_real_utility": 0.57599609375,
-      "violation_rate": 0.666015625
+      "selected_real_utility": 0.5566894531250001,
+      "violation_rate": 0.75
     },
     {
       "N": 2,
       "experiment": "rendered_visual_simulator",
       "method": "oracle",
       "seed": 2,
-      "selected_real_utility": 0.7561448080708661,
-      "violation_rate": 0.4585153174212598
+      "selected_real_utility": 0.7283781373031497,
+      "violation_rate": 0.5635765255905512
     },
     {
       "N": 4,
       "experiment": "rendered_visual_simulator",
       "method": "oracle",
       "seed": 2,
-      "selected_real_utility": 0.8988053813976378,
-      "violation_rate": 0.2265415651168604
+      "selected_real_utility": 0.8749360606486689,
+      "violation_rate": 0.3202137935883015
     },
     {
       "N": 8,
       "experiment": "rendered_visual_simulator",
       "method": "oracle",
       "seed": 2,
-      "selected_real_utility": 0.9755989949288895,
-      "violation_rate": 0.0583828897893601
+      "selected_real_utility": 0.9664041584317813,
+      "violation_rate": 0.10619792414204102
     },
     {
       "N": 16,
       "experiment": "rendered_visual_simulator",
       "method": "oracle",
       "seed": 2,
-      "selected_real_utility": 0.997680196079795,
-      "violation_rate": 0.004365298174377493
+      "selected_real_utility": 0.9966297648981997,
+      "violation_rate": 0.01291212862448217
     },
     {
       "N": 32,
       "experiment": "rendered_visual_simulator",
       "method": "oracle",
       "seed": 2,
-      "selected_real_utility": 0.9999656427695797,
-      "violation_rate": 3.1890676334846094e-05
+      "selected_real_utility": 0.9999518746424336,
+      "violation_rate": 0.0002126414467874893
     },
     {
       "N": 64,
       "experiment": "rendered_visual_simulator",
       "method": "oracle",
       "seed": 2,
-      "selected_real_utility": 0.9999999986303344,
-      "violation_rate": 7.813232142377505e-10
+      "selected_real_utility": 0.9999999982993117,
+      "violation_rate": 8.560336954662497e-09
     },
     {
       "N": 128,
@@ -198,63 +198,63 @@
       "experiment": "rendered_visual_simulator",
       "method": "random",
       "seed": 2,
-      "selected_real_utility": 0.57599609375,
-      "violation_rate": 0.666015625
+      "selected_real_utility": 0.5566894531250001,
+      "violation_rate": 0.75
     },
     {
       "N": 2,
       "experiment": "rendered_visual_simulator",
       "method": "random",
       "seed": 2,
-      "selected_real_utility": 0.5754855130413387,
-      "violation_rate": 0.6674458661417323
+      "selected_real_utility": 0.5538173597440945,
+      "violation_rate": 0.7582277312992127
     },
     {
       "N": 4,
       "experiment": "rendered_visual_simulator",
       "method": "random",
       "seed": 2,
-      "selected_real_utility": 0.5702221091113611,
-      "violation_rate": 0.6773953529246345
+      "selected_real_utility": 0.5455680127484066,
+      "violation_rate": 0.7751935344019497
     },
     {
       "N": 8,
       "experiment": "rendered_visual_simulator",
       "method": "random",
       "seed": 2,
-      "selected_real_utility": 0.5638531309805557,
-      "violation_rate": 0.6942425937202347
+      "selected_real_utility": 0.5381020126726607,
+      "violation_rate": 0.7877675232057749
     },
     {
       "N": 16,
       "experiment": "rendered_visual_simulator",
       "method": "random",
       "seed": 2,
-      "selected_real_utility": 0.5498116301439429,
-      "violation_rate": 0.7364515633617807
+      "selected_real_utility": 0.5257340713283365,
+      "violation_rate": 0.8082524482378407
     },
     {
       "N": 32,
       "experiment": "rendered_visual_simulator",
       "method": "random",
       "seed": 2,
-      "selected_real_utility": 0.5187552286640958,
-      "violation_rate": 0.8080177197523766
+      "selected_real_utility": 0.49834409503574106,
+      "violation_rate": 0.8486398211028965
     },
     {
       "N": 64,
       "experiment": "rendered_visual_simulator",
       "method": "random",
       "seed": 2,
-      "selected_real_utility": 0.46495494526257575,
-      "violation_rate": 0.8968820384495273
+      "selected_real_utility": 0.445078341072508,
+      "violation_rate": 0.9094154342072229
     },
     {
       "N": 128,
       "experiment": "rendered_visual_simulator",
       "method": "random",
       "seed": 2,
-      "selected_real_utility": 0.35125000000000006,
+      "selected_real_utility": 0.33000000000000007,
       "violation_rate": 1.0
     },
     {
@@ -262,55 +262,55 @@
       "experiment": "rendered_visual_simulator",
       "method": "raw_semantic",
       "seed": 2,
-      "selected_real_utility": 0.57599609375,
-      "violation_rate": 0.666015625
+      "selected_real_utility": 0.5566894531250001,
+      "violation_rate": 0.75
     },
     {
       "N": 2,
       "experiment": "rendered_visual_simulator",
       "method": "raw_semantic",
       "seed": 2,
-      "selected_real_utility": 0.5637855253444882,
-      "violation_rate": 0.7476624015748031
+      "selected_real_utility": 0.5683741387795276,
+      "violation_rate": 0.7722840797244095
     },
     {
       "N": 4,
       "experiment": "rendered_visual_simulator",
       "method": "raw_semantic",
       "seed": 2,
-      "selected_real_utility": 0.5064876336942258,
-      "violation_rate": 0.8914981603862018
+      "selected_real_utility": 0.5189399951959132,
+      "violation_rate": 0.8943463629546307
     },
     {
       "N": 8,
       "experiment": "rendered_visual_simulator",
       "method": "raw_semantic",
       "seed": 2,
-      "selected_real_utility": 0.45234229756513344,
-      "violation_rate": 0.9844872961965941
+      "selected_real_utility": 0.4667783510996497,
+      "violation_rate": 0.9846946044085516
     },
     {
       "N": 16,
       "experiment": "rendered_visual_simulator",
       "method": "raw_semantic",
       "seed": 2,
-      "selected_real_utility": 0.4349159957992139,
-      "violation_rate": 0.999746169907535
+      "selected_real_utility": 0.4499347607781906,
+      "violation_rate": 0.9997479968410217
     },
     {
       "N": 32,
       "experiment": "rendered_visual_simulator",
       "method": "raw_semantic",
       "seed": 2,
-      "selected_real_utility": 0.4323164782974064,
-      "violation_rate": 0.9999999716028267
+      "selected_real_utility": 0.44712998609806726,
+      "violation_rate": 0.9999999716219435
     },
     {
       "N": 64,
       "experiment": "rendered_visual_simulator",
       "method": "raw_semantic",
       "seed": 2,
-      "selected_real_utility": 0.43187177334154647,
+      "selected_real_utility": 0.4460225304427725,
       "violation_rate": 1.0
     },
     {
@@ -318,7 +318,7 @@
       "experiment": "rendered_visual_simulator",
       "method": "raw_semantic",
       "seed": 2,
-      "selected_real_utility": 0.41375000000000006,
+      "selected_real_utility": 0.4275000000000001,
       "violation_rate": 1.0
     },
     {
@@ -326,56 +326,56 @@
       "experiment": "rendered_visual_simulator",
       "method": "semantic_plus_physical",
       "seed": 2,
-      "selected_real_utility": 0.57599609375,
-      "violation_rate": 0.666015625
+      "selected_real_utility": 0.5566894531250001,
+      "violation_rate": 0.75
     },
     {
       "N": 2,
       "experiment": "rendered_visual_simulator",
       "method": "semantic_plus_physical",
       "seed": 2,
-      "selected_real_utility": 0.715601470226378,
-      "violation_rate": 0.4484959399606299
+      "selected_real_utility": 0.680665754183071,
+      "violation_rate": 0.5654219980314961
     },
     {
       "N": 4,
       "experiment": "rendered_visual_simulator",
       "method": "semantic_plus_physical",
       "seed": 2,
-      "selected_real_utility": 0.857020094734252,
-      "violation_rate": 0.2096524653168354
+      "selected_real_utility": 0.823981917416573,
+      "violation_rate": 0.3271256092988377
     },
     {
       "N": 8,
       "experiment": "rendered_visual_simulator",
       "method": "semantic_plus_physical",
       "seed": 2,
-      "selected_real_utility": 0.9550580037196643,
-      "violation_rate": 0.05043973570077291
+      "selected_real_utility": 0.9362210547646731,
+      "violation_rate": 0.12017370123646559
     },
     {
       "N": 16,
       "experiment": "rendered_visual_simulator",
       "method": "semantic_plus_physical",
       "seed": 2,
-      "selected_real_utility": 0.9891635869476141,
-      "violation_rate": 0.0035463386949220023
+      "selected_real_utility": 0.9852051204692437,
+      "violation_rate": 0.030130388227361703
     },
     {
       "N": 32,
       "experiment": "rendered_visual_simulator",
       "method": "semantic_plus_physical",
       "seed": 2,
-      "selected_real_utility": 0.993327255621081,
-      "violation_rate": 1.624821527188506e-05
+      "selected_real_utility": 0.9929354421519716,
+      "violation_rate": 0.016002907892318355
     },
     {
       "N": 64,
       "experiment": "rendered_visual_simulator",
       "method": "semantic_plus_physical",
       "seed": 2,
-      "selected_real_utility": 0.9966785637623392,
-      "violation_rate": 1.0775102275532106e-11
+      "selected_real_utility": 0.9965203970875696,
+      "violation_rate": 0.00790818680531884
     },
     {
       "N": 128,
@@ -390,56 +390,56 @@
       "experiment": "rendered_visual_simulator",
       "method": "torch_calibrated",
       "seed": 2,
-      "selected_real_utility": 0.57599609375,
-      "violation_rate": 0.666015625
+      "selected_real_utility": 0.5566894531250001,
+      "violation_rate": 0.75
     },
     {
       "N": 2,
       "experiment": "rendered_visual_simulator",
       "method": "torch_calibrated",
       "seed": 2,
-      "selected_real_utility": 0.754056502214567,
-      "violation_rate": 0.4661048228346457
+      "selected_real_utility": 0.7264916031003937,
+      "violation_rate": 0.5635765255905512
     },
     {
       "N": 4,
       "experiment": "rendered_visual_simulator",
       "method": "torch_calibrated",
       "seed": 2,
-      "selected_real_utility": 0.8972039359533184,
-      "violation_rate": 0.23078886623547057
+      "selected_real_utility": 0.8729190083661418,
+      "violation_rate": 0.3202137935883015
     },
     {
       "N": 8,
       "experiment": "rendered_visual_simulator",
       "method": "torch_calibrated",
       "seed": 2,
-      "selected_real_utility": 0.9749654484300532,
-      "violation_rate": 0.05862898269426194
+      "selected_real_utility": 0.9654528064273904,
+      "violation_rate": 0.10619792414204099
     },
     {
       "N": 16,
       "experiment": "rendered_visual_simulator",
       "method": "torch_calibrated",
       "seed": 2,
-      "selected_real_utility": 0.9976067799159034,
-      "violation_rate": 0.0046465753667685634
+      "selected_real_utility": 0.996423675750562,
+      "violation_rate": 0.012912128624482173
     },
     {
       "N": 32,
       "experiment": "rendered_visual_simulator",
       "method": "torch_calibrated",
       "seed": 2,
-      "selected_real_utility": 0.9999653554612116,
-      "violation_rate": 6.312864447307149e-05
+      "selected_real_utility": 0.9999466552410338,
+      "violation_rate": 0.00021264144678748934
     },
     {
       "N": 64,
       "experiment": "rendered_visual_simulator",
       "method": "torch_calibrated",
       "seed": 2,
-      "selected_real_utility": 0.9999999986302708,
-      "violation_rate": 5.004974961206899e-09
+      "selected_real_utility": 0.999999998164901,
+      "violation_rate": 8.560336954662497e-09
     },
     {
       "N": 128,
@@ -454,47 +454,47 @@
       "experiment": "rendered_visual_simulator",
       "method": "torch_semantic",
       "seed": 2,
-      "selected_real_utility": 0.57599609375,
-      "violation_rate": 0.666015625
+      "selected_real_utility": 0.5566894531250001,
+      "violation_rate": 0.75
     },
     {
       "N": 2,
       "experiment": "rendered_visual_simulator",
       "method": "torch_semantic",
       "seed": 2,
-      "selected_real_utility": 0.5620493971456694,
-      "violation_rate": 0.7460476131889764
+      "selected_real_utility": 0.5651394869586615,
+      "violation_rate": 0.7755444143700787
     },
     {
       "N": 4,
       "experiment": "rendered_visual_simulator",
       "method": "torch_semantic",
       "seed": 2,
-      "selected_real_utility": 0.4943693619547557,
-      "violation_rate": 0.8910724128233971
+      "selected_real_utility": 0.5076250338238971,
+      "violation_rate": 0.8940824779715035
     },
     {
       "N": 8,
       "experiment": "rendered_visual_simulator",
       "method": "torch_semantic",
       "seed": 2,
-      "selected_real_utility": 0.4329233418990316,
-      "violation_rate": 0.9812591900764142
+      "selected_real_utility": 0.44971901447703355,
+      "violation_rate": 0.9812916895951406
     },
     {
       "N": 16,
       "experiment": "rendered_visual_simulator",
       "method": "torch_semantic",
       "seed": 2,
-      "selected_real_utility": 0.41522576150604257,
-      "violation_rate": 0.9990755387384461
+      "selected_real_utility": 0.4329898286681898,
+      "violation_rate": 0.9990755407959493
     },
     {
       "N": 32,
       "experiment": "rendered_visual_simulator",
       "method": "torch_semantic",
       "seed": 2,
-      "selected_real_utility": 0.42040659502790084,
+      "selected_real_utility": 0.4376418596545568,
       "violation_rate": 0.9999947494062109
     },
     {
@@ -502,7 +502,7 @@
       "experiment": "rendered_visual_simulator",
       "method": "torch_semantic",
       "seed": 2,
-      "selected_real_utility": 0.4394887313386162,
+      "selected_real_utility": 0.4545276226339861,
       "violation_rate": 0.9999999999932876
     },
     {
@@ -510,7 +510,7 @@
       "experiment": "rendered_visual_simulator",
       "method": "torch_semantic",
       "seed": 2,
-      "selected_real_utility": 0.46208333333333335,
+      "selected_real_utility": 0.4733333333333334,
       "violation_rate": 1.0
     }
   ],

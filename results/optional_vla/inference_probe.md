@@ -8,10 +8,10 @@
 - task: put the red mug in the cabinet
 - action_shape: `[1, 50, 6]`
 - action_dtype: `torch.float32`
-- action_abs_max: `0.9026641845703125`
-- first_action: `[0.05234574154019356, -0.0497642457485199, -0.03662483021616936, -0.0669940635561943, -0.04889203608036041, -0.3559389114379883]`
+- action_abs_max: `0.8936074376106262`
+- first_action: `[0.06739343702793121, -0.11558115482330322, -0.09738729149103165, -0.10297173261642456, 0.04221004992723465, -0.0485251285135746]`
 - parameter_count: `450046176`
-- config_load_seconds: `1.5228`
-- policy_load_seconds: `70.31`
-- preprocess_seconds: `0.0239`
-- inference_seconds: `56.7759`
+- config_load_seconds: `2.3773`
+- policy_load_seconds: `148.0436`
+- preprocess_seconds: `0.0241`
+- inference_seconds: `131.4909`

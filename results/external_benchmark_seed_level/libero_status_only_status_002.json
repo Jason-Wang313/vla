@@ -1,0 +1,34 @@
+{
+  "action_space": {},
+  "asset_status": {
+    "libero_package_dir_exists": true,
+    "repo_root": "C:\\Users\\wangz\\external_benchmarks\\LIBERO",
+    "repo_root_exists": true,
+    "robocasa_assets_dir_exists": false,
+    "robocasa_macros_private_exists": false
+  },
+  "benchmark": "libero",
+  "env_id": "libero/status_only",
+  "observation_keys": [],
+  "package_versions": {
+    "gymnasium": "UNAVAILABLE:PackageNotFoundError",
+    "lerobot": "0.3.3",
+    "libero": "0.1.0",
+    "robocasa": "UNAVAILABLE:PackageNotFoundError",
+    "robosuite": "1.4.0",
+    "torch": "2.4.1",
+    "transformers": "4.57.3"
+  },
+  "physical_success_claimed": false,
+  "policy_kind": "status_only",
+  "python_executable": "C:\\Users\\wangz\\external_benchmarks\\.venvs\\libero310\\Scripts\\python.exe",
+  "reset_ok": false,
+  "reward_trace": [],
+  "seed": null,
+  "skip_reason": "no guarded runtime wrapper is implemented for this benchmark",
+  "step_ok": false,
+  "success_trace": [],
+  "tailguard_connected": false,
+  "termination_trace": [],
+  "truncation_trace": []
+}

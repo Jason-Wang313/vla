@@ -8,6 +8,8 @@ __all__ = [
     "deployment",
     "learned_vla",
     "plotting",
+    "tailguard",
+    "stress",
 ]
 
 __version__ = "0.1.0"

@@ -50,6 +50,50 @@ The experiments report selected real utility, selected semantic score, selected 
 - Average score-utility correlation can miss high-N failure because Best-of-N stresses the upper score tail.
 - Physical grounding helps only when it repairs tail ranking, not merely when it improves average feasibility accuracy.
 
+## Selected-Tail Utility Principle
+
+For large `N`, Best-of-N is governed by the conditional real utility in the scorer's upper tail, not by average score-utility correlation over the whole candidate pool. In finite pools this is visible directly from the exact law: as `N` increases, probability mass shifts toward candidates whose score is near the maximum. A scorer with good average correlation but bad upper-tail ranking can therefore fail at high `N`.
+
+This motivates reporting:
+
+```text
+E[R | S in upper tail]
+tail rank correlation between S and R
+semantic-real tail gap
+```
+
+rather than only full-pool rank correlation.
+
+## Certified TailGuard-BoN Guarantee
+
+Certified TailGuard-BoN keeps `TailGuard-BoN` as the implementation short name but adds a hard certificate layer before calibrated scoring. Candidate actions must pass modeled predicates for reach envelope, swept-volume collision, receptacle compatibility, stability margin, fragile/heavy handling, tool/object match, blocked-path constraints, and modeled hidden obstacles when such flags are available.
+
+After certificate filtering, the controller fits a bounded real-utility calibrator from pilot labels and predicts the exact selected utility curve for a candidate `N` grid. Let `L_N` be a one-sided lower confidence bound on predicted selected utility at `N`, and let `B` be the larger of the `N=1` and random-selection baselines. The default controller allows high-N only when
+
+```text
+L_N >= B + margin.
+```
+
+If pilot labels, selected-tail labels, or certified candidates are insufficient, it returns `collect_pilot_labels` or `block_high_n`. If high-N adds no lower-bound value, it returns `stop_early`. Public outputs include certificate pass/failure types, certified candidate count, fallback use, abstention reason, certified selected utility, and certified violation rate.
+
+The guarantee is conditional: if the modeled certificate predicates are sound for the relevant physics failures and the bounded-error tail utility estimates are calibrated at the requested confidence level, then any `allow_high_n` decision has a lower-bound selected utility advantage over both baselines. Otherwise the controller falls back or abstains. This does not prove that every real verifier, calibrator, perception system, or robot is accurate.
+
+## No-Free-Lunch For Semantic Scores Alone
+
+Semantic scores alone cannot certify physical high-N utility when upper-tail utility is unconstrained. Two pools can share the same semantic scores and average semantic statistics while swapping the physical utilities of the semantic tail. A semantic-only controller must make the same high-N decision in both pools and therefore fails on one. The repository's affirmative repair claims require certificates, verifier evidence, pilot labels, or abstention.
+
+## Pilot-Label Sample Complexity
+
+The implementation uses an empirical-Bernstein-style lower-bound radius for bounded utilities in `[0, 1]`:
+
+```text
+radius(n, delta) =
+sqrt(2 * empirical_variance * log(2/delta) / n)
++ 7 * log(2/delta) / (3 * (n - 1)).
+```
+
+Here `n` is the number of selected-tail pilot labels used for the bound. The bound tightens as tail labels increase and widens under noisy labels through the empirical residual variance. The sample-complexity experiment crosses pilot label budgets `{0.5%, 1%, 2%, 5%, 10%, 20%}` with label noise `{0, 0.05, 0.10, 0.20}`.
+
 ## Boundary
 
 The theorem is conditional on a fixed finite generator/scorer stack. The controlled experiments are VLA-style toy experiments unless real VLA benchmarks are added. This repository claims no real-robot validation, no universal VLA training recipe, no proof that Best-of-N always helps, and no proof that grounding always fixes the issue.

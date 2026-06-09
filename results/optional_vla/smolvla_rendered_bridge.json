@@ -1,0 +1,14 @@
+{
+  "action_abs_max_mean": null,
+  "action_count": 0,
+  "action_decode_supported": false,
+  "action_shape": [],
+  "benchmark_validation": false,
+  "bridge_name": "smolvla_rendered_bridge",
+  "decoded_physical_success": false,
+  "mapping_documented": false,
+  "physical_success_claimed": false,
+  "reason": "Rendered toy observations were not fed through SmoLVLA in the core run. Use the optional probe path only as model-plumbing evidence unless an action-to-toy-evaluator mapping is implemented and documented.",
+  "rendered_input_count": 0,
+  "status": "SKIPPED_WITH_REASON"
+}

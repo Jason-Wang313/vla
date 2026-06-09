@@ -24,3 +24,15 @@
 22. "Is calibration just training on the answer?" Response: calibration uses small pilot real-utility labels and is evaluated on separate held-out scenes.
 23. "Does the exact law assume independent candidates?" Response: no, it audits a fixed finite candidate pool sampled without replacement.
 24. "Do average correlations suffice?" Response: no, because Best-of-N stresses the upper score tail, which can behave differently from the average.
+
+## ICLR Reviewer-Attack Matrix
+
+| Attack | Risk | Current answer | Needed artifact for stronger answer |
+|---|---|---|---|
+| Novelty | Reviewers may see this as generic reranking or reward-model misalignment. | The paper centers the VLA-specific semantic/physical selected tail and separates it from WAM, JEPA, EBM, and diffusion framings. | Sharper related-work positioning in the final introduction. |
+| Toy evidence | Controlled settings may be judged insufficient for robotics. | Claims are intentionally controlled; rendered scenes, simulator utility, first-principles stress, and external integration status reduce but do not remove this concern. | Reset/step/reward/success artifacts from RoboCasa, LIBERO, or another simulator. |
+| Certificate soundness | Modeled certificates may be mistaken for real safety guarantees. | The theorem and limitations state the guarantee is conditional on modeled predicates and calibration assumptions. | Formal statement of each predicate and a failure-case appendix. |
+| Calibration assumptions | Pilot real-utility labels could be seen as tuning to evaluation scenes. | Separate train/pilot/test-style artifacts and sample-complexity sweeps are included. | Clearer split table in the final experimental appendix. |
+| Abstention practicality | Reviewers may object that abstention/request-labels is not a robot policy. | TailGuard is an inference-time gate; abstention is the safe output when high-N evidence is weak. | Cost model for fallback, relabeling, or human intervention. |
+| Real-robot boundary | Overclaiming would be fatal. | The claim audit forbids robot claims and external method claims without artifacts. | Hardware evidence, if ever added, must be seed/episode-level and separate from integration status. |
+| Reproducibility | Long optional probes and external assets may be hard to reproduce. | Core scripts remain CPU-controlled; optional probes are guarded and write skip reasons. | Anonymous package/asset snapshot instructions for any submission supplement. |

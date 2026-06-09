@@ -1,0 +1,5 @@
+scenario,expected_gate,gate_decision,reason_code,selected_N,baseline_n1,random_baseline,high_n_predicted_utility,high_n_lcb,pilot_label_count,tail_label_count,confidence_radius,expected_behavior_verified
+aligned_tail_allows_high_n,allow_high_n,allow_high_n,tail_lcb_beats_baselines,128,0.49999999940451695,0.4999999994045169,0.9924907128713677,0.9885410743552218,4096,820,0.003949638516145904,True
+flat_tail_stops_early,stop_early,stop_early,high_n_not_worth_margin,1,0.4999999999999998,0.5,0.5000000000000132,0.49605044341562576,4096,820,0.003949556584387465,True
+scarce_tail_labels_collects,collect_pilot_labels,collect_pilot_labels,insufficient_pilot_labels,1,0.5551460937672329,0.5551460937672328,0.9969910662072053,0.0,2,1,1.0,True
+uncertain_flat_tail_blocks,block_high_n,block_high_n,tail_lcb_below_baselines,1,0.5,0.49999999999999994,0.5000000000000004,0.41561386869674033,512,103,0.08438613130326009,True

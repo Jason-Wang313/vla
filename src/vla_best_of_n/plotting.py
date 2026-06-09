@@ -29,6 +29,13 @@ def create_figures(results_dir: str | Path) -> list[str]:
     distractor = _read(root / "distractor_summary.csv")
     rendered_path = root / "rendered_summary.csv"
     robustness_path = root / "robustness_summary.csv"
+    tailguard_path = root / "tailguard_summary.csv"
+    phase_path = root / "phase_diagram_summary.csv"
+    sample_complexity_path = root / "calibration_sample_complexity.csv"
+    physics_stress_path = root / "physics_stress_summary.csv"
+    component_ablation_path = root / "component_ablation_summary.csv"
+    failure_honesty_path = root / "failure_honesty_summary.csv"
+    smolvla_bridge_path = root / "optional_vla" / "smolvla_rendered_bridge.json"
 
     raw = learned[learned["method"] == "raw_semantic"].sort_values("N")
     fig, ax1 = plt.subplots(figsize=(6.4, 4.2))
@@ -189,6 +196,200 @@ def create_figures(results_dir: str | Path) -> list[str]:
         ax.legend(fontsize=8)
         fig.tight_layout()
         path = fig_dir / "figure10_learned_scorer_comparison.png"
+        fig.savefig(path, dpi=180)
+        plt.close(fig)
+        paths.append(str(path))
+
+    if tailguard_path.exists():
+        tailguard = _read(tailguard_path)
+        order = [
+            "raw_fixed_high_n",
+            "n1_baseline",
+            "random_high_n",
+            "verifier_filtered_high_n",
+            "calibrated_high_n_no_certificates",
+            "certificate_only_filtering_without_tail_calibration",
+            "tailguard_without_lower_confidence_bound",
+            "certified_tailguard_bon",
+            "tailguard_bon",
+            "oracle_high_n",
+        ]
+        bars = tailguard.set_index("method").reindex([m for m in order if m in set(tailguard["method"])])
+        if not bars.empty:
+            fig, ax = plt.subplots(figsize=(7.2, 4.4))
+            ax.bar(bars.index, bars["selected_real_utility"], color="#2563eb")
+            if "violation_rate" in bars:
+                ax.plot(bars.index, bars["violation_rate"], color="#dc2626", marker="o", label="violation rate")
+                ax.legend(fontsize=8)
+            ax.set_ylabel("selected real utility")
+            ax.set_title("Figure 11: Certified TailGuard vs BoN baselines")
+            ax.tick_params(axis="x", labelrotation=25)
+            fig.tight_layout()
+            path = fig_dir / "figure11_tailguard_adaptive_n.png"
+            fig.savefig(path, dpi=180)
+            plt.close(fig)
+            paths.append(str(path))
+
+    if phase_path.exists():
+        phase = _read(phase_path)
+        if not phase.empty:
+            pivot = phase.pivot_table(
+                index="semantic_physical_misalignment",
+                columns="distractor_salience",
+                values="tailguard_gain_over_raw",
+                aggfunc="mean",
+            ).sort_index(ascending=True)
+            fig, ax = plt.subplots(figsize=(6.4, 4.8))
+            im = ax.imshow(pivot.values, origin="lower", aspect="auto", cmap="RdYlGn")
+            ax.set_xticks(range(len(pivot.columns)))
+            ax.set_xticklabels([f"{float(x):.2f}" for x in pivot.columns])
+            ax.set_yticks(range(len(pivot.index)))
+            ax.set_yticklabels([f"{float(x):.2f}" for x in pivot.index])
+            ax.set_xlabel("distractor salience")
+            ax.set_ylabel("semantic/physical misalignment")
+            ax.set_title("Figure 12: Misalignment phase diagram")
+            fig.colorbar(im, ax=ax, label="TailGuard gain over raw")
+            fig.tight_layout()
+            path = fig_dir / "figure12_phase_diagram.png"
+            fig.savefig(path, dpi=180)
+            plt.close(fig)
+            paths.append(str(path))
+
+            fig, ax = plt.subplots(figsize=(6.4, 4.4))
+            scatter = ax.scatter(
+                phase["verifier_false_positive_rate"],
+                phase["verifier_false_negative_rate"],
+                c=phase["tailguard_gain_over_raw"],
+                s=70,
+                cmap="RdYlGn",
+                edgecolor="#111827",
+                linewidth=0.3,
+            )
+            ax.set_xlabel("verifier false-positive rate")
+            ax.set_ylabel("verifier false-negative rate")
+            ax.set_title("Figure 14: Imperfect verifier failure map")
+            fig.colorbar(scatter, ax=ax, label="TailGuard gain over raw")
+            fig.tight_layout()
+            path = fig_dir / "figure14_imperfect_verifier_map.png"
+            fig.savefig(path, dpi=180)
+            plt.close(fig)
+            paths.append(str(path))
+
+    if sample_complexity_path.exists():
+        sample = _read(sample_complexity_path)
+        if not sample.empty:
+            fig, ax1 = plt.subplots(figsize=(6.8, 4.4))
+            for noise, group in sample.groupby("label_noise"):
+                curve = group.sort_values("label_budget_fraction")
+                ax1.plot(
+                    curve["label_budget_fraction"],
+                    curve["tailguard_utility"],
+                    marker="o",
+                    label=f"noise={float(noise):.2f}",
+                )
+            ax1.set_xscale("log")
+            ax1.set_xlabel("pilot label budget fraction")
+            ax1.set_ylabel("TailGuard selected utility")
+            ax2 = ax1.twinx()
+            radius = sample.groupby("label_budget_fraction", as_index=False)["confidence_radius"].mean()
+            ax2.plot(radius["label_budget_fraction"], radius["confidence_radius"], color="#111827", marker="s", label="LCB radius")
+            ax2.set_ylabel("mean confidence radius")
+            ax1.set_title("Figure 13: Calibration sample complexity")
+            ax1.legend(fontsize=8, ncol=2)
+            fig.tight_layout()
+            path = fig_dir / "figure13_calibration_sample_complexity.png"
+            fig.savefig(path, dpi=180)
+            plt.close(fig)
+            paths.append(str(path))
+
+    if physics_stress_path.exists():
+        physics = _read(physics_stress_path)
+        if not physics.empty:
+            fig, ax = plt.subplots(figsize=(8.6, 4.8))
+            x = range(len(physics))
+            width = 0.38
+            ax.bar([i - width / 2 for i in x], physics["focus_failure_rate_raw"], width=width, label="raw high-N")
+            ax.bar([i + width / 2 for i in x], physics["focus_failure_rate_tailguard"], width=width, label="TailGuard")
+            ax.set_xticks(list(x))
+            ax.set_xticklabels(physics["stress_family"], rotation=30, ha="right")
+            ax.set_ylabel("selected focus failure rate")
+            ax.set_title("Figure 15: First-principles physics failure decomposition")
+            ax.legend(fontsize=8)
+            fig.tight_layout()
+            path = fig_dir / "figure15_physics_failure_decomposition.png"
+            fig.savefig(path, dpi=180)
+            plt.close(fig)
+            paths.append(str(path))
+
+    if component_ablation_path.exists():
+        ablation = _read(component_ablation_path)
+        if not ablation.empty:
+            fig, ax = plt.subplots(figsize=(8.2, 4.6))
+            order = [
+                "full_certified_tailguard",
+                "no_physical_certificate",
+                "no_verifier_score",
+                "no_pilot_labels",
+                "no_empirical_lower_bound",
+                "no_adaptive_n",
+                "no_abstention_fallback",
+            ]
+            worst_by_method = (
+                ablation.groupby("method", as_index=True)
+                .agg(selected_real_utility=("selected_real_utility", "min"), violation_rate=("violation_rate", "max"))
+            )
+            bars = worst_by_method.reindex([m for m in order if m in set(ablation["method"])])
+            x = range(len(bars))
+            ax.bar(x, bars["selected_real_utility"], color="#0f766e", label="utility")
+            ax.plot(list(x), bars["violation_rate"], color="#dc2626", marker="o", label="violation")
+            ax.axhline(0.98, color="#166534", linewidth=0.8, linestyle="--")
+            ax.axhline(0.01, color="#991b1b", linewidth=0.8, linestyle=":")
+            ax.set_xticks(list(x))
+            ax.set_xticklabels(bars.index, rotation=30, ha="right")
+            ax.set_ylabel("rate / utility")
+            ax.set_title("Figure 17: Certified TailGuard component ablation")
+            ax.legend(fontsize=8)
+            fig.tight_layout()
+            path = fig_dir / "figure17_component_ablation.png"
+            fig.savefig(path, dpi=180)
+            plt.close(fig)
+            paths.append(str(path))
+
+    if failure_honesty_path.exists():
+        honesty = _read(failure_honesty_path)
+        if not honesty.empty:
+            fig, ax = plt.subplots(figsize=(8.2, 4.4))
+            x = range(len(honesty))
+            width = 0.36
+            ax.bar([i - width / 2 for i in x], honesty["abstention_rate"], width=width, label="abstention")
+            ax.bar([i + width / 2 for i in x], honesty["fallback_rate"], width=width, label="fallback")
+            ax.set_xticks(list(x))
+            ax.set_xticklabels(honesty["stress_family"], rotation=30, ha="right")
+            ax.set_ylabel("rate")
+            ax.set_title("Figure 18: Failure honesty by stress regime")
+            ax.legend(fontsize=8)
+            fig.tight_layout()
+            path = fig_dir / "figure18_failure_honesty.png"
+            fig.savefig(path, dpi=180)
+            plt.close(fig)
+            paths.append(str(path))
+
+    if smolvla_bridge_path.exists():
+        import json
+
+        bridge = json.loads(smolvla_bridge_path.read_text(encoding="utf-8"))
+        fig, ax = plt.subplots(figsize=(6.4, 3.6))
+        ax.axis("off")
+        lines = [
+            "Figure 16: Optional SmoLVLA rendered-input bridge",
+            f"status: {bridge.get('status', 'missing')}",
+            f"benchmark_validation: {bridge.get('benchmark_validation', False)}",
+            f"decoded_physical_success: {bridge.get('decoded_physical_success', False)}",
+            f"action_count: {bridge.get('action_count', 0)}",
+        ]
+        ax.text(0.02, 0.86, "\n".join(lines), va="top", ha="left", fontsize=10)
+        fig.tight_layout()
+        path = fig_dir / "figure16_smolvla_rendered_bridge_status.png"
         fig.savefig(path, dpi=180)
         plt.close(fig)
         paths.append(str(path))

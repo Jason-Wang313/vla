@@ -6,3 +6,11 @@ build/
 dist/
 *.egg-info/
 results/smoke/
+paper/iclr2026/*.aux
+paper/iclr2026/*.bbl
+paper/iclr2026/*.blg
+paper/iclr2026/*.fdb_latexmk
+paper/iclr2026/*.fls
+paper/iclr2026/*.log
+paper/iclr2026/*.out
+paper/iclr2026/main.pdf

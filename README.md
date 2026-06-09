@@ -6,7 +6,11 @@ This repository studies a VLA-style failure mode: sampling more language-conditi
 
 The core claim is conditional and controlled: for a fixed VLA-style generator/scorer stack, Best-of-N selection stresses the high semantic-score tail. If that tail is misaligned with physical feasibility, selected actions can look more instruction-relevant while becoming less reachable, more collision-prone, or bound to the wrong object. Physical verification and pilot-label calibration can repair the selected tail in these toy settings.
 
-No real-robot validation or large robot foundation model benchmark is claimed in v1.
+The v2 headline repair is **Certified TailGuard-BoN** (`TailGuard-BoN` in code), an abstaining inference-time controller. It hard-filters candidates through modeled physical certificates, calibrates selected-tail utility from pilot labels, chooses `N`, returns one of `allow_high_n`, `stop_early`, `collect_pilot_labels`, or `block_high_n`, and only allows high-N when a lower confidence bound beats the `N=1` and random-selection baselines by a margin.
+
+Near-100% repair claims are limited to controlled/simulator regimes where the modeled certificate covers the relevant failure modes. Otherwise the method is expected to fall back or abstain.
+
+No real-robot validation or large robot foundation model benchmark is claimed.
 
 ## Why This Is VLA-Specific
 
@@ -56,6 +60,23 @@ bash scripts/run_optional_vla.sh --attempt-inference
 
 This probe loads cached SmoLVLA on CPU and emits an action chunk for synthetic visual/state/language input. It is not a benchmark or robot validation.
 
+Optional, guarded external benchmark status:
+
+```bash
+bash scripts/run_external_benchmark.sh --status-only
+bash scripts/run_external_benchmark.sh --attempt-robocasa --attempt-libero --timeout-seconds 10
+```
+
+The external runner uses isolated environments under `C:\Users\wangz\external_benchmarks\.venvs`. The latest artifact records RoboCasa integration and target task registration, plus a bounded reset/step attempt that timed out before producing reward or success metrics. It does not support simulator-performance, method-performance, or robot claims.
+
+Anonymous ICLR-style PDF build:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\build_iclr_submission.ps1
+```
+
+The script builds `paper/iclr2026/main.tex` and copies the PDF to `C:\Users\wangz\Downloads\certified-tailguard-bon-iclr-submission.pdf`.
+
 ## Key Outputs
 
 - `results/controlled_summary.csv`
@@ -65,9 +86,21 @@ This probe loads cached SmoLVLA on CPU and emits an action chunk for synthetic v
 - `results/rendered_summary.csv`
 - `results/rendered_visual_metadata.csv`
 - `results/robustness_summary.csv`
+- `results/tailguard_summary.csv`
+- `results/tailguard_gate_examples.csv`
+- `results/phase_diagram_summary.csv`
+- `results/calibration_sample_complexity.csv`
+- `results/physics_stress_summary.csv`
+- `results/component_ablation_summary.csv`
+- `results/failure_honesty_summary.csv`
 - `results/claims_status.md`
 - `results/optional_vla/adapter_status.md`
 - `results/optional_vla/inference_probe.md` when the optional SmoLVLA probe is run
+- `results/optional_vla/smolvla_rendered_bridge.json`
+- `results/optional_vla/libero_benchmark_status.json`
+- `results/external_benchmark_status.json`
+- `results/external_benchmark_summary.csv`
+- `results/external_benchmark_seed_level/`
 - `docs/final_audit.md`
 
 Paper-critical figures:
@@ -82,10 +115,19 @@ Paper-critical figures:
 - `results/figures/figure8_robustness_repairs.png`
 - `results/figures/figure9_calibration_budget_noise.png`
 - `results/figures/figure10_learned_scorer_comparison.png`
+- `results/figures/figure11_tailguard_adaptive_n.png`
+- `results/figures/figure12_phase_diagram.png`
+- `results/figures/figure13_calibration_sample_complexity.png`
+- `results/figures/figure14_imperfect_verifier_map.png`
+- `results/figures/figure15_physics_failure_decomposition.png`
+- `results/figures/figure16_smolvla_rendered_bridge_status.png`
+- `results/figures/figure17_component_ablation.png`
+- `results/figures/figure18_failure_honesty.png`
+- `results/figures/figure19_external_benchmark_status.png` when the external runner is run
 
 ## Claim Boundaries
 
-Supported v1 claims are controlled VLA-style and learned VLA-style claims. The learned scorer consumes instruction, visual/object observation, and action candidate features, but it is still a small CPU-friendly model.
+Supported claims are controlled VLA-style, learned VLA-style, Certified TailGuard-BoN, phase-diagram, calibration sample-complexity, component-ablation, failure-honesty, first-principles physics stress-test, optional model-plumbing, and guarded external-integration claims. The learned scorer consumes instruction, visual/object observation, and action candidate features, but it is still a CPU-friendly controlled model.
 
 Unsupported in v1:
 
@@ -94,6 +136,7 @@ Unsupported in v1:
 - universal VLA deployment recipe
 - proof that more samples always help
 - proof that grounding always repairs errors
+- real-world safety certification beyond the modeled certificate predicates
 
 Inspect `docs/final_audit.md` and `results/claims_status.md` before citing any claim.
 
@@ -130,14 +173,23 @@ Robustness stress test at `N=128`:
 - ideal verifier: utility `1.000`, violation `0.000`, gate `stop_early`.
 - calibration under stress ranges from utility `0.684` to `1.000`, showing budget/noise sensitivity rather than assuming calibration always works.
 
+Certified TailGuard controlled stress:
+
+- raw fixed high-N remains high-violation in the controlled stress setting.
+- Certified TailGuard selects only certified candidates, records certificate failure decomposition, and reaches the controlled target of utility at least `0.98` with violation at most `0.01` in supported runs.
+- `results/component_ablation_summary.csv` shows a component-specific failing regime for every named core removal.
+- `results/failure_honesty_summary.csv` lists regimes where the method falls back or abstains instead of claiming repair.
+
 Optional real-VLA/SmoLVLA status:
 
 - cached SmoLVLA config/weights are present locally.
 - core ML runtime modules and `lerobot` are available.
 - optional CPU SmoLVLA inference probe passes on synthetic visual/state/language input.
+- rendered bridge status records `action_decode_supported: false` and `physical_success_claimed: false`.
 - probe artifact: `results/optional_vla/inference_probe.json`.
 - probe model size: `450,046,176` parameters; action chunk shape: `1 x 50 x 6`.
-- `libero` is not importable, so LIBERO/OpenVLA-style benchmark validation is still not run.
+- the guarded external runner records RoboCasa package importability, asset/macros presence, target task registration, and a bounded reset/step timeout.
+- an isolated LIBERO environment reports `libero` importability, but no guarded LIBERO reset/step wrapper is implemented.
 - this does not support real VLA benchmark or real-robot claims.
 
 PyTorch learned scorer at `N=128`:

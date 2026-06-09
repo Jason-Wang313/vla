@@ -208,6 +208,74 @@ def _write_inference_probe(root: Path, probe: OptionalVLAInferenceProbe) -> dict
     return data
 
 
+def write_smolvla_rendered_bridge_status(results_dir: str | Path) -> dict[str, object]:
+    """Write a guarded rendered-to-SmoLVLA bridge status artifact.
+
+    The core run does not decode SmoLVLA actions back into the toy evaluator, so
+    this artifact is deliberately a run-or-skip status rather than success
+    evidence.
+    """
+
+    root = ensure_dir(Path(results_dir) / "optional_vla")
+    data: dict[str, object] = {
+        "status": "SKIPPED_WITH_REASON",
+        "reason": "Rendered toy observations were not fed through SmoLVLA in the core run. Use the optional probe path only as model-plumbing evidence unless an action-to-toy-evaluator mapping is implemented and documented.",
+        "bridge_name": "smolvla_rendered_bridge",
+        "benchmark_validation": False,
+        "decoded_physical_success": False,
+        "action_decode_supported": False,
+        "physical_success_claimed": False,
+        "action_count": 0,
+        "action_shape": [],
+        "action_abs_max_mean": None,
+        "rendered_input_count": 0,
+        "mapping_documented": False,
+    }
+    write_json(root / "smolvla_rendered_bridge.json", data)
+    lines = [
+        "# Optional SmoLVLA Rendered Bridge",
+        "",
+        f"- status: `{data['status']}`",
+        f"- benchmark_validation: `{data['benchmark_validation']}`",
+        f"- decoded_physical_success: `{data['decoded_physical_success']}`",
+        f"- action_decode_supported: `{data['action_decode_supported']}`",
+        f"- physical_success_claimed: `{data['physical_success_claimed']}`",
+        f"- reason: {data['reason']}",
+    ]
+    (root / "smolvla_rendered_bridge.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return data
+
+
+def write_libero_benchmark_status(results_dir: str | Path) -> dict[str, object]:
+    """Write a guarded LIBERO/LeRobot benchmark wrapper status artifact."""
+
+    root = ensure_dir(Path(results_dir) / "optional_vla")
+    has_libero = importlib.util.find_spec("libero") is not None
+    data: dict[str, object] = {
+        "status": "READY_TO_IMPLEMENT_WRAPPER" if has_libero else "SKIPPED_WITH_REASON",
+        "reason": (
+            "libero is importable, but no benchmark task wrapper has been run in this core pipeline."
+            if has_libero
+            else "libero is not importable, so the guarded LIBERO/OpenVLA-style benchmark wrapper is skipped."
+        ),
+        "benchmark_validation": False,
+        "real_robot_validation": False,
+        "libero_importable": bool(has_libero),
+        "wrapper_skeleton": "guarded_optional_status_only",
+    }
+    write_json(root / "libero_benchmark_status.json", data)
+    lines = [
+        "# Optional LIBERO Benchmark Status",
+        "",
+        f"- status: `{data['status']}`",
+        f"- libero_importable: `{data['libero_importable']}`",
+        f"- benchmark_validation: `{data['benchmark_validation']}`",
+        f"- reason: {data['reason']}",
+    ]
+    (root / "libero_benchmark_status.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return data
+
+
 def attempt_smolvla_cpu_inference_probe(
     results_dir: str | Path,
     cache_root: str | Path | None = None,
@@ -359,4 +427,6 @@ def write_optional_vla_status(results_dir: str | Path, cache_root: str | Path | 
         snapshot_count = len(model["snapshots"])
         lines.append(f"- {model['cache_name']}: exists={model['exists']}, snapshots={snapshot_count}")
     (root / "adapter_status.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    write_smolvla_rendered_bridge_status(results_dir)
+    write_libero_benchmark_status(results_dir)
     return data

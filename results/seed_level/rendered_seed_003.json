@@ -6,63 +6,63 @@
       "experiment": "rendered_visual_simulator",
       "method": "calibrated",
       "seed": 3,
-      "selected_real_utility": 0.593974609375,
-      "violation_rate": 0.611328125
+      "selected_real_utility": 0.575908203125,
+      "violation_rate": 0.69140625
     },
     {
       "N": 2,
       "experiment": "rendered_visual_simulator",
       "method": "calibrated",
       "seed": 3,
-      "selected_real_utility": 0.7884261195866142,
-      "violation_rate": 0.3728623277559055
+      "selected_real_utility": 0.76171875,
+      "violation_rate": 0.4784694881889764
     },
     {
       "N": 4,
       "experiment": "rendered_visual_simulator",
       "method": "calibrated",
       "seed": 3,
-      "selected_real_utility": 0.9283337202380952,
-      "violation_rate": 0.13774197365954255
+      "selected_real_utility": 0.9074833764529435,
+      "violation_rate": 0.22970475956130487
     },
     {
       "N": 8,
       "experiment": "rendered_visual_simulator",
       "method": "calibrated",
       "seed": 3,
-      "selected_real_utility": 0.9878374838661488,
-      "violation_rate": 0.018270509716321628
+      "selected_real_utility": 0.9823953007656374,
+      "violation_rate": 0.053305256153573184
     },
     {
       "N": 16,
       "experiment": "rendered_visual_simulator",
       "method": "calibrated",
       "seed": 3,
-      "selected_real_utility": 0.998140902271005,
-      "violation_rate": 0.00028552885184061525
+      "selected_real_utility": 0.9992318692544736,
+      "violation_rate": 0.0028279963780460855
     },
     {
       "N": 32,
       "experiment": "rendered_visual_simulator",
       "method": "calibrated",
       "seed": 3,
-      "selected_real_utility": 0.9974755822033065,
-      "violation_rate": 4.016307669966676e-08
+      "selected_real_utility": 0.9999989148882922,
+      "violation_rate": 4.997216659794747e-06
     },
     {
       "N": 64,
       "experiment": "rendered_visual_simulator",
       "method": "calibrated",
       "seed": 3,
-      "selected_real_utility": 0.9956610236220333,
-      "violation_rate": 2.4941630793519038e-18
+      "selected_real_utility": 0.9999999999999799,
+      "violation_rate": 1.218813507558315e-13
     },
     {
       "N": 128,
       "experiment": "rendered_visual_simulator",
       "method": "calibrated",
       "seed": 3,
-      "selected_real_utility": 0.9925,
+      "selected_real_utility": 1.0,
       "violation_rate": 0.0
     },
     {
@@ -70,56 +70,56 @@
       "experiment": "rendered_visual_simulator",
       "method": "grounded_combined",
       "seed": 3,
-      "selected_real_utility": 0.593974609375,
-      "violation_rate": 0.611328125
+      "selected_real_utility": 0.575908203125,
+      "violation_rate": 0.69140625
     },
     {
       "N": 2,
       "experiment": "rendered_visual_simulator",
       "method": "grounded_combined",
       "seed": 3,
-      "selected_real_utility": 0.7637978284940945,
-      "violation_rate": 0.372677780511811
+      "selected_real_utility": 0.7216635396161417,
+      "violation_rate": 0.4784694881889764
     },
     {
       "N": 4,
       "experiment": "rendered_visual_simulator",
       "method": "grounded_combined",
       "seed": 3,
-      "selected_real_utility": 0.9099707277605924,
-      "violation_rate": 0.13728885451818523
+      "selected_real_utility": 0.8759772076537309,
+      "violation_rate": 0.22970475956130487
     },
     {
       "N": 8,
       "experiment": "rendered_visual_simulator",
       "method": "grounded_combined",
       "seed": 3,
-      "selected_real_utility": 0.984832658539853,
-      "violation_rate": 0.017932030624663895
+      "selected_real_utility": 0.9722485765589113,
+      "violation_rate": 0.053305256153573184
     },
     {
       "N": 16,
       "experiment": "rendered_visual_simulator",
       "method": "grounded_combined",
       "seed": 3,
-      "selected_real_utility": 0.9994536469914143,
-      "violation_rate": 0.00025495375951139663
+      "selected_real_utility": 0.9985787622746001,
+      "violation_rate": 0.002827996378046086
     },
     {
       "N": 32,
       "experiment": "rendered_visual_simulator",
       "method": "grounded_combined",
       "seed": 3,
-      "selected_real_utility": 0.9999991502223379,
-      "violation_rate": 1.8394628163392464e-08
+      "selected_real_utility": 0.9999975995332334,
+      "violation_rate": 4.997216659794747e-06
     },
     {
       "N": 64,
       "experiment": "rendered_visual_simulator",
       "method": "grounded_combined",
       "seed": 3,
-      "selected_real_utility": 0.9999999999999696,
-      "violation_rate": 1.7080948167121278e-20
+      "selected_real_utility": 0.9999999999999359,
+      "violation_rate": 1.218813507558315e-13
     },
     {
       "N": 128,
@@ -134,56 +134,56 @@
       "experiment": "rendered_visual_simulator",
       "method": "oracle",
       "seed": 3,
-      "selected_real_utility": 0.593974609375,
-      "violation_rate": 0.611328125
+      "selected_real_utility": 0.575908203125,
+      "violation_rate": 0.69140625
     },
     {
       "N": 2,
       "experiment": "rendered_visual_simulator",
       "method": "oracle",
       "seed": 3,
-      "selected_real_utility": 0.7892970287893701,
-      "violation_rate": 0.37379275344488194
+      "selected_real_utility": 0.7628574064960632,
+      "violation_rate": 0.4784694881889764
     },
     {
       "N": 4,
       "experiment": "rendered_visual_simulator",
       "method": "oracle",
       "seed": 3,
-      "selected_real_utility": 0.929097309828459,
-      "violation_rate": 0.14003160933008374
+      "selected_real_utility": 0.9083921215316836,
+      "violation_rate": 0.22970475956130484
     },
     {
       "N": 8,
       "experiment": "rendered_visual_simulator",
       "method": "oracle",
       "seed": 3,
-      "selected_real_utility": 0.9886520933441694,
-      "violation_rate": 0.02006501924914407
+      "selected_real_utility": 0.9826973846568683,
+      "violation_rate": 0.05330525615357319
     },
     {
       "N": 16,
       "experiment": "rendered_visual_simulator",
       "method": "oracle",
       "seed": 3,
-      "selected_real_utility": 0.9995365451004175,
-      "violation_rate": 0.0004998504991596471
+      "selected_real_utility": 0.9992543879731663,
+      "violation_rate": 0.002827996378046086
     },
     {
       "N": 32,
       "experiment": "rendered_visual_simulator",
       "method": "oracle",
       "seed": 3,
-      "selected_real_utility": 0.9999992618040967,
-      "violation_rate": 5.761335245506137e-07
+      "selected_real_utility": 0.9999989505182298,
+      "violation_rate": 4.997216659794746e-06
     },
     {
       "N": 64,
       "experiment": "rendered_visual_simulator",
       "method": "oracle",
       "seed": 3,
-      "selected_real_utility": 0.9999999999999842,
-      "violation_rate": 1.414531952455569e-14
+      "selected_real_utility": 0.9999999999999802,
+      "violation_rate": 1.2188135075583147e-13
     },
     {
       "N": 128,
@@ -198,63 +198,63 @@
       "experiment": "rendered_visual_simulator",
       "method": "random",
       "seed": 3,
-      "selected_real_utility": 0.593974609375,
-      "violation_rate": 0.611328125
+      "selected_real_utility": 0.575908203125,
+      "violation_rate": 0.69140625
     },
     {
       "N": 2,
       "experiment": "rendered_visual_simulator",
       "method": "random",
       "seed": 3,
-      "selected_real_utility": 0.6010708353838583,
-      "violation_rate": 0.5986251230314961
+      "selected_real_utility": 0.583982375738189,
+      "violation_rate": 0.6802257627952757
     },
     {
       "N": 4,
       "experiment": "rendered_visual_simulator",
       "method": "random",
       "seed": 3,
-      "selected_real_utility": 0.5944616881092989,
-      "violation_rate": 0.6054462879640045
+      "selected_real_utility": 0.5802078687429697,
+      "violation_rate": 0.6820221105174353
     },
     {
       "N": 8,
       "experiment": "rendered_visual_simulator",
       "method": "random",
       "seed": 3,
-      "selected_real_utility": 0.5837937454163084,
-      "violation_rate": 0.6200131716990895
+      "selected_real_utility": 0.5712631294768546,
+      "violation_rate": 0.6954643374422196
     },
     {
       "N": 16,
       "experiment": "rendered_visual_simulator",
       "method": "random",
       "seed": 3,
-      "selected_real_utility": 0.5725288159900133,
-      "violation_rate": 0.6387098796247532
+      "selected_real_utility": 0.5600627637029367,
+      "violation_rate": 0.7181870733145095
     },
     {
       "N": 32,
       "experiment": "rendered_visual_simulator",
       "method": "random",
       "seed": 3,
-      "selected_real_utility": 0.5566608894849545,
-      "violation_rate": 0.6685339246574469
+      "selected_real_utility": 0.5448194381709085,
+      "violation_rate": 0.7518176682570995
     },
     {
       "N": 64,
       "experiment": "rendered_visual_simulator",
       "method": "random",
       "seed": 3,
-      "selected_real_utility": 0.5213070207101378,
-      "violation_rate": 0.7275501084861709
+      "selected_real_utility": 0.5123161935303933,
+      "violation_rate": 0.8079591883559052
     },
     {
       "N": 128,
       "experiment": "rendered_visual_simulator",
       "method": "random",
       "seed": 3,
-      "selected_real_utility": 0.44875,
+      "selected_real_utility": 0.46125000000000005,
       "violation_rate": 0.875
     },
     {
@@ -262,47 +262,47 @@
       "experiment": "rendered_visual_simulator",
       "method": "raw_semantic",
       "seed": 3,
-      "selected_real_utility": 0.593974609375,
-      "violation_rate": 0.611328125
+      "selected_real_utility": 0.575908203125,
+      "violation_rate": 0.69140625
     },
     {
       "N": 2,
       "experiment": "rendered_visual_simulator",
       "method": "raw_semantic",
       "seed": 3,
-      "selected_real_utility": 0.5822939222440945,
-      "violation_rate": 0.7040938730314961
+      "selected_real_utility": 0.5873089936023622,
+      "violation_rate": 0.7186423474409449
     },
     {
       "N": 4,
       "experiment": "rendered_visual_simulator",
       "method": "raw_semantic",
       "seed": 3,
-      "selected_real_utility": 0.521690859931571,
-      "violation_rate": 0.8609130460254969
+      "selected_real_utility": 0.5334499954302587,
+      "violation_rate": 0.861218023528309
     },
     {
       "N": 8,
       "experiment": "rendered_visual_simulator",
       "method": "raw_semantic",
       "seed": 3,
-      "selected_real_utility": 0.4662996065393307,
-      "violation_rate": 0.9743300182996849
+      "selected_real_utility": 0.47959653457676654,
+      "violation_rate": 0.9743301118164205
     },
     {
       "N": 16,
       "experiment": "rendered_visual_simulator",
       "method": "raw_semantic",
       "seed": 3,
-      "selected_real_utility": 0.4567052451232695,
-      "violation_rate": 0.9991551112182707
+      "selected_real_utility": 0.47026644936838713,
+      "violation_rate": 0.9991551112182726
     },
     {
       "N": 32,
       "experiment": "rendered_visual_simulator",
       "method": "raw_semantic",
       "seed": 3,
-      "selected_real_utility": 0.4643241261538148,
+      "selected_real_utility": 0.4779195372692561,
       "violation_rate": 0.9999993024587355
     },
     {
@@ -310,7 +310,7 @@
       "experiment": "rendered_visual_simulator",
       "method": "raw_semantic",
       "seed": 3,
-      "selected_real_utility": 0.4791474243151346,
+      "selected_real_utility": 0.4924750104774114,
       "violation_rate": 0.9999999999999957
     },
     {
@@ -318,7 +318,7 @@
       "experiment": "rendered_visual_simulator",
       "method": "raw_semantic",
       "seed": 3,
-      "selected_real_utility": 0.49500000000000005,
+      "selected_real_utility": 0.50875,
       "violation_rate": 1.0
     },
     {
@@ -326,56 +326,56 @@
       "experiment": "rendered_visual_simulator",
       "method": "semantic_plus_physical",
       "seed": 3,
-      "selected_real_utility": 0.593974609375,
-      "violation_rate": 0.611328125
+      "selected_real_utility": 0.575908203125,
+      "violation_rate": 0.69140625
     },
     {
       "N": 2,
       "experiment": "rendered_visual_simulator",
       "method": "semantic_plus_physical",
       "seed": 3,
-      "selected_real_utility": 0.7634082800196851,
-      "violation_rate": 0.37267778051181105
+      "selected_real_utility": 0.7212355437992126,
+      "violation_rate": 0.47846948818897633
     },
     {
       "N": 4,
       "experiment": "rendered_visual_simulator",
       "method": "semantic_plus_physical",
       "seed": 3,
-      "selected_real_utility": 0.9098154686914137,
-      "violation_rate": 0.13728885451818523
+      "selected_real_utility": 0.8758548757967755,
+      "violation_rate": 0.22970475956130482
     },
     {
       "N": 8,
       "experiment": "rendered_visual_simulator",
       "method": "semantic_plus_physical",
       "seed": 3,
-      "selected_real_utility": 0.9847259852404189,
-      "violation_rate": 0.017932030624663895
+      "selected_real_utility": 0.9722395618266899,
+      "violation_rate": 0.053305256153573184
     },
     {
       "N": 16,
       "experiment": "rendered_visual_simulator",
       "method": "semantic_plus_physical",
       "seed": 3,
-      "selected_real_utility": 0.9994317425392384,
-      "violation_rate": 0.00025495375951139663
+      "selected_real_utility": 0.9985787540273228,
+      "violation_rate": 0.002827996378046086
     },
     {
       "N": 32,
       "experiment": "rendered_visual_simulator",
       "method": "semantic_plus_physical",
       "seed": 3,
-      "selected_real_utility": 0.9999990165458432,
-      "violation_rate": 1.8394628163392464e-08
+      "selected_real_utility": 0.9999975995332333,
+      "violation_rate": 4.997216659794746e-06
     },
     {
       "N": 64,
       "experiment": "rendered_visual_simulator",
       "method": "semantic_plus_physical",
       "seed": 3,
-      "selected_real_utility": 0.9999999999999529,
-      "violation_rate": 1.7080948167121278e-20
+      "selected_real_utility": 0.9999999999999359,
+      "violation_rate": 1.218813507558315e-13
     },
     {
       "N": 128,
@@ -390,63 +390,63 @@
       "experiment": "rendered_visual_simulator",
       "method": "torch_calibrated",
       "seed": 3,
-      "selected_real_utility": 0.593974609375,
-      "violation_rate": 0.611328125
+      "selected_real_utility": 0.575908203125,
+      "violation_rate": 0.69140625
     },
     {
       "N": 2,
       "experiment": "rendered_visual_simulator",
       "method": "torch_calibrated",
       "seed": 3,
-      "selected_real_utility": 0.7883776759350394,
-      "violation_rate": 0.37287770669291337
+      "selected_real_utility": 0.7616930671751969,
+      "violation_rate": 0.4784694881889764
     },
     {
       "N": 4,
       "experiment": "rendered_visual_simulator",
       "method": "torch_calibrated",
       "seed": 3,
-      "selected_real_utility": 0.9284017730205599,
-      "violation_rate": 0.13779942350956131
+      "selected_real_utility": 0.9074745920041245,
+      "violation_rate": 0.22970475956130487
     },
     {
       "N": 8,
       "experiment": "rendered_visual_simulator",
       "method": "torch_calibrated",
       "seed": 3,
-      "selected_real_utility": 0.9881340672396783,
-      "violation_rate": 0.01835047081780178
+      "selected_real_utility": 0.9823923790009026,
+      "violation_rate": 0.053305256153573184
     },
     {
       "N": 16,
       "experiment": "rendered_visual_simulator",
       "method": "torch_calibrated",
       "seed": 3,
-      "selected_real_utility": 0.9989757812406999,
-      "violation_rate": 0.0003033549182353448
+      "selected_real_utility": 0.9992321855681114,
+      "violation_rate": 0.002827996378046086
     },
     {
       "N": 32,
       "experiment": "rendered_visual_simulator",
       "method": "torch_calibrated",
       "seed": 3,
-      "selected_real_utility": 0.9994020561204542,
-      "violation_rate": 9.11160229852079e-08
+      "selected_real_utility": 0.9999989172387633,
+      "violation_rate": 4.997216659794747e-06
     },
     {
       "N": 64,
       "experiment": "rendered_visual_simulator",
       "method": "torch_calibrated",
       "seed": 3,
-      "selected_real_utility": 0.9994008722843668,
-      "violation_rate": 1.0776986470437421e-16
+      "selected_real_utility": 0.99999999999998,
+      "violation_rate": 1.218813507558315e-13
     },
     {
       "N": 128,
       "experiment": "rendered_visual_simulator",
       "method": "torch_calibrated",
       "seed": 3,
-      "selected_real_utility": 0.999400871459695,
+      "selected_real_utility": 1.0,
       "violation_rate": 0.0
     },
     {
@@ -454,47 +454,47 @@
       "experiment": "rendered_visual_simulator",
       "method": "torch_semantic",
       "seed": 3,
-      "selected_real_utility": 0.593974609375,
-      "violation_rate": 0.611328125
+      "selected_real_utility": 0.575908203125,
+      "violation_rate": 0.69140625
     },
     {
       "N": 2,
       "experiment": "rendered_visual_simulator",
       "method": "torch_semantic",
       "seed": 3,
-      "selected_real_utility": 0.5760796013779528,
-      "violation_rate": 0.7103223425196851
+      "selected_real_utility": 0.5800859682578741,
+      "violation_rate": 0.7245939960629921
     },
     {
       "N": 4,
       "experiment": "rendered_visual_simulator",
       "method": "torch_semantic",
       "seed": 3,
-      "selected_real_utility": 0.508677279363517,
-      "violation_rate": 0.8663898692350956
+      "selected_real_utility": 0.5207980684055119,
+      "violation_rate": 0.8666599643794526
     },
     {
       "N": 8,
       "experiment": "rendered_visual_simulator",
       "method": "torch_semantic",
       "seed": 3,
-      "selected_real_utility": 0.4519818730050755,
-      "violation_rate": 0.9753904802121356
+      "selected_real_utility": 0.4675204350239986,
+      "violation_rate": 0.975390531786059
     },
     {
       "N": 16,
       "experiment": "rendered_visual_simulator",
       "method": "torch_semantic",
       "seed": 3,
-      "selected_real_utility": 0.44328733477020155,
-      "violation_rate": 0.9991931741766755
+      "selected_real_utility": 0.4599297719576574,
+      "violation_rate": 0.9991931741766756
     },
     {
       "N": 32,
       "experiment": "rendered_visual_simulator",
       "method": "torch_semantic",
       "seed": 3,
-      "selected_real_utility": 0.45171519875164956,
+      "selected_real_utility": 0.4684742922036743,
       "violation_rate": 0.9999994346168277
     },
     {
@@ -502,7 +502,7 @@
       "experiment": "rendered_visual_simulator",
       "method": "torch_semantic",
       "seed": 3,
-      "selected_real_utility": 0.45505241178784306,
+      "selected_real_utility": 0.47242223496389313,
       "violation_rate": 0.9999999999999984
     },
     {
@@ -510,7 +510,7 @@
       "experiment": "rendered_visual_simulator",
       "method": "torch_semantic",
       "seed": 3,
-      "selected_real_utility": 0.4447727272727273,
+      "selected_real_utility": 0.46375000000000005,
       "violation_rate": 1.0
     }
   ],

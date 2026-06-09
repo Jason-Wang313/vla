@@ -1,0 +1,20 @@
+ablation_regime,method,physical_certificate,verifier_score,pilot_labels,empirical_lower_bound,adaptive_n,abstention_fallback,selected_real_utility,violation_rate,fallback_rate,abstention_rate,dominant_gate,component_under_test,supporting_failure_mode,passes_controlled_acceptance,constructed_case_index
+adversarial_semantic_tail_with_imperfect_verifier,full_certified_tailguard,1,1,1,1,1,1,1.0,0.0,1.0,0.0,block_high_n,joint_stress,mixed_adversarial_tail,True,
+adversarial_semantic_tail_with_imperfect_verifier,no_physical_certificate,0,1,1,1,1,1,1.0,0.0,0.0,0.0,block_high_n,joint_stress,mixed_adversarial_tail,True,
+adversarial_semantic_tail_with_imperfect_verifier,no_verifier_score,1,0,1,1,1,1,1.0,0.0,0.0,0.0,block_high_n,joint_stress,mixed_adversarial_tail,True,
+adversarial_semantic_tail_with_imperfect_verifier,no_pilot_labels,1,1,0,1,1,1,0.04750000000000004,1.0,0.0,0.0,block_high_n,joint_stress,mixed_adversarial_tail,False,
+adversarial_semantic_tail_with_imperfect_verifier,no_empirical_lower_bound,1,1,1,0,1,1,1.0,0.0,0.0,0.0,block_high_n,joint_stress,mixed_adversarial_tail,True,
+adversarial_semantic_tail_with_imperfect_verifier,no_adaptive_n,1,1,1,1,0,1,1.0,0.0,0.0,0.0,block_high_n,joint_stress,mixed_adversarial_tail,True,
+adversarial_semantic_tail_with_imperfect_verifier,no_abstention_fallback,1,1,1,1,1,0,0.038000000000000034,1.0,0.0,0.0,block_high_n,joint_stress,mixed_adversarial_tail,False,
+certificate_blocks_unreachable_semantic_tail,full_certified_tailguard,1,1,1,1,1,1,1.0,0.0,0.0,0.0,block_high_n,no_physical_certificate,uncertified high-semantic candidate is physically impossible,True,0.0
+certificate_blocks_unreachable_semantic_tail,no_physical_certificate,0,1,1,1,1,1,0.04,1.0,0.0,0.0,unsafe_ablation,no_physical_certificate,uncertified high-semantic candidate is physically impossible,False,0.0
+verifier_resolves_certificate_blind_spot,full_certified_tailguard,1,1,1,1,1,1,1.0,0.0,0.0,0.0,block_high_n,no_verifier_score,certificate cannot distinguish a hidden low-feasibility candidate,True,1.0
+verifier_resolves_certificate_blind_spot,no_verifier_score,1,0,1,1,1,1,0.18,1.0,0.0,0.0,unsafe_ablation,no_verifier_score,certificate cannot distinguish a hidden low-feasibility candidate,False,1.0
+pilot_labels_correct_false_positive_verifier,full_certified_tailguard,1,1,1,1,1,1,1.0,0.0,0.0,0.0,block_high_n,no_pilot_labels,verifier false positive in semantic tail requires pilot utility labels,True,2.0
+pilot_labels_correct_false_positive_verifier,no_pilot_labels,1,1,0,1,1,1,0.05,1.0,0.0,0.0,unsafe_ablation,no_pilot_labels,verifier false positive in semantic tail requires pilot utility labels,False,2.0
+lower_bound_blocks_overfit_tail_calibration,full_certified_tailguard,1,1,1,1,1,1,1.0,0.0,0.0,0.0,block_high_n,no_empirical_lower_bound,mean calibrated score is high but selected-tail lower bound is unsafe,True,3.0
+lower_bound_blocks_overfit_tail_calibration,no_empirical_lower_bound,1,1,1,0,1,1,0.22,1.0,0.0,0.0,unsafe_ablation,no_empirical_lower_bound,mean calibrated score is high but selected-tail lower bound is unsafe,False,3.0
+adaptive_n_stops_before_bad_tail,full_certified_tailguard,1,1,1,1,1,1,1.0,0.0,1.0,0.0,block_high_n,no_adaptive_n,fixed high-N selection enters a bad certified semantic tail,True,4.0
+adaptive_n_stops_before_bad_tail,no_adaptive_n,1,1,1,1,0,1,0.25,1.0,0.0,0.0,unsafe_ablation,no_adaptive_n,fixed high-N selection enters a bad certified semantic tail,False,4.0
+fallback_prevents_low_certified_count_overclaim,full_certified_tailguard,1,1,1,1,1,1,1.0,0.0,1.0,0.0,block_high_n,no_abstention_fallback,too few certified candidates remain for high-N selection,True,5.0
+fallback_prevents_low_certified_count_overclaim,no_abstention_fallback,1,1,1,1,1,0,0.0,1.0,0.0,0.0,unsafe_ablation,no_abstention_fallback,too few certified candidates remain for high-N selection,False,5.0

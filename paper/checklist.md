@@ -14,5 +14,8 @@
 - [x] Simulator-style physical utility artifact.
 - [x] Noisy verifier robustness artifact.
 - [x] Calibration budget/noise artifact.
+- [x] Guarded RoboCasa/LIBERO external integration-status artifact.
+- [x] Claim-evidence appendix table.
+- [x] LLM usage disclosure note.
 - [ ] Real VLA benchmark validation.
 - [ ] Real-robot validation.

@@ -10,13 +10,22 @@
     128
   ],
   "artifacts": {
+    "calibration_sample_complexity": "results\\calibration_sample_complexity.csv",
+    "component_ablation": "results\\component_ablation_summary.csv",
     "controlled": "results\\controlled_semantic_overselection_artifact.json",
+    "failure_honesty": "results\\failure_honesty_summary.csv",
     "learned": "results\\learned_vla_artifact.json",
+    "optional_libero_benchmark_status": "results\\optional_vla\\libero_benchmark_status.json",
+    "optional_smolvla_rendered_bridge": "results\\optional_vla\\smolvla_rendered_bridge.json",
     "optional_vla_inference_probe": "results\\optional_vla\\inference_probe.json",
     "optional_vla_status": "results\\optional_vla\\adapter_status.json",
+    "phase_diagram": "results\\phase_diagram_summary.csv",
+    "physics_stress": "results\\physics_stress_summary.csv",
     "rendered_visual_simulator": "results\\rendered_visual_simulator_artifact.json",
     "repair": "results\\repair_artifact.json",
-    "robustness": "results\\robustness_artifact.json"
+    "robustness": "results\\robustness_artifact.json",
+    "tailguard": "results\\tailguard_artifact.json",
+    "tailguard_gate_examples": "results\\tailguard_gate_examples.csv"
   },
   "candidates_per_state": 128,
   "epochs": 1,
@@ -30,6 +39,14 @@
     "results\\figures\\figure8_robustness_repairs.png",
     "results\\figures\\figure9_calibration_budget_noise.png",
     "results\\figures\\figure10_learned_scorer_comparison.png",
+    "results\\figures\\figure11_tailguard_adaptive_n.png",
+    "results\\figures\\figure12_phase_diagram.png",
+    "results\\figures\\figure14_imperfect_verifier_map.png",
+    "results\\figures\\figure13_calibration_sample_complexity.png",
+    "results\\figures\\figure15_physics_failure_decomposition.png",
+    "results\\figures\\figure17_component_ablation.png",
+    "results\\figures\\figure18_failure_honesty.png",
+    "results\\figures\\figure16_smolvla_rendered_bridge_status.png",
     "results\\figures\\figure7_rendered_scene_examples.png"
   ],
   "mc_trials": 120,

@@ -28,6 +28,6 @@ The adapter is guarded and non-blocking. It may return:
 - `INFERENCE_PROBE_PASS`: the optional heavyweight probe loaded cached SmoLVLA on CPU and emitted an action chunk from synthetic image/state/language input.
 - `INFERENCE_PROBE_FAIL`: the optional heavyweight probe attempted real model inference but failed before producing a finite action chunk.
 
-Current status after the v2 gap-closure pass: cached SmoLVLA config/weights exist, `lerobot` is importable, and the CPU inference probe can run if optional dependencies are installed. `libero` is still not importable, so LIBERO benchmark validation remains unsupported.
+Current status after the v2 gap-closure pass: cached SmoLVLA config/weights exist, `lerobot` is importable in the core optional path, and a prior CPU inference probe artifact records successful synthetic action emission. `libero` is still not importable in the core optional path, while the isolated external `libero310` environment can import `libero` but has no guarded reset/step wrapper. LIBERO benchmark validation remains unsupported.
 
 No claim audit should mark real VLA benchmark validation as supported unless the optional adapter runs model inference inside an actual benchmark or simulator task with physical success evaluation. The synthetic SmoLVLA action probe is useful plumbing evidence, not robotics validation.

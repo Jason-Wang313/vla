@@ -7,7 +7,7 @@
       "method": "grounded_combined",
       "seed": 3,
       "selected_real_utility": 0.42295735677083335,
-      "violation_rate": 0.359375
+      "violation_rate": 0.7900390625
     },
     {
       "N": 2,
@@ -15,7 +15,7 @@
       "method": "grounded_combined",
       "seed": 3,
       "selected_real_utility": 0.548097625492126,
-      "violation_rate": 0.24783156988188976
+      "violation_rate": 0.6263072096456692
     },
     {
       "N": 4,
@@ -23,7 +23,7 @@
       "method": "grounded_combined",
       "seed": 3,
       "selected_real_utility": 0.7201789658128671,
-      "violation_rate": 0.18796871484814398
+      "violation_rate": 0.39195832161604804
     },
     {
       "N": 8,
@@ -31,7 +31,7 @@
       "method": "grounded_combined",
       "seed": 3,
       "selected_real_utility": 0.8990114745333624,
-      "violation_rate": 0.10314936376573934
+      "violation_rate": 0.1524650702051289
     },
     {
       "N": 16,
@@ -39,7 +39,7 @@
       "method": "grounded_combined",
       "seed": 3,
       "selected_real_utility": 0.9866845695438615,
-      "violation_rate": 0.019957876946669048
+      "violation_rate": 0.022881061665125667
     },
     {
       "N": 32,
@@ -47,7 +47,7 @@
       "method": "grounded_combined",
       "seed": 3,
       "selected_real_utility": 0.9997237098831112,
-      "violation_rate": 0.0005346525673156923
+      "violation_rate": 0.0005442062838708278
     },
     {
       "N": 64,
@@ -55,7 +55,7 @@
       "method": "grounded_combined",
       "seed": 3,
       "selected_real_utility": 0.9999999139589428,
-      "violation_rate": 1.7648889004468727e-07
+      "violation_rate": 1.7649255396990544e-07
     },
     {
       "N": 128,
@@ -71,7 +71,7 @@
       "method": "oracle",
       "seed": 3,
       "selected_real_utility": 0.42295735677083335,
-      "violation_rate": 0.359375
+      "violation_rate": 0.7900390625
     },
     {
       "N": 2,
@@ -79,7 +79,7 @@
       "method": "oracle",
       "seed": 3,
       "selected_real_utility": 0.6295965079560367,
-      "violation_rate": 0.2249015748031496
+      "violation_rate": 0.6240157480314961
     },
     {
       "N": 4,
@@ -87,7 +87,7 @@
       "method": "oracle",
       "seed": 3,
       "selected_real_utility": 0.8293121121578553,
-      "violation_rate": 0.13546870313085863
+      "violation_rate": 0.3893546470753656
     },
     {
       "N": 8,
@@ -95,7 +95,7 @@
       "method": "oracle",
       "seed": 3,
       "selected_real_utility": 0.9547847574661315,
-      "violation_rate": 0.039649755986649104
+      "violation_rate": 0.1530196405422295
     },
     {
       "N": 16,
@@ -103,7 +103,7 @@
       "method": "oracle",
       "seed": 3,
       "selected_real_utility": 0.9951445925470479,
-      "violation_rate": 0.002897513139886905
+      "violation_rate": 0.028659939997066855
     },
     {
       "N": 32,
@@ -111,7 +111,7 @@
       "method": "oracle",
       "seed": 3,
       "selected_real_utility": 0.999920933101187,
-      "violation_rate": 4.4248536929346843e-05
+      "violation_rate": 0.00873061992211824
     },
     {
       "N": 64,
@@ -119,7 +119,7 @@
       "method": "oracle",
       "seed": 3,
       "selected_real_utility": 0.9999999947696445,
-      "violation_rate": 1.1323289913025065e-09
+      "violation_rate": 0.008370557589154521
     },
     {
       "N": 128,
@@ -127,7 +127,7 @@
       "method": "oracle",
       "seed": 3,
       "selected_real_utility": 1.0,
-      "violation_rate": 0.0
+      "violation_rate": 0.008370535714285714
     },
     {
       "N": 1,
@@ -135,7 +135,7 @@
       "method": "random",
       "seed": 3,
       "selected_real_utility": 0.42295735677083335,
-      "violation_rate": 0.359375
+      "violation_rate": 0.7900390625
     },
     {
       "N": 2,
@@ -143,7 +143,7 @@
       "method": "random",
       "seed": 3,
       "selected_real_utility": 0.42128880618438325,
-      "violation_rate": 0.35502276082677164
+      "violation_rate": 0.7994279035433072
     },
     {
       "N": 4,
@@ -151,7 +151,7 @@
       "method": "random",
       "seed": 3,
       "selected_real_utility": 0.42930010486970377,
-      "violation_rate": 0.3497599831271091
+      "violation_rate": 0.8018581388263968
     },
     {
       "N": 8,
@@ -159,7 +159,7 @@
       "method": "random",
       "seed": 3,
       "selected_real_utility": 0.4498734353034146,
-      "violation_rate": 0.3457192735943371
+      "violation_rate": 0.792616487740542
     },
     {
       "N": 16,
@@ -167,7 +167,7 @@
       "method": "random",
       "seed": 3,
       "selected_real_utility": 0.4785591808500218,
-      "violation_rate": 0.33147999710877357
+      "violation_rate": 0.775978916269253
     },
     {
       "N": 32,
@@ -175,7 +175,7 @@
       "method": "random",
       "seed": 3,
       "selected_real_utility": 0.5010318000249157,
-      "violation_rate": 0.3144707404271273
+      "violation_rate": 0.7606595480648258
     },
     {
       "N": 64,
@@ -183,7 +183,7 @@
       "method": "random",
       "seed": 3,
       "selected_real_utility": 0.5048405807686356,
-      "violation_rate": 0.2917295684602774
+      "violation_rate": 0.7390775846065946
     },
     {
       "N": 128,
@@ -191,7 +191,7 @@
       "method": "random",
       "seed": 3,
       "selected_real_utility": 0.5718749999999999,
-      "violation_rate": 0.25
+      "violation_rate": 0.625
     },
     {
       "N": 1,
@@ -199,7 +199,7 @@
       "method": "raw_semantic",
       "seed": 3,
       "selected_real_utility": 0.42295735677083335,
-      "violation_rate": 0.359375
+      "violation_rate": 0.7900390625
     },
     {
       "N": 2,
@@ -207,7 +207,7 @@
       "method": "raw_semantic",
       "seed": 3,
       "selected_real_utility": 0.4062057855561024,
-      "violation_rate": 0.5118725393700787
+      "violation_rate": 0.7743294783464567
     },
     {
       "N": 4,
@@ -215,7 +215,7 @@
       "method": "raw_semantic",
       "seed": 3,
       "selected_real_utility": 0.3561618356299212,
-      "violation_rate": 0.7289330357142858
+      "violation_rate": 0.8457668260217472
     },
     {
       "N": 8,
@@ -223,7 +223,7 @@
       "method": "raw_semantic",
       "seed": 3,
       "selected_real_utility": 0.28321550912039983,
-      "violation_rate": 0.9068472777109923
+      "violation_rate": 0.9437523211482083
     },
     {
       "N": 16,
@@ -231,7 +231,7 @@
       "method": "raw_semantic",
       "seed": 3,
       "selected_real_utility": 0.24936454853635215,
-      "violation_rate": 0.9703360660107625
+      "violation_rate": 0.9792983546228011
     },
     {
       "N": 32,
@@ -239,7 +239,7 @@
       "method": "raw_semantic",
       "seed": 3,
       "selected_real_utility": 0.2544790070973775,
-      "violation_rate": 0.9662749288309493
+      "violation_rate": 0.9686496316576012
     },
     {
       "N": 64,
@@ -247,7 +247,7 @@
       "method": "raw_semantic",
       "seed": 3,
       "selected_real_utility": 0.2874731072867541,
-      "violation_rate": 0.9374028591670571
+      "violation_rate": 0.9374999875255918
     },
     {
       "N": 128,
@@ -263,7 +263,7 @@
       "method": "semantic_plus_physical",
       "seed": 3,
       "selected_real_utility": 0.42295735677083335,
-      "violation_rate": 0.359375
+      "violation_rate": 0.7900390625
     },
     {
       "N": 2,
@@ -271,7 +271,7 @@
       "method": "semantic_plus_physical",
       "seed": 3,
       "selected_real_utility": 0.5150244525098425,
-      "violation_rate": 0.1490218996062992
+      "violation_rate": 0.6565883366141734
     },
     {
       "N": 4,
@@ -279,7 +279,7 @@
       "method": "semantic_plus_physical",
       "seed": 3,
       "selected_real_utility": 0.5955655092918073,
-      "violation_rate": 0.030957032714660666
+      "violation_rate": 0.5066285972065991
     },
     {
       "N": 8,
@@ -287,7 +287,7 @@
       "method": "semantic_plus_physical",
       "seed": 3,
       "selected_real_utility": 0.6680423505512255,
-      "violation_rate": 0.0030058410722928865
+      "violation_rate": 0.3935219074576783
     },
     {
       "N": 16,
@@ -295,7 +295,7 @@
       "method": "semantic_plus_physical",
       "seed": 3,
       "selected_real_utility": 0.7206248407779079,
-      "violation_rate": 6.724043329069507e-05
+      "violation_rate": 0.32871567817773373
     },
     {
       "N": 32,
@@ -303,7 +303,7 @@
       "method": "semantic_plus_physical",
       "seed": 3,
       "selected_real_utility": 0.7509962289347836,
-      "violation_rate": 1.8550560477587736e-08
+      "violation_rate": 0.2929456215407476
     },
     {
       "N": 64,
@@ -311,7 +311,7 @@
       "method": "semantic_plus_physical",
       "seed": 3,
       "selected_real_utility": 0.7694119263846241,
-      "violation_rate": 6.725384799657953e-19
+      "violation_rate": 0.2712800866063245
     },
     {
       "N": 128,
@@ -319,7 +319,7 @@
       "method": "semantic_plus_physical",
       "seed": 3,
       "selected_real_utility": 0.7875,
-      "violation_rate": 0.0
+      "violation_rate": 0.25
     }
   ],
   "seed": 3
