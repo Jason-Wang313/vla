@@ -8,7 +8,7 @@
 - Failure modes are constructed to isolate semantic affordance over-selection.
 - The theorem is conditional on a fixed generator/scorer stack.
 - Calibration requires pilot real-utility labels.
-- Certified TailGuard-BoN inherits any blind spots in the modeled certificate predicates, pilot labels, verifier scores, and selected-tail coverage.
+- Certified TailGuard inherits any blind spots in the modeled certificate predicates, pilot labels, verifier scores, and selected-tail coverage.
 - Physical verifiers can be wrong.
 - A certificate only covers modeled physics; unmodeled perception, dynamics, contact, calibration, or hardware failures are outside the guarantee.
 - Near-100% repair claims apply only to controlled/simulator regimes where the certificate covers the relevant failure modes.

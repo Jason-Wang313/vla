@@ -12,7 +12,7 @@ The v2 rendered benchmark adds RGB scene observations to the controlled VLA-styl
 
 Implementation:
 
-- rendering module: `src/vla_best_of_n/rendering.py`
+- rendering module: `src/vla_tailguard_audit/rendering.py`
 - experiment output: `results/rendered/`
 - metadata: `results/rendered_visual_metadata.csv`
 - summary: `results/rendered_summary.csv`

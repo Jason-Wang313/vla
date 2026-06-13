@@ -40,14 +40,14 @@ Cached local model folders exist:
 5. Heavier PyTorch visual-language-action scorer.
 6. Optional guarded SmoLVLA/real-VLA adapter.
 
-Items 1-5 now have implemented artifacts. The repository now also includes Certified TailGuard-BoN, phase diagrams, calibration sample-complexity sweeps, component ablations, failure-honesty artifacts, and first-principles physics stress decompositions. Item 6 has guarded readiness/status artifacts and a heavyweight synthetic CPU inference probe path: cached SmoLVLA can load through LeRobot and emit a finite action chunk from synthetic visual/state/language input when the optional probe is run. Actual benchmark evaluation remains future work.
+Items 1-5 now have implemented artifacts. The repository now also includes Certified TailGuard, phase diagrams, calibration sample-complexity sweeps, component ablations, failure-honesty artifacts, and first-principles physics stress decompositions. Item 6 has guarded readiness/status artifacts and a heavyweight synthetic CPU inference probe path: cached SmoLVLA can load through LeRobot and emit a finite action chunk from synthetic visual/state/language input when the optional probe is run. Actual benchmark evaluation remains future work.
 
 The latest external benchmark pass adds `experiments/run_external_benchmark.py` and `scripts/run_external_benchmark.sh`. It records RoboCasa package importability, assets/macros, task registration, bounded reset/step attempts, reward/success traces when available, and a separate LIBERO status row. The current artifact is integration-only: RoboCasa imports and registers the target task, but the bounded reset/step attempt timed out before reward or success metrics were produced.
 
-## Certified TailGuard-BoN Additions
+## Certified TailGuard Additions
 
-- `src/vla_best_of_n/tailguard.py` implements certificate predicates, `TailGuardConfig`, `TailGuardResult`, `fit_tail_calibrator`, `predict_selected_tail_curve`, and `tailguard_select`.
-- `results/tailguard_summary.csv` compares Certified TailGuard with raw fixed-N BoN, `N=1`, random high-N, verifier filtering, calibrated high-N without certificates, certificate-only filtering, TailGuard ablations, and oracle.
+- `src/vla_tailguard_audit/tailguard.py` implements certificate predicates, `TailGuardConfig`, `TailGuardResult`, `fit_tail_calibrator`, `predict_selected_tail_curve`, and `tailguard_select`.
+- `results/tailguard_summary.csv` compares Certified TailGuard with raw fixed high-N selection, `N=1`, random high-N, verifier filtering, calibrated high-N without certificates, certificate-only filtering, TailGuard ablations, and oracle.
 - `results/tailguard_artifact.json` records controller decisions, selected N, curves, lower bounds, gate decisions, reason codes, certificate pass/failure types, certified candidate count, fallback, abstention, certified selected utility, and certified violation.
 - `results/tailguard_gate_examples.csv` gives constructed examples for `allow_high_n`, `stop_early`, `collect_pilot_labels`, and `block_high_n`.
 - `results/component_ablation_summary.csv` and `results/failure_honesty_summary.csv` record component necessity and abstain/fallback regimes.

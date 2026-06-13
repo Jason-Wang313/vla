@@ -2,8 +2,8 @@
   "claims": [
     {
       "category": "theorem claims",
-      "claim": "Exact finite tie-aware Best-of-N law, selected-tail principle, and semantic-score no-free-lunch examples are implemented and documented.",
-      "evidence": "src/vla_best_of_n/theory.py; docs/theory.md; tests/test_theory.py",
+      "claim": "Exact finite tie-aware score-tail law, selected-tail principle, and semantic-score no-free-lunch examples are implemented and documented.",
+      "evidence": "src/vla_tailguard_audit/theory.py; docs/theory.md; tests/test_theory.py",
       "status": "SUPPORTED"
     },
     {
@@ -62,7 +62,7 @@
     },
     {
       "category": "Certified TailGuard method claims",
-      "claim": "Certified TailGuard-BoN uses hard physical certificates, tail lower bounds, fallback/abstention metadata, and reaches >=0.98 utility with <=0.01 violation in controlled stress.",
+      "claim": "Certified TailGuard uses hard physical certificates, tail lower bounds, fallback/abstention metadata, and reaches >=0.98 utility with <=0.01 violation in controlled stress.",
       "evidence": "results\\tailguard_summary.csv; results\\tailguard_artifact.json; results\\tailguard_gate_examples.csv",
       "status": "SUPPORTED"
     },

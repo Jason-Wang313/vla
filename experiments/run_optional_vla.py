@@ -6,12 +6,12 @@ import argparse
 import os
 from pathlib import Path
 
-from vla_best_of_n.optional_vla import attempt_smolvla_cpu_inference_probe, write_optional_vla_status
+from vla_tailguard_audit.optional_vla import attempt_smolvla_cpu_inference_probe, write_optional_vla_status
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--results-dir", default=os.environ.get("VLA_BON_RESULTS_DIR", "results"))
+    parser.add_argument("--results-dir", default=os.environ.get("VLA_TAILGUARD_RESULTS_DIR", "results"))
     parser.add_argument("--cache-root", default=None)
     parser.add_argument("--attempt-inference", action="store_true")
     parser.add_argument("--task", default="put the red mug in the cabinet")

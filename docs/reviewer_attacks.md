@@ -23,7 +23,7 @@
 21. "Could the physical verifier be wrong?" Response: yes, and the limitations state that verifier error can preserve or worsen tail failures.
 22. "Is calibration just training on the answer?" Response: calibration uses small pilot real-utility labels and is evaluated on separate held-out scenes.
 23. "Does the exact law assume independent candidates?" Response: no, it audits a fixed finite candidate pool sampled without replacement.
-24. "Do average correlations suffice?" Response: no, because Best-of-N stresses the upper score tail, which can behave differently from the average.
+24. "Do average correlations suffice?" Response: no, because score-tail stresses the upper score tail, which can behave differently from the average.
 
 ## ICLR Reviewer-Attack Matrix
 

@@ -2,7 +2,7 @@
 
 The v2 simulator-style evaluator recomputes real utility from rendered scene geometry and action-candidate constraints.
 
-Implementation: `src/vla_best_of_n/simulator.py`
+Implementation: `src/vla_tailguard_audit/simulator.py`
 
 The evaluator checks:
 

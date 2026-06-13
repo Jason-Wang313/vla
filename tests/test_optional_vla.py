@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from vla_best_of_n.optional_vla import (
+from vla_tailguard_audit.optional_vla import (
     assess_optional_vla,
     attempt_smolvla_cpu_inference_probe,
     discover_cached_models,

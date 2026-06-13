@@ -1,4 +1,4 @@
-"""First-principles stress tests for Certified TailGuard-BoN."""
+"""First-principles stress tests for Certified TailGuard."""
 
 from __future__ import annotations
 
@@ -418,8 +418,8 @@ def tailguard_adaptive_summary(
         tail_metrics["certified_violation_rate"] = (
             0.0 if result.certified_violation_rate is None else float(result.certified_violation_rate)
         )
-        method_metrics["certified_tailguard_bon"].append(tail_metrics)
-        method_metrics["tailguard_bon"].append(dict(tail_metrics))
+        method_metrics["certified_tailguard"].append(tail_metrics)
+        method_metrics["tailguard"].append(dict(tail_metrics))
         decisions.append(result)
 
     rows = []
@@ -431,7 +431,7 @@ def tailguard_adaptive_summary(
         row["pilot_label_count"] = int(calibrator.label_count)
         row["tail_label_count"] = int(calibrator.tail_label_count)
         row["confidence_radius"] = float(calibrator.confidence_radius)
-        if method in {"certified_tailguard_bon", "tailguard_bon"}:
+        if method in {"certified_tailguard", "tailguard"}:
             gates = Counter(decision.gate_decision for decision in decisions)
             for gate in ["allow_high_n", "stop_early", "collect_pilot_labels", "block_high_n"]:
                 row[f"{gate}_rate"] = float(gates.get(gate, 0) / max(1, len(decisions)))
@@ -443,8 +443,8 @@ def tailguard_adaptive_summary(
         rows.append(row)
     summary = pd.DataFrame(rows).sort_values("method").reset_index(drop=True)
     artifact = {
-        "method": "Certified TailGuard-BoN",
-        "implementation_short_name": "TailGuard-BoN",
+        "method": "Certified TailGuard",
+        "implementation_short_name": "TailGuard",
         "n_grid": [int(n) for n in grid],
         "pilot_label_count": int(calibrator.label_count),
         "tail_label_count": int(calibrator.tail_label_count),
@@ -704,7 +704,7 @@ def component_ablation_summary(
     candidates: int,
     n_grid: Iterable[int],
 ) -> pd.DataFrame:
-    """Ablate the Certified TailGuard-BoN components on a hard stress regime."""
+    """Ablate the Certified TailGuard components on a hard stress regime."""
 
     knobs = StressKnobs(
         semantic_physical_misalignment=0.82,

@@ -1,4 +1,4 @@
-"""Run controlled and learned VLA-style Best-of-N experiments."""
+"""Run controlled and learned VLA-style score-tail experiments."""
 
 from __future__ import annotations
 
@@ -9,22 +9,22 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from vla_best_of_n.diagnostics import evaluate_selection, seed_variance
-from vla_best_of_n.io import ensure_dir, write_csv, write_json
-from vla_best_of_n.learned_vla import LearnedVLAScorer, RealUtilityCalibrator
-from vla_best_of_n.optional_vla import write_optional_vla_status
-from vla_best_of_n.plotting import create_figures
-from vla_best_of_n.rendering import attach_visual_observation, create_render_montage, render_pools
-from vla_best_of_n.robustness import robustness_scores
-from vla_best_of_n.scorers import (
+from vla_tailguard_audit.diagnostics import evaluate_selection, seed_variance
+from vla_tailguard_audit.io import ensure_dir, write_csv, write_json
+from vla_tailguard_audit.learned_vla import LearnedVLAScorer, RealUtilityCalibrator
+from vla_tailguard_audit.optional_vla import write_optional_vla_status
+from vla_tailguard_audit.plotting import create_figures
+from vla_tailguard_audit.rendering import attach_visual_observation, create_render_montage, render_pools
+from vla_tailguard_audit.robustness import robustness_scores
+from vla_tailguard_audit.scorers import (
     grounded_score,
     hand_scorer_dict,
     oracle_score,
     random_score,
     semantic_plus_physical_score,
 )
-from vla_best_of_n.simulator import simulate_pool
-from vla_best_of_n.stress import (
+from vla_tailguard_audit.simulator import simulate_pool
+from vla_tailguard_audit.stress import (
     calibration_sample_complexity_summary,
     component_ablation_summary,
     failure_honesty_summary,
@@ -33,8 +33,8 @@ from vla_best_of_n.stress import (
     tailguard_adaptive_summary,
     tailguard_gate_examples_summary,
 )
-from vla_best_of_n.torch_vla import TorchVLAScorer, torch_available
-from vla_best_of_n.vla_env import CandidatePool, generate_pools
+from vla_tailguard_audit.torch_vla import TorchVLAScorer, torch_available
+from vla_tailguard_audit.vla_env import CandidatePool, generate_pools
 
 
 def _ns_for(candidates: int) -> list[int]:
@@ -312,7 +312,7 @@ def run(mode: str, results_dir: Path, seeds: list[int], states: int, candidates:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--mode", choices=["smoke", "full"], default="full")
-    parser.add_argument("--results-dir", default=os.environ.get("VLA_BON_RESULTS_DIR", "results"))
+    parser.add_argument("--results-dir", default=os.environ.get("VLA_TAILGUARD_RESULTS_DIR", "results"))
     parser.add_argument("--seeds", nargs="*", type=int)
     parser.add_argument("--states", type=int)
     parser.add_argument("--candidates", type=int)

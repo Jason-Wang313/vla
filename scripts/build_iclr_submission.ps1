@@ -5,7 +5,7 @@ $paperDir = Join-Path $repoRoot "paper\iclr2026"
 $source = Join-Path $paperDir "main.tex"
 $builtPdf = Join-Path $paperDir "main.pdf"
 $downloads = Join-Path $env:USERPROFILE "Downloads"
-$destination = Join-Path $downloads "certified-tailguard-bon-iclr-submission.pdf"
+$destination = Join-Path $downloads "certified-tailguard-vla-iclr-submission.pdf"
 
 if (-not (Test-Path -LiteralPath $source)) {
     throw "Cannot find LaTeX source: $source"

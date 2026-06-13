@@ -96,7 +96,7 @@ def _probe_code() -> str:
         import traceback
 
         REQUIRED_MODULES = ["robocasa", "gymnasium", "robosuite", "lerobot", "torch", "transformers", "libero"]
-        SENTINEL = "__VLA_BON_EXTERNAL_JSON__="
+        SENTINEL = "__VLA_TAILGUARD_EXTERNAL_JSON__="
 
         def version(name):
             try:
@@ -200,14 +200,14 @@ def _probe_code() -> str:
         def emit(payload):
             print(SENTINEL + json.dumps(payload, sort_keys=True, default=to_jsonable))
 
-        benchmark = os.environ.get("VLA_BON_EXTERNAL_BENCHMARK", "robocasa")
-        env_id = os.environ.get("VLA_BON_EXTERNAL_ENV_ID", "robocasa/PickPlaceCounterToCabinet")
-        split = os.environ.get("VLA_BON_EXTERNAL_SPLIT", "pretrain")
-        attempt_reset = os.environ.get("VLA_BON_EXTERNAL_ATTEMPT_RESET", "0") == "1"
-        max_steps = int(os.environ.get("VLA_BON_EXTERNAL_MAX_STEPS", "1"))
-        seeds = [int(item) for item in os.environ.get("VLA_BON_EXTERNAL_SEEDS", "0").split(",") if item]
-        policy_kinds = [item for item in os.environ.get("VLA_BON_EXTERNAL_POLICIES", "zero,random").split(",") if item]
-        repo_root = os.environ.get("VLA_BON_EXTERNAL_REPO_ROOT", "")
+        benchmark = os.environ.get("VLA_TAILGUARD_EXTERNAL_BENCHMARK", "robocasa")
+        env_id = os.environ.get("VLA_TAILGUARD_EXTERNAL_ENV_ID", "robocasa/PickPlaceCounterToCabinet")
+        split = os.environ.get("VLA_TAILGUARD_EXTERNAL_SPLIT", "pretrain")
+        attempt_reset = os.environ.get("VLA_TAILGUARD_EXTERNAL_ATTEMPT_RESET", "0") == "1"
+        max_steps = int(os.environ.get("VLA_TAILGUARD_EXTERNAL_MAX_STEPS", "1"))
+        seeds = [int(item) for item in os.environ.get("VLA_TAILGUARD_EXTERNAL_SEEDS", "0").split(",") if item]
+        policy_kinds = [item for item in os.environ.get("VLA_TAILGUARD_EXTERNAL_POLICIES", "zero,random").split(",") if item]
+        repo_root = os.environ.get("VLA_TAILGUARD_EXTERNAL_REPO_ROOT", "")
 
         module_importable = {name: importlib.util.find_spec(name) is not None for name in REQUIRED_MODULES}
         package_versions = {name: version(name) for name in REQUIRED_MODULES}
@@ -351,14 +351,14 @@ def _run_probe_subprocess(
     env.update(
         {
             "PYTHONUTF8": "1",
-            "VLA_BON_EXTERNAL_BENCHMARK": benchmark,
-            "VLA_BON_EXTERNAL_ENV_ID": env_id,
-            "VLA_BON_EXTERNAL_SPLIT": split,
-            "VLA_BON_EXTERNAL_ATTEMPT_RESET": "1" if attempt_reset else "0",
-            "VLA_BON_EXTERNAL_MAX_STEPS": str(max_steps),
-            "VLA_BON_EXTERNAL_SEEDS": ",".join(str(int(seed)) for seed in seeds),
-            "VLA_BON_EXTERNAL_POLICIES": ",".join(policy_kinds),
-            "VLA_BON_EXTERNAL_REPO_ROOT": str(external_repo_root),
+            "VLA_TAILGUARD_EXTERNAL_BENCHMARK": benchmark,
+            "VLA_TAILGUARD_EXTERNAL_ENV_ID": env_id,
+            "VLA_TAILGUARD_EXTERNAL_SPLIT": split,
+            "VLA_TAILGUARD_EXTERNAL_ATTEMPT_RESET": "1" if attempt_reset else "0",
+            "VLA_TAILGUARD_EXTERNAL_MAX_STEPS": str(max_steps),
+            "VLA_TAILGUARD_EXTERNAL_SEEDS": ",".join(str(int(seed)) for seed in seeds),
+            "VLA_TAILGUARD_EXTERNAL_POLICIES": ",".join(policy_kinds),
+            "VLA_TAILGUARD_EXTERNAL_REPO_ROOT": str(external_repo_root),
         }
     )
     try:
@@ -399,7 +399,7 @@ def _run_probe_subprocess(
         }
 
     payload = None
-    sentinel = "__VLA_BON_EXTERNAL_JSON__="
+    sentinel = "__VLA_TAILGUARD_EXTERNAL_JSON__="
     for line in proc.stdout.splitlines()[::-1]:
         if line.startswith(sentinel):
             payload = json.loads(line[len(sentinel) :])

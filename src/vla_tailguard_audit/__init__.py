@@ -1,4 +1,4 @@
-"""VLA Best-of-N diagnostics for semantic affordance over-selection."""
+"""VLA score-tail diagnostics for semantic affordance over-selection."""
 
 __all__ = [
     "theory",

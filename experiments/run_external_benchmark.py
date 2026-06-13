@@ -6,12 +6,12 @@ import argparse
 import os
 from pathlib import Path
 
-from vla_best_of_n.external_benchmark import DEFAULT_EXTERNAL_ROOT, DEFAULT_ROBOCASA_ENV_ID, run_external_benchmark
+from vla_tailguard_audit.external_benchmark import DEFAULT_EXTERNAL_ROOT, DEFAULT_ROBOCASA_ENV_ID, run_external_benchmark
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--results-dir", default=os.environ.get("VLA_BON_RESULTS_DIR", "results"))
+    parser.add_argument("--results-dir", default=os.environ.get("VLA_TAILGUARD_RESULTS_DIR", "results"))
     parser.add_argument("--external-root", default=str(DEFAULT_EXTERNAL_ROOT))
     parser.add_argument("--env-id", default=DEFAULT_ROBOCASA_ENV_ID)
     parser.add_argument("--split", default="pretrain")

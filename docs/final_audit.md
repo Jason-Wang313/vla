@@ -1,12 +1,12 @@
 # Final Audit
 
-Repository path at latest audit: `C:\Users\wangz\best of n vla`.
+Repository path at latest audit: `C:\Users\wangz\score-tail vla`.
 
-Git checkpoint: `7a8cc45` (`Initial paper-quality VLA Best-of-N checkpoint`). The repository was initialized during the resumability pass.
+Git checkpoint: `7a8cc45` (`Initial paper-quality VLA score-tail checkpoint`). The repository was initialized during the resumability pass.
 
 ## V2 TailGuard Addendum
 
-Latest v2 pass upgrades the method to **Certified TailGuard-BoN** while retaining `TailGuard-BoN` as the implementation short name. The headline method is implemented in `src/vla_best_of_n/tailguard.py`; stress sweeps are implemented in `src/vla_best_of_n/stress.py`.
+Latest v2 pass upgrades the method to **Certified TailGuard** while retaining `TailGuard` as the implementation short name. The headline method is implemented in `src/vla_tailguard_audit/tailguard.py`; stress sweeps are implemented in `src/vla_tailguard_audit/stress.py`.
 
 Certified additions:
 
@@ -58,7 +58,7 @@ Latest claim-audit additions are designed to support Certified TailGuard method 
 
 Latest guarded external runner additions:
 
-- implementation: `src/vla_best_of_n/external_benchmark.py`
+- implementation: `src/vla_tailguard_audit/external_benchmark.py`
 - CLI: `experiments/run_external_benchmark.py`
 - shell wrapper: `scripts/run_external_benchmark.sh`
 - tests: `tests/test_external_benchmark.py`
@@ -90,7 +90,7 @@ Component-ablation strengthening: `results/component_ablation_summary.csv` now i
 
 Intermediate note: plain `pytest` initially failed because `scripts` was not importable from the standalone pytest path. This was fixed by adding `scripts/__init__.py` and setting `pythonpath = ["src", "."]` in `pyproject.toml`; the final standalone `pytest` pass above is from the fixed state.
 
-Rename note: the repository was later renamed from `C:\Users\wangz\vla-best-of-n` to `C:\Users\wangz\best of n vla`. The command table above reflects checks run from the renamed path.
+Rename note: the repository was later renamed from `C:\Users\wangz\vla-score-tail` to `C:\Users\wangz\score-tail vla`. The command table above reflects checks run from the renamed path.
 
 ## 2. Artifact Inventory
 
@@ -247,7 +247,7 @@ At `N=128`:
 
 ## 6. Not-Clone Checklist
 
-- reused math: finite tie-aware Best-of-N law only.
+- reused math: finite tie-aware score-tail law only.
 - new scientific object: VLA-style instruction, visual/object observation, action candidate, semantic score, physical feasibility, calibrated score, real utility.
 - new VLA-specific failure: semantic affordance over-selection.
 - new VLA-specific experiments: object/receptacle scenes, distractors, reachability, collision, wrong-object and wrong-target failures.
@@ -316,7 +316,7 @@ This closes the “LeRobot/SmoLVLA cannot run at all” gap. It does not support
 
 ## 6d. PyTorch Learned VLA-Style Scorer
 
-Implementation: `src/vla_best_of_n/torch_vla.py`.
+Implementation: `src/vla_tailguard_audit/torch_vla.py`.
 
 At `N=128` in `results/learned_summary.csv`:
 
@@ -363,4 +363,4 @@ Judgment: paper-worthy v1 as a controlled diagnostic repository with optional re
 
 - Repository initialized: yes.
 - Initial checkpoint commit: `7a8cc45`.
-- Commit message: `Initial paper-quality VLA Best-of-N checkpoint`.
+- Commit message: `Initial paper-quality VLA score-tail checkpoint`.

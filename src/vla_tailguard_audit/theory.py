@@ -1,4 +1,4 @@
-"""Exact finite tie-aware Best-of-N laws.
+"""Exact finite tie-aware score-tail laws.
 
 The law here audits a fixed finite candidate pool. A subset of N candidates is
 sampled uniformly without replacement; the candidate with the largest score is
@@ -40,7 +40,7 @@ def _as_vector(values: Iterable[float], name: str) -> np.ndarray:
 
 
 def tie_aware_selection_probabilities(scores: Iterable[float], n: int) -> SelectionLawResult:
-    """Return exact candidate-selection probabilities for finite Best-of-N.
+    """Return exact candidate-selection probabilities for finite score-tail.
 
     The formula is exact for a fixed finite pool with tied scores. For candidate
     i, it sums over how many same-score candidates are also sampled, excludes
@@ -75,7 +75,7 @@ def tie_aware_selection_probabilities(scores: Iterable[float], n: int) -> Select
 
 
 def expected_selected_value(scores: Iterable[float], values: Iterable[float], n: int) -> float:
-    """Expected selected value under the tie-aware finite Best-of-N law."""
+    """Expected selected value under the tie-aware finite score-tail law."""
 
     score = _as_vector(scores, "scores")
     value = _as_vector(values, "values")
@@ -109,7 +109,7 @@ def monte_carlo_selected_values(
     trials: int,
     rng: np.random.Generator,
 ) -> np.ndarray:
-    """Monte Carlo selected values for finite-pool Best-of-N."""
+    """Monte Carlo selected values for finite-pool score-tail."""
 
     score = _as_vector(scores, "scores")
     value = _as_vector(values, "values")

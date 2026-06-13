@@ -1,4 +1,4 @@
-"""Claim audit for VLA Best-of-N artifacts."""
+"""Claim audit for VLA score-tail artifacts."""
 
 from __future__ import annotations
 
@@ -16,7 +16,7 @@ FORBIDDEN_CLAIMS = [
     "We solve robot planning.",
     "We validate on real robots.",
     "This is a universal VLA inference recipe.",
-    "Best-of-N always helps.",
+    "score-tail always helps.",
     "Grounding always fixes VLA errors.",
     "This is full robot foundation model validation",
     "This is not toy evidence",
@@ -113,9 +113,9 @@ def audit(results_dir: Path) -> tuple[list[dict], dict]:
     claims.append(
         {
             "category": "theorem claims",
-            "claim": "Exact finite tie-aware Best-of-N law, selected-tail principle, and semantic-score no-free-lunch examples are implemented and documented.",
-            "status": _status(has_theory_docs and Path("src/vla_best_of_n/theory.py").exists()),
-            "evidence": "src/vla_best_of_n/theory.py; docs/theory.md; tests/test_theory.py",
+            "claim": "Exact finite tie-aware score-tail law, selected-tail principle, and semantic-score no-free-lunch examples are implemented and documented.",
+            "status": _status(has_theory_docs and Path("src/vla_tailguard_audit/theory.py").exists()),
+            "evidence": "src/vla_tailguard_audit/theory.py; docs/theory.md; tests/test_theory.py",
         }
     )
 
@@ -305,7 +305,7 @@ def audit(results_dir: Path) -> tuple[list[dict], dict]:
     )
 
     tailguard_supported = False
-    if not tailguard.empty and "certified_tailguard_bon" in set(tailguard.get("method", pd.Series(dtype=str))):
+    if not tailguard.empty and "certified_tailguard" in set(tailguard.get("method", pd.Series(dtype=str))):
         required_methods = {
             "raw_fixed_high_n",
             "n1_baseline",
@@ -316,11 +316,11 @@ def audit(results_dir: Path) -> tuple[list[dict], dict]:
             "tailguard_without_lower_confidence_bound",
             "tailguard_without_random_baseline_check",
             "tailguard_without_n1_baseline_check",
-            "certified_tailguard_bon",
+            "certified_tailguard",
             "oracle_high_n",
         }
         high_raw = tailguard[tailguard["method"] == "raw_fixed_high_n"]
-        tg = tailguard[tailguard["method"] == "certified_tailguard_bon"]
+        tg = tailguard[tailguard["method"] == "certified_tailguard"]
         if not high_raw.empty and not tg.empty:
             utility_gain = float(tg.iloc[0]["selected_real_utility"]) - float(high_raw.iloc[0]["selected_real_utility"])
             violation_drop = float(high_raw.iloc[0].get("violation_rate", 0.0)) - float(tg.iloc[0].get("violation_rate", 0.0))
@@ -383,7 +383,7 @@ def audit(results_dir: Path) -> tuple[list[dict], dict]:
     claims.append(
         {
             "category": "Certified TailGuard method claims",
-            "claim": "Certified TailGuard-BoN uses hard physical certificates, tail lower bounds, fallback/abstention metadata, and reaches >=0.98 utility with <=0.01 violation in controlled stress.",
+            "claim": "Certified TailGuard uses hard physical certificates, tail lower bounds, fallback/abstention metadata, and reaches >=0.98 utility with <=0.01 violation in controlled stress.",
             "status": _status(tailguard_supported),
             "evidence": f"{results_dir / 'tailguard_summary.csv'}; {results_dir / 'tailguard_artifact.json'}; {results_dir / 'tailguard_gate_examples.csv'}",
         }
@@ -659,8 +659,8 @@ def audit(results_dir: Path) -> tuple[list[dict], dict]:
         "this_is_not_JEPA_clone": True,
         "this_is_not_EBM_clone": True,
         "this_is_not_diffusion_clone": True,
-        "learned_language_conditioned_model_exists": Path("src/vla_best_of_n/learned_vla.py").exists(),
-        "visual_object_observation_input_exists": Path("src/vla_best_of_n/vla_env.py").exists(),
+        "learned_language_conditioned_model_exists": Path("src/vla_tailguard_audit/learned_vla.py").exists(),
+        "visual_object_observation_input_exists": Path("src/vla_tailguard_audit/vla_env.py").exists(),
         "semantic_score_separate_from_real_utility": True,
         "physical_utility_evaluated_separately": True,
         "object_distractor_reachability_collision_failures_represented": True,

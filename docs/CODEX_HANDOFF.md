@@ -2,17 +2,17 @@
 
 ## Current Goal
 
-Make the worktree resumable in a new thread and push the VLA Best-of-N repository toward the best feasible paper-quality state. User requested the folder name `best of n vla` and said RAM is not a concern; prioritize evidence quality.
+Make the worktree resumable in a new thread and push the VLA score-tail repository toward the best feasible paper-quality state. User requested the folder name `score-tail vla` and said RAM is not a concern; prioritize evidence quality.
 
 ## Repo Facts Verified From Files
 
-- Current repository path: `C:\Users\wangz\best of n vla`.
-- The old path `C:\Users\wangz\vla-best-of-n` was renamed during this continuation.
+- Current repository path: `C:\Users\wangz\score-tail vla`.
+- The old path `C:\Users\wangz\vla-score-tail` was renamed during this continuation.
 - No `AGENTS.md` existed before this update; one now exists.
 - The repo is now a git repository.
-- Initial checkpoint commit: `7a8cc45` (`Initial paper-quality VLA Best-of-N checkpoint`).
-- Main Python package remains `src/vla_best_of_n`.
-- `pyproject.toml` project name is now `best-of-n-vla`.
+- Initial checkpoint commit: `7a8cc45` (`Initial paper-quality VLA score-tail checkpoint`).
+- Main Python package remains `src/vla_tailguard_audit`.
+- `pyproject.toml` project name is now `vla-tailguard-audit`.
 - v1 generated artifacts exist under `results/`, including summary CSVs, seed-level files, claim status files, and five figures.
 - v2 rendered visual/simulator artifacts now exist under `results/rendered/`, `results/rendered_summary.csv`, and `results/rendered_visual_metadata.csv`.
 - v2 noisy verifier and calibration robustness artifacts now exist under `results/robustness_summary.csv` and `results/robustness_artifact.json`.
@@ -74,34 +74,34 @@ Optional VLA adapter status:
 
 PyTorch learned scorer artifact:
 
-- implementation: `src/vla_best_of_n/torch_vla.py`
+- implementation: `src/vla_tailguard_audit/torch_vla.py`
 - symbolic `N=128`: `torch_semantic` utility `0.329`, violation `0.958`; `torch_calibrated` utility `0.999`, violation `0.000`
 - rendered `N=128`: `torch_semantic` utility `0.455`, violation `1.000`; `torch_calibrated` utility `1.000`, violation `0.000`
 
 ## Files Changed In This Continuation
 
-- Renamed repo folder to `C:\Users\wangz\best of n vla`.
+- Renamed repo folder to `C:\Users\wangz\score-tail vla`.
 - Updated `pyproject.toml` project name and added optional `v2` dependencies.
-- Updated `src/vla_best_of_n/learned_vla.py` docstring to remove RAM-light framing.
+- Updated `src/vla_tailguard_audit/learned_vla.py` docstring to remove RAM-light framing.
 - Updated `docs/current_state_before_v1.md` to record the rename.
 - Added `AGENTS.md` for future agents.
 - Added `docs/v2_gap_closure.md`.
 - Added this handoff: `docs/CODEX_HANDOFF.md`.
-- Added rendered visual benchmark implementation in `src/vla_best_of_n/rendering.py`.
-- Added simulator-style evaluator in `src/vla_best_of_n/simulator.py`.
-- Updated `experiments/run_experiments.py` and `src/vla_best_of_n/plotting.py` to produce rendered/simulator artifacts and figures.
+- Added rendered visual benchmark implementation in `src/vla_tailguard_audit/rendering.py`.
+- Added simulator-style evaluator in `src/vla_tailguard_audit/simulator.py`.
+- Updated `experiments/run_experiments.py` and `src/vla_tailguard_audit/plotting.py` to produce rendered/simulator artifacts and figures.
 - Added `tests/test_rendering_simulator.py`.
-- Added robustness implementation in `src/vla_best_of_n/robustness.py`.
+- Added robustness implementation in `src/vla_tailguard_audit/robustness.py`.
 - Extended `RealUtilityCalibrator` with sample fraction and label-noise options.
 - Added `tests/test_robustness.py`.
 - Added `docs/robustness_stress_tests.md`.
 - Added `docs/visual_benchmark.md` and `docs/simulator_evaluator.md`.
-- Added optional VLA status module `src/vla_best_of_n/optional_vla.py`.
+- Added optional VLA status module `src/vla_tailguard_audit/optional_vla.py`.
 - Added optional VLA runner `experiments/run_optional_vla.py` and `scripts/run_optional_vla.sh`.
 - Added `tests/test_optional_vla.py`.
 - Added `docs/optional_real_vla_adapter.md`.
 - Extended optional VLA runner with `--attempt-inference`, which loads cached SmoLVLA on CPU and writes `results/optional_vla/inference_probe.json`.
-- Added PyTorch scorer `src/vla_best_of_n/torch_vla.py`.
+- Added PyTorch scorer `src/vla_tailguard_audit/torch_vla.py`.
 - Added `tests/test_torch_vla.py`.
 - Added `docs/torch_learned_scorer.md`.
 - Updated experiments and plotting to include `torch_semantic`, `torch_calibrated`, and `figure10_learned_scorer_comparison.png`.
@@ -112,11 +112,11 @@ PyTorch learned scorer artifact:
 
 - Inspected context-handoff skill: success.
 - Verified folder state before rename:
-  - `C:\Users\wangz\vla-best-of-n`: existed.
-  - `C:\Users\wangz\best of n vla`: did not exist.
+  - `C:\Users\wangz\vla-score-tail`: existed.
+  - `C:\Users\wangz\score-tail vla`: did not exist.
 - Renamed folder with `Move-Item`: success.
 - Checked git status before rename: failed with `fatal: not a git repository`.
-- Scanned references with `rg`; command timed out after reporting relevant matches in `pyproject.toml`, `README.md`, `docs/current_state_before_v1.md`, and `src/vla_best_of_n/learned_vla.py`.
+- Scanned references with `rg`; command timed out after reporting relevant matches in `pyproject.toml`, `README.md`, `docs/current_state_before_v1.md`, and `src/vla_tailguard_audit/learned_vla.py`.
 - Ran `pytest` from renamed path: PASS, 13 passed, runtime 25.06 s.
 - Ran `bash scripts/run_claim_audit.sh` from renamed path: PASS, runtime 24.22 s.
 - Ran `bash scripts/run_smoke.sh` from renamed path: PASS, runtime 109.10 s.

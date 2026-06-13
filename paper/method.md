@@ -2,15 +2,15 @@
 
 We model a VLA-style stack with instruction `l`, visual/object observation `o`, action or trajectory `a`, generator `G(a | o, l)`, semantic score `S_sem(o, l, a)`, physical feasibility score `S_phys(o, a)`, calibrated score `S_calib`, and real utility `R(a)`.
 
-For a fixed finite candidate pool, Best-of-N samples `N` candidates without replacement and selects the highest-scoring candidate with uniform tie breaking. The exact law computes selected real utility by summing candidate selection probabilities times `R(a_i)`.
+For a fixed finite candidate pool, a top-score selector samples `N` candidates without replacement and selects the highest-scoring candidate with uniform tie breaking. The exact law computes selected real utility by summing candidate selection probabilities times `R(a_i)`.
 
 Diagnostics include selected semantic score, selected real utility, physical feasibility, exact-law prediction error, semantic-real tail gap, top-score-tail utility, overall and tail rank correlation, high-N regret, oracle gap, physical violation rate, wrong-object and wrong-target rates, collision and reachability failures, marginal value per added candidate, seed variance, and a deterministic deployment gate.
 
-Baselines include raw fixed-N BoN, `N=1`, random high-N, verifier-filtered high-N, calibrated high-N without certificates, certificate-only filtering without tail calibration, TailGuard ablations without lower confidence bounds or baseline checks, and oracle selection.
+Baselines include raw fixed high-N selection, `N=1`, random high-N, verifier-filtered high-N, calibrated high-N without certificates, certificate-only filtering without tail calibration, TailGuard ablations without lower confidence bounds or baseline checks, and oracle selection.
 
-## Certified TailGuard-BoN
+## Certified TailGuard
 
-Certified TailGuard-BoN is the v2 inference-time controller. The implementation-compatible short name remains `TailGuard-BoN`. Inputs are a finite candidate pool, semantic scores, optional verifier scores, pilot real-utility labels, simulator flags or modeled-physics checks, and a candidate `N` grid.
+Certified TailGuard is the v2 inference-time controller. The implementation-compatible short name remains `TailGuard`. Inputs are a finite candidate pool, semantic scores, optional verifier scores, pilot real-utility labels, simulator flags or modeled-physics checks, and a candidate `N` grid.
 
 The controller has four layers.
 

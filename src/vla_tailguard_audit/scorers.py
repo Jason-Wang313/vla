@@ -1,4 +1,4 @@
-"""Scorers for VLA-style Best-of-N selection."""
+"""Scorers for VLA-style score-tail selection."""
 
 from __future__ import annotations
 

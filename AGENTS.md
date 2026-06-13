@@ -1,14 +1,14 @@
 # Agent Handoff Notes
 
-Repository: `C:\Users\wangz\best of n vla`
+Repository: `C:\Users\wangz\score-tail vla`
 
-Primary package: `src/vla_best_of_n`
+Primary package: `src/vla_tailguard_audit`
 
-Project title: **Best-of-N Robot Foundation Models: When Sampling More VLA Actions Helps or Hallucinates**
+Project title: **Certified TailGuard for VLA Action Selection: Auditing Semantic Affordance Over-Selection**
 
 ## Current Thesis
 
-Best-of-N VLA action selection can amplify semantic/affordance ranking errors. As `N` grows, selected language/vision plausibility can improve while real physical utility saturates or drops. Physical grounding, simulator-style verification, or calibrated real-utility scoring should be evaluated by whether they repair the selected high-score tail.
+score-tail VLA action selection can amplify semantic/affordance ranking errors. As `N` grows, selected language/vision plausibility can improve while real physical utility saturates or drops. Physical grounding, simulator-style verification, or calibrated real-utility scoring should be evaluated by whether they repair the selected high-score tail.
 
 ## Current State
 

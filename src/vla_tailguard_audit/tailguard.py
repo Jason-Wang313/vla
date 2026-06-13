@@ -1,4 +1,4 @@
-"""Certified TailGuard-BoN: certified tail-calibrated Best-of-N control."""
+"""Certified TailGuard: certified tail-calibrated score-tail control."""
 
 from __future__ import annotations
 
@@ -144,7 +144,7 @@ def certify_candidates(
 
 @dataclass(frozen=True)
 class TailGuardConfig:
-    """Controller settings for Certified TailGuard-BoN."""
+    """Controller settings for Certified TailGuard."""
 
     n_grid: tuple[int, ...] = (1, 2, 4, 8, 16, 32, 64, 128)
     margin: float = 0.03
@@ -191,7 +191,7 @@ class TailCalibrator:
 
 @dataclass(frozen=True)
 class TailGuardResult:
-    """One Certified TailGuard-BoN decision for a candidate pool."""
+    """One Certified TailGuard decision for a candidate pool."""
 
     selected_n: int
     selected_index: int
@@ -389,7 +389,7 @@ def tailguard_select(
     n_grid: Iterable[int] | None = None,
     config: TailGuardConfig | None = None,
 ) -> TailGuardResult:
-    """Select N and an action under Certified TailGuard-BoN."""
+    """Select N and an action under Certified TailGuard."""
 
     cfg = config or TailGuardConfig()
     sem = _as_array(semantic_scores, "semantic_scores")

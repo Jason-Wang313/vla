@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from vla_best_of_n.external_benchmark import REQUIRED_RUN_FIELDS, run_external_benchmark
+from vla_tailguard_audit.external_benchmark import REQUIRED_RUN_FIELDS, run_external_benchmark
 
 
 def test_external_benchmark_missing_venv_writes_guarded_artifacts(tmp_path: Path):

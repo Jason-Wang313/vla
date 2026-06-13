@@ -419,8 +419,8 @@
       "tail_label_count": 96
     }
   ],
-  "implementation_short_name": "TailGuard-BoN",
-  "method": "Certified TailGuard-BoN",
+  "implementation_short_name": "TailGuard",
+  "method": "Certified TailGuard",
   "n_grid": [
     1,
     2,

@@ -4,8 +4,8 @@ The v2 robustness experiment tests whether repair survives imperfect physical gr
 
 Implementation:
 
-- robustness module: `src/vla_best_of_n/robustness.py`
-- calibrator: `src/vla_best_of_n/learned_vla.py`
+- robustness module: `src/vla_tailguard_audit/robustness.py`
+- calibrator: `src/vla_tailguard_audit/learned_vla.py`
 - experiment output: `results/robustness_summary.csv`
 - artifact: `results/robustness_artifact.json`
 - figures:

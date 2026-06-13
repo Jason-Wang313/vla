@@ -4,7 +4,7 @@ The v2 PyTorch scorer is a heavier learned semantic/affordance model than the Nu
 
 Implementation:
 
-- `src/vla_best_of_n/torch_vla.py`
+- `src/vla_tailguard_audit/torch_vla.py`
 
 Inputs:
 

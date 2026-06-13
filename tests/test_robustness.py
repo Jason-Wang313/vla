@@ -1,10 +1,10 @@
 import numpy as np
 
-from vla_best_of_n.learned_vla import LearnedVLAScorer
-from vla_best_of_n.rendering import attach_visual_observation
-from vla_best_of_n.robustness import NoisyVerifierConfig, noisy_physical_feasibility, robustness_scores
-from vla_best_of_n.simulator import simulate_pool
-from vla_best_of_n.vla_env import generate_pools
+from vla_tailguard_audit.learned_vla import LearnedVLAScorer
+from vla_tailguard_audit.rendering import attach_visual_observation
+from vla_tailguard_audit.robustness import NoisyVerifierConfig, noisy_physical_feasibility, robustness_scores
+from vla_tailguard_audit.simulator import simulate_pool
+from vla_tailguard_audit.vla_env import generate_pools
 
 
 def test_noisy_verifier_is_seeded_and_imperfect():

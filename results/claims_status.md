@@ -1,7 +1,7 @@
 # Claims Status
 
-- **SUPPORTED** `theorem claims`: Exact finite tie-aware Best-of-N law, selected-tail principle, and semantic-score no-free-lunch examples are implemented and documented.
-  Evidence: src/vla_best_of_n/theory.py; docs/theory.md; tests/test_theory.py
+- **SUPPORTED** `theorem claims`: Exact finite tie-aware score-tail law, selected-tail principle, and semantic-score no-free-lunch examples are implemented and documented.
+  Evidence: src/vla_tailguard_audit/theory.py; docs/theory.md; tests/test_theory.py
 - **SUPPORTED** `exact-law validation claims`: Every main experiment compares exact finite-law selected utility with Monte Carlo estimates and confidence intervals.
   Evidence: controlled/learned/distractor/repair/rendered/robustness summary CSVs.
 - **SUPPORTED** `controlled VLA-style toy claims`: Controlled VLA-style experiment shows semantic score improves while real utility saturates or drops and violations rise.
@@ -20,7 +20,7 @@
   Evidence: results\robustness_summary.csv
 - **SUPPORTED** `calibration budget/noise claims`: Pilot-label calibration is stress-tested across label budgets and label noise.
   Evidence: results\robustness_summary.csv
-- **SUPPORTED** `Certified TailGuard method claims`: Certified TailGuard-BoN uses hard physical certificates, tail lower bounds, fallback/abstention metadata, and reaches >=0.98 utility with <=0.01 violation in controlled stress.
+- **SUPPORTED** `Certified TailGuard method claims`: Certified TailGuard uses hard physical certificates, tail lower bounds, fallback/abstention metadata, and reaches >=0.98 utility with <=0.01 violation in controlled stress.
   Evidence: results\tailguard_summary.csv; results\tailguard_artifact.json; results\tailguard_gate_examples.csv
 - **SUPPORTED** `Certified TailGuard ablation claims`: Component ablations cover certificates, verifier score, pilot labels, empirical lower bound, adaptive N, and abstention/fallback, with each named removal failing controlled acceptance in at least one stress regime.
   Evidence: results\component_ablation_summary.csv

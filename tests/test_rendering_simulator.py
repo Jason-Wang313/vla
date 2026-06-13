@@ -3,9 +3,9 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
-from vla_best_of_n.rendering import attach_visual_observation, render_pool_scene, visual_observation_vector
-from vla_best_of_n.simulator import simulate_pool
-from vla_best_of_n.vla_env import generate_pools
+from vla_tailguard_audit.rendering import attach_visual_observation, render_pool_scene, visual_observation_vector
+from vla_tailguard_audit.simulator import simulate_pool
+from vla_tailguard_audit.vla_env import generate_pools
 
 
 def test_rendered_scene_is_nonblank(tmp_path: Path):

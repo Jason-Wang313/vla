@@ -14,4 +14,4 @@ else
   exit 127
 fi
 
-"${PY[@]}" scripts/run_with_src.py scripts/claim_audit.py --results-dir "${VLA_BON_RESULTS_DIR:-results}" --fail-on-error "$@"
+"${PY[@]}" scripts/run_with_src.py scripts/claim_audit.py --results-dir "${VLA_TAILGUARD_RESULTS_DIR:-results}" --fail-on-error "$@"

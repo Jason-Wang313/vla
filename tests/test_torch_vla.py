@@ -1,10 +1,10 @@
 import numpy as np
 import pytest
 
-from vla_best_of_n.rendering import attach_visual_observation
-from vla_best_of_n.simulator import simulate_pool
-from vla_best_of_n.torch_vla import TorchVLAScorer, torch_available
-from vla_best_of_n.vla_env import generate_pools
+from vla_tailguard_audit.rendering import attach_visual_observation
+from vla_tailguard_audit.simulator import simulate_pool
+from vla_tailguard_audit.torch_vla import TorchVLAScorer, torch_available
+from vla_tailguard_audit.vla_env import generate_pools
 
 
 @pytest.mark.skipif(not torch_available(), reason="PyTorch is not available")

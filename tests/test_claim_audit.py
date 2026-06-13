@@ -4,7 +4,7 @@ from scripts.claim_audit import FORBIDDEN_CLAIMS
 
 
 def test_forbidden_claim_list_contains_user_forbidden_claims():
-    assert "Best-of-N always helps." in FORBIDDEN_CLAIMS
+    assert "score-tail always helps." in FORBIDDEN_CLAIMS
     assert "We validate on real robots." in FORBIDDEN_CLAIMS
 
 

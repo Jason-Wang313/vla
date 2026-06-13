@@ -14,4 +14,4 @@ else
   exit 127
 fi
 
-"${PY[@]}" scripts/run_with_src.py experiments/run_external_benchmark.py --results-dir "${VLA_BON_RESULTS_DIR:-results}" "$@"
+"${PY[@]}" scripts/run_with_src.py experiments/run_external_benchmark.py --results-dir "${VLA_TAILGUARD_RESULTS_DIR:-results}" "$@"

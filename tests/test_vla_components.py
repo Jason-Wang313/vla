@@ -1,10 +1,10 @@
 import numpy as np
 
-from vla_best_of_n.deployment import VALID_GATES, deployment_gate
-from vla_best_of_n.diagnostics import evaluate_selection
-from vla_best_of_n.learned_vla import LearnedVLAScorer, RealUtilityCalibrator, model_features
-from vla_best_of_n.scorers import hand_scorer_dict
-from vla_best_of_n.vla_env import generate_pools
+from vla_tailguard_audit.deployment import VALID_GATES, deployment_gate
+from vla_tailguard_audit.diagnostics import evaluate_selection
+from vla_tailguard_audit.learned_vla import LearnedVLAScorer, RealUtilityCalibrator, model_features
+from vla_tailguard_audit.scorers import hand_scorer_dict
+from vla_tailguard_audit.vla_env import generate_pools
 
 
 def test_vla_pool_has_separate_semantic_and_real_utility():

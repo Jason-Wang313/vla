@@ -26,7 +26,7 @@ V2 adds noisy physical verifiers with false positives, false negatives, hidden c
 
 ## Certified TailGuard Adaptive N
 
-Certified TailGuard-BoN is compared with raw fixed-N BoN, `N=1`, random high-N, verifier-filtered high-N, calibrated high-N without certificates, certificate-only filtering without tail calibration, TailGuard without lower-confidence bounds, TailGuard without random-baseline checks, TailGuard without `N=1` checks, and oracle selection. The key outputs are adaptive selected `N`, selected real utility, violation rate, certified candidate count, certificate pass, certified selected utility, certified violation rate, fallback rate, abstention rate, confidence radius, gate decision, and gate rates across scenes.
+Certified TailGuard is compared with raw fixed high-N selection, `N=1`, random high-N, verifier-filtered high-N, calibrated high-N without certificates, certificate-only filtering without tail calibration, TailGuard without lower-confidence bounds, TailGuard without random-baseline checks, TailGuard without `N=1` checks, and oracle selection. The key outputs are adaptive selected `N`, selected real utility, violation rate, certified candidate count, certificate pass, certified selected utility, certified violation rate, fallback rate, abstention rate, confidence radius, gate decision, and gate rates across scenes.
 
 Constructed gate examples separately exercise all four controller outputs: allowing high-N when the calibrated selected tail dominates baselines, stopping early when the tail adds no lower-bound value, requesting pilot labels when selected-tail evidence is too scarce, and blocking high-N when the lower bound falls below baselines.
 

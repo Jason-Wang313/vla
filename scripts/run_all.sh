@@ -27,8 +27,8 @@ PY
 )"
 PATHSEP="${PATHSEP%$'\r'}"
 export PYTHONPATH="${PYTHONPATH:-}${PATHSEP}$ROOT_DIR${PATHSEP}$ROOT_DIR/src"
-export VLA_BON_RESULTS_DIR="${VLA_BON_RESULTS_DIR:-results}"
+export VLA_TAILGUARD_RESULTS_DIR="${VLA_TAILGUARD_RESULTS_DIR:-results}"
 
 "${PY[@]}" -m pytest -q
-"${PY[@]}" scripts/run_with_src.py experiments/run_experiments.py --mode full --results-dir "$VLA_BON_RESULTS_DIR" --seeds 1 2 3 --states 8 --candidates 128 --mc-trials 120 --epochs 1
-"${PY[@]}" scripts/run_with_src.py scripts/claim_audit.py --results-dir "$VLA_BON_RESULTS_DIR" --fail-on-error
+"${PY[@]}" scripts/run_with_src.py experiments/run_experiments.py --mode full --results-dir "$VLA_TAILGUARD_RESULTS_DIR" --seeds 1 2 3 --states 8 --candidates 128 --mc-trials 120 --epochs 1
+"${PY[@]}" scripts/run_with_src.py scripts/claim_audit.py --results-dir "$VLA_TAILGUARD_RESULTS_DIR" --fail-on-error

@@ -1,12 +1,12 @@
-# Best-of-N Robot Foundation Models
+# Certified TailGuard for VLA Action Selection
 
-**When Sampling More VLA Actions Helps or Hallucinates**
+**Auditing Semantic Affordance Over-Selection**
 
 This repository studies a VLA-style failure mode: sampling more language-conditioned robot action candidates can improve selected semantic plausibility while hurting real physical utility. We call this **semantic affordance over-selection**.
 
-The core claim is conditional and controlled: for a fixed VLA-style generator/scorer stack, Best-of-N selection stresses the high semantic-score tail. If that tail is misaligned with physical feasibility, selected actions can look more instruction-relevant while becoming less reachable, more collision-prone, or bound to the wrong object. Physical verification and pilot-label calibration can repair the selected tail in these toy settings.
+The core claim is conditional and controlled: for a fixed VLA-style generator/scorer stack, score-tail selection stresses the high semantic-score tail. If that tail is misaligned with physical feasibility, selected actions can look more instruction-relevant while becoming less reachable, more collision-prone, or bound to the wrong object. Physical verification and pilot-label calibration can repair the selected tail in these toy settings.
 
-The v2 headline repair is **Certified TailGuard-BoN** (`TailGuard-BoN` in code), an abstaining inference-time controller. It hard-filters candidates through modeled physical certificates, calibrates selected-tail utility from pilot labels, chooses `N`, returns one of `allow_high_n`, `stop_early`, `collect_pilot_labels`, or `block_high_n`, and only allows high-N when a lower confidence bound beats the `N=1` and random-selection baselines by a margin.
+The v2 headline repair is **Certified TailGuard** (`TailGuard` in code), an abstaining inference-time controller. It hard-filters candidates through modeled physical certificates, calibrates selected-tail utility from pilot labels, chooses `N`, returns one of `allow_high_n`, `stop_early`, `collect_pilot_labels`, or `block_high_n`, and only allows high-N when a lower confidence bound beats the `N=1` and random-selection baselines by a margin.
 
 Near-100% repair claims are limited to controlled/simulator regimes where the modeled certificate covers the relevant failure modes. Otherwise the method is expected to fall back or abstain.
 
@@ -31,7 +31,7 @@ The experiments include object names, colors, categories, receptacles, obstacles
 
 ## Not WAM, JEPA, EBM, Or Diffusion
 
-This repository reuses only the finite tie-aware Best-of-N selection law.
+This repository reuses only the finite tie-aware score-tail selection law.
 
 - WAM: imagined rollout mismatch and model-error amplification.
 - JEPA: latent encoder/predictor compatibility and latent-real rank distortion.
@@ -75,7 +75,7 @@ Anonymous ICLR-style PDF build:
 powershell -ExecutionPolicy Bypass -File scripts\build_iclr_submission.ps1
 ```
 
-The script builds `paper/iclr2026/main.tex` and copies the PDF to `C:\Users\wangz\Downloads\certified-tailguard-bon-iclr-submission.pdf`.
+The script builds `paper/iclr2026/main.tex` and copies the PDF to `C:\Users\wangz\Downloads\certified-tailguard-vla-iclr-submission.pdf`.
 
 ## Key Outputs
 
@@ -127,7 +127,7 @@ Paper-critical figures:
 
 ## Claim Boundaries
 
-Supported claims are controlled VLA-style, learned VLA-style, Certified TailGuard-BoN, phase-diagram, calibration sample-complexity, component-ablation, failure-honesty, first-principles physics stress-test, optional model-plumbing, and guarded external-integration claims. The learned scorer consumes instruction, visual/object observation, and action candidate features, but it is still a CPU-friendly controlled model.
+Supported claims are controlled VLA-style, learned VLA-style, Certified TailGuard, phase-diagram, calibration sample-complexity, component-ablation, failure-honesty, first-principles physics stress-test, optional model-plumbing, and guarded external-integration claims. The learned scorer consumes instruction, visual/object observation, and action candidate features, but it is still a CPU-friendly controlled model.
 
 Unsupported in v1:
 

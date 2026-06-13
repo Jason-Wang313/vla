@@ -4,7 +4,7 @@
 
 A VLA-style policy stack receives an instruction `l`, a visual/object observation `o`, and samples candidate actions or trajectories `a_i` from a fixed generator `G(a | o, l)`. Candidates are ranked by a semantic affordance score `S_sem(o, l, a_i)`, optionally by a physical feasibility score `S_phys(o, a_i)`, a calibrated score `S_calib`, or an oracle score equal to real utility `R(a_i)`.
 
-Best-of-N selects
+score-tail selects
 
 ```text
 a* = argmax_i S(a_i)
@@ -47,12 +47,12 @@ The experiments report selected real utility, selected semantic score, selected 
 
 - If the upper semantic-score tail aligns with real utility, increasing `N` helps or saturates.
 - If the upper semantic-score tail is noisy or anti-aligned, increasing `N` can improve semantic plausibility while hurting real utility.
-- Average score-utility correlation can miss high-N failure because Best-of-N stresses the upper score tail.
+- Average score-utility correlation can miss high-N failure because score-tail stresses the upper score tail.
 - Physical grounding helps only when it repairs tail ranking, not merely when it improves average feasibility accuracy.
 
 ## Selected-Tail Utility Principle
 
-For large `N`, Best-of-N is governed by the conditional real utility in the scorer's upper tail, not by average score-utility correlation over the whole candidate pool. In finite pools this is visible directly from the exact law: as `N` increases, probability mass shifts toward candidates whose score is near the maximum. A scorer with good average correlation but bad upper-tail ranking can therefore fail at high `N`.
+For large `N`, score-tail is governed by the conditional real utility in the scorer's upper tail, not by average score-utility correlation over the whole candidate pool. In finite pools this is visible directly from the exact law: as `N` increases, probability mass shifts toward candidates whose score is near the maximum. A scorer with good average correlation but bad upper-tail ranking can therefore fail at high `N`.
 
 This motivates reporting:
 
@@ -64,9 +64,9 @@ semantic-real tail gap
 
 rather than only full-pool rank correlation.
 
-## Certified TailGuard-BoN Guarantee
+## Certified TailGuard Guarantee
 
-Certified TailGuard-BoN keeps `TailGuard-BoN` as the implementation short name but adds a hard certificate layer before calibrated scoring. Candidate actions must pass modeled predicates for reach envelope, swept-volume collision, receptacle compatibility, stability margin, fragile/heavy handling, tool/object match, blocked-path constraints, and modeled hidden obstacles when such flags are available.
+Certified TailGuard keeps `TailGuard` as the implementation short name but adds a hard certificate layer before calibrated scoring. Candidate actions must pass modeled predicates for reach envelope, swept-volume collision, receptacle compatibility, stability margin, fragile/heavy handling, tool/object match, blocked-path constraints, and modeled hidden obstacles when such flags are available.
 
 After certificate filtering, the controller fits a bounded real-utility calibrator from pilot labels and predicts the exact selected utility curve for a candidate `N` grid. Let `L_N` be a one-sided lower confidence bound on predicted selected utility at `N`, and let `B` be the larger of the `N=1` and random-selection baselines. The default controller allows high-N only when
 
@@ -96,4 +96,4 @@ Here `n` is the number of selected-tail pilot labels used for the bound. The bou
 
 ## Boundary
 
-The theorem is conditional on a fixed finite generator/scorer stack. The controlled experiments are VLA-style toy experiments unless real VLA benchmarks are added. This repository claims no real-robot validation, no universal VLA training recipe, no proof that Best-of-N always helps, and no proof that grounding always fixes the issue.
+The theorem is conditional on a fixed finite generator/scorer stack. The controlled experiments are VLA-style toy experiments unless real VLA benchmarks are added. This repository claims no real-robot validation, no universal VLA training recipe, no proof that score-tail always helps, and no proof that grounding always fixes the issue.

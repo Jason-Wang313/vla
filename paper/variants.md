@@ -2,7 +2,7 @@
 
 ## Controlled-Only Variant
 
-Use this as the current submission stance. It claims the selected-tail theorem, semantic affordance over-selection in controlled and learned VLA-style settings, Certified TailGuard-BoN, stress tests, ablations, and optional integration-status artifacts. It does not claim external simulator reward/success evidence.
+Use this as the current submission stance. It claims the selected-tail theorem, semantic affordance over-selection in controlled and learned VLA-style settings, Certified TailGuard, stress tests, ablations, and optional integration-status artifacts. It does not claim external simulator reward/success evidence.
 
 ## External-Simulator-Upgraded Variant
 

@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from vla_best_of_n.theory import (
+from vla_tailguard_audit.theory import (
     anti_aligned_score_example,
     binary_expected_success,
     constant_utility_edge_case,

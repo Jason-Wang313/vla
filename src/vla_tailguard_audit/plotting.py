@@ -210,21 +210,36 @@ def create_figures(results_dir: str | Path) -> list[str]:
             "calibrated_high_n_no_certificates",
             "certificate_only_filtering_without_tail_calibration",
             "tailguard_without_lower_confidence_bound",
-            "certified_tailguard_bon",
-            "tailguard_bon",
+            "certified_tailguard",
+            "tailguard",
             "oracle_high_n",
         ]
         bars = tailguard.set_index("method").reindex([m for m in order if m in set(tailguard["method"])])
         if not bars.empty:
+            label_map = {
+                "raw_fixed_high_n": "raw high-N",
+                "n1_baseline": "N=1",
+                "random_high_n": "random",
+                "verifier_filtered_high_n": "verifier\nfiltered",
+                "calibrated_high_n_no_certificates": "calibrated\nno cert.",
+                "certificate_only_filtering_without_tail_calibration": "cert. only",
+                "tailguard_without_lower_confidence_bound": "no lower\nbound",
+                "certified_tailguard": "Certified\nTailGuard",
+                "tailguard": "TailGuard",
+                "oracle_high_n": "oracle\nhigh-N",
+            }
+            x = list(range(len(bars)))
+            labels = [label_map.get(method, method) for method in bars.index]
             fig, ax = plt.subplots(figsize=(7.2, 4.4))
-            ax.bar(bars.index, bars["selected_real_utility"], color="#2563eb")
+            ax.bar(x, bars["selected_real_utility"], color="#2563eb")
             if "violation_rate" in bars:
-                ax.plot(bars.index, bars["violation_rate"], color="#dc2626", marker="o", label="violation rate")
+                ax.plot(x, bars["violation_rate"], color="#dc2626", marker="o", label="violation rate")
                 ax.legend(fontsize=8)
             ax.set_ylabel("selected real utility")
-            ax.set_title("Figure 11: Certified TailGuard vs BoN baselines")
-            ax.tick_params(axis="x", labelrotation=25)
-            fig.tight_layout()
+            ax.set_title("Figure 11: Certified TailGuard vs high-N baselines")
+            ax.set_xticks(x)
+            ax.set_xticklabels(labels, fontsize=7)
+            fig.subplots_adjust(bottom=0.24)
             path = fig_dir / "figure11_tailguard_adaptive_n.png"
             fig.savefig(path, dpi=180)
             plt.close(fig)
@@ -340,12 +355,21 @@ def create_figures(results_dir: str | Path) -> list[str]:
             )
             bars = worst_by_method.reindex([m for m in order if m in set(ablation["method"])])
             x = range(len(bars))
+            ablation_labels = {
+                "full_certified_tailguard": "full",
+                "no_physical_certificate": "no cert.",
+                "no_verifier_score": "no verifier",
+                "no_pilot_labels": "no labels",
+                "no_empirical_lower_bound": "no LCB",
+                "no_adaptive_n": "no adaptive N",
+                "no_abstention_fallback": "no fallback",
+            }
             ax.bar(x, bars["selected_real_utility"], color="#0f766e", label="utility")
             ax.plot(list(x), bars["violation_rate"], color="#dc2626", marker="o", label="violation")
             ax.axhline(0.98, color="#166534", linewidth=0.8, linestyle="--")
             ax.axhline(0.01, color="#991b1b", linewidth=0.8, linestyle=":")
             ax.set_xticks(list(x))
-            ax.set_xticklabels(bars.index, rotation=30, ha="right")
+            ax.set_xticklabels([ablation_labels.get(method, method) for method in bars.index], rotation=25, ha="right", fontsize=7)
             ax.set_ylabel("rate / utility")
             ax.set_title("Figure 17: Certified TailGuard component ablation")
             ax.legend(fontsize=8)
@@ -364,7 +388,8 @@ def create_figures(results_dir: str | Path) -> list[str]:
             ax.bar([i - width / 2 for i in x], honesty["abstention_rate"], width=width, label="abstention")
             ax.bar([i + width / 2 for i in x], honesty["fallback_rate"], width=width, label="fallback")
             ax.set_xticks(list(x))
-            ax.set_xticklabels(honesty["stress_family"], rotation=30, ha="right")
+            ax.set_xticklabels([str(i + 1) for i in x], fontsize=7)
+            ax.set_xlabel("stress regime index")
             ax.set_ylabel("rate")
             ax.set_title("Figure 18: Failure honesty by stress regime")
             ax.legend(fontsize=8)

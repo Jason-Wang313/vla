@@ -27,8 +27,8 @@ PY
 )"
 PATHSEP="${PATHSEP%$'\r'}"
 export PYTHONPATH="${PYTHONPATH:-}${PATHSEP}$ROOT_DIR${PATHSEP}$ROOT_DIR/src"
-export VLA_BON_RESULTS_DIR="${VLA_BON_SMOKE_RESULTS_DIR:-results/smoke}"
+export VLA_TAILGUARD_RESULTS_DIR="${VLA_TAILGUARD_SMOKE_RESULTS_DIR:-results/smoke}"
 
 "${PY[@]}" -m pytest -q
-"${PY[@]}" scripts/run_with_src.py experiments/run_experiments.py --mode smoke --results-dir "$VLA_BON_RESULTS_DIR" --seeds 1 2 --states 5 --candidates 64 --mc-trials 60 --epochs 1
-"${PY[@]}" scripts/run_with_src.py scripts/claim_audit.py --results-dir "$VLA_BON_RESULTS_DIR" --fail-on-error
+"${PY[@]}" scripts/run_with_src.py experiments/run_experiments.py --mode smoke --results-dir "$VLA_TAILGUARD_RESULTS_DIR" --seeds 1 2 --states 5 --candidates 64 --mc-trials 60 --epochs 1
+"${PY[@]}" scripts/run_with_src.py scripts/claim_audit.py --results-dir "$VLA_TAILGUARD_RESULTS_DIR" --fail-on-error

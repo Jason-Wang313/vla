@@ -12,7 +12,7 @@ High-N utility is governed by `E[R | S in the selected upper tail]`, not by aver
 
 ## Conditional Certificate-Abstention Guarantee
 
-For a finite candidate pool, suppose the certificate predicates are sound for the modeled physics failure modes and the calibrated selected-tail utility error is bounded by the reported confidence radius. Then Certified TailGuard-BoN either selects a certified action whose lower-bound utility beats the configured `N=1` and random baselines by the margin, falls back to certified low-N selection, or abstains/request labels. The guarantee is conditional on the candidate pool, modeled physics predicates, and calibration assumptions; it is not a real-world safety theorem.
+For a finite candidate pool, suppose the certificate predicates are sound for the modeled physics failure modes and the calibrated selected-tail utility error is bounded by the reported confidence radius. Then Certified TailGuard either selects a certified action whose lower-bound utility beats the configured `N=1` and random baselines by the margin, falls back to certified low-N selection, or abstains/request labels. The guarantee is conditional on the candidate pool, modeled physics predicates, and calibration assumptions; it is not a real-world safety theorem.
 
 ## No-Free-Lunch Proposition
 

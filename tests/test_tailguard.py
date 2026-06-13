@@ -1,18 +1,18 @@
 import numpy as np
 import pandas as pd
 
-from vla_best_of_n.deployment import VALID_GATES
-from vla_best_of_n.rendering import attach_visual_observation
-from vla_best_of_n.simulator import evaluate_candidate_geometry, simulate_pool
-from vla_best_of_n.stress import component_ablation_summary, phase_diagram_summary, tailguard_gate_examples_summary
-from vla_best_of_n.tailguard import (
+from vla_tailguard_audit.deployment import VALID_GATES
+from vla_tailguard_audit.rendering import attach_visual_observation
+from vla_tailguard_audit.simulator import evaluate_candidate_geometry, simulate_pool
+from vla_tailguard_audit.stress import component_ablation_summary, phase_diagram_summary, tailguard_gate_examples_summary
+from vla_tailguard_audit.tailguard import (
     CERTIFICATE_FAILURE_TYPES,
     TailGuardConfig,
     certify_candidates,
     fit_tail_calibrator,
     tailguard_select,
 )
-from vla_best_of_n.vla_env import FEATURE_NAMES, generate_pools
+from vla_tailguard_audit.vla_env import FEATURE_NAMES, generate_pools
 
 
 def _aligned_pilot(count: int = 256):

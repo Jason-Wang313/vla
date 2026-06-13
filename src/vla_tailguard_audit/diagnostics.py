@@ -1,4 +1,4 @@
-"""Diagnostics for selected-tail VLA Best-of-N behavior."""
+"""Diagnostics for selected-tail VLA score-tail behavior."""
 
 from __future__ import annotations
 

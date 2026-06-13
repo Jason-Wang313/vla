@@ -13,14 +13,13 @@
 \usepackage{url}
 \usepackage[hidelinks]{hyperref}
 
-\title{Certified TailGuard for Best-of-N Vision-Language-Action Selection}
+\title{Certified TailGuard for Vision-Language-Action Selection}
 
 \author{Anonymous authors}
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{proposition}{Proposition}
-\newcommand{\bon}{Best-of-$N$}
-\newcommand{\method}{Certified TailGuard-BoN}
+\newcommand{\method}{Certified TailGuard}
 \newcommand{\sem}{S_{\mathrm{sem}}}
 \newcommand{\phys}{S_{\mathrm{phys}}}
 \newcommand{\calib}{S_{\mathrm{cal}}}
@@ -31,7 +30,7 @@
 \maketitle
 
 \begin{abstract}
-Vision-language-action (VLA) policies increasingly combine language-conditioned action generation with inference-time selection among multiple candidates. This paper studies a controlled failure mode of that selection step. In a finite candidate pool, \bon{} is governed by the physical utility of the selected score tail, not by average semantic plausibility. We give an exact tie-aware finite-pool law and use it to define semantic affordance over-selection: selected language/vision plausibility rises with $N$ while selected physical utility saturates or collapses. We then introduce \method{}, an abstaining inference-time controller that hard-filters candidates with modeled physical certificates, calibrates selected-tail utility from pilot labels, applies lower confidence bounds, compares against $N=1$ and random-selection baselines, and either allows high $N$, stops early, requests labels, or blocks high $N$. Controlled VLA-style, rendered-simulator, robustness, phase-diagram, and ablation artifacts support the selected-tail claim and show controlled repair only when the modeled certificates cover the relevant failure modes. External RoboCasa/LIBERO artifacts are reported as integration status only; they contain no reward/success metrics, no external method outcome, and no hardware validation.
+Vision-language-action (VLA) policies increasingly combine language-conditioned action generation with inference-time selection among multiple candidates. This paper studies a controlled failure mode of that selection step. In a finite candidate pool, top-score selection is governed by the physical utility of the selected score tail, not by average semantic plausibility. We give an exact tie-aware finite-pool law and use it to define semantic affordance over-selection: selected language/vision plausibility rises with $N$ while selected physical utility saturates or collapses. We then introduce \method{}, an abstaining inference-time controller that hard-filters candidates with modeled physical certificates, calibrates selected-tail utility from pilot labels, applies lower confidence bounds, compares against $N=1$ and random-selection baselines, and either allows high $N$, stops early, requests labels, or blocks high $N$. Controlled VLA-style, rendered-simulator, robustness, phase-diagram, and ablation artifacts support the selected-tail claim and show controlled repair only when the modeled certificates cover the relevant failure modes. External RoboCasa/LIBERO artifacts are reported as integration status only; they contain no reward/success metrics, no external method outcome, and no hardware validation.
 \end{abstract}
 
 \section{Introduction}
@@ -40,13 +39,13 @@ VLA systems map an instruction and visual observation to robot actions or trajec
 
 The core claim is narrow. For a fixed VLA-style generator and scorer, increasing $N$ stresses the selected score tail. If that tail is misaligned with physical utility, selected semantic plausibility can improve while real utility drops. Average score-utility correlation, imitation loss, or language plausibility is not enough to certify high-$N$ action selection. The selected tail itself must be audited.
 
-We make three contributions. First, we state and validate an exact finite, tie-aware \bon{} law for selected utility under sampling without replacement. Second, we build controlled VLA-style diagnostics that separate instruction/vision/action semantic scores from physical utility and violations. Third, we introduce \method{}, a conservative inference-time controller that uses modeled physical certificates, pilot-label calibration, empirical lower bounds, and abstention to prevent high-$N$ overclaims. The paper's evidence is intentionally controlled. Optional SmoLVLA, RoboCasa, and LIBERO artifacts record plumbing and integration boundaries, but the paper reports no benchmark outcomes and no hardware outcomes.
+We make three contributions. First, we state and validate an exact finite, tie-aware score-tail law for selected utility under sampling without replacement. Second, we build controlled VLA-style diagnostics that separate instruction/vision/action semantic scores from physical utility and violations. Third, we introduce \method{}, a conservative inference-time controller that uses modeled physical certificates, pilot-label calibration, empirical lower bounds, and abstention to prevent high-$N$ overclaims. The paper's evidence is intentionally controlled. Optional SmoLVLA, RoboCasa, and LIBERO artifacts record plumbing and integration boundaries, but the paper reports no benchmark outcomes and no hardware outcomes.
 
 \section{Finite Selected-Tail Law}
 
-Let a fixed candidate pool contain $m$ actions $a_i$ generated from observation $o$ and instruction $\ell$. Each candidate has a selection score $s_i$ and physical utility $r_i \in [0,1]$. \bon{} samples $N$ distinct candidates uniformly without replacement and selects a uniformly random member among sampled candidates with maximal score.
+Let a fixed candidate pool contain $m$ actions $a_i$ generated from observation $o$ and instruction $\ell$. Each candidate has a selection score $s_i$ and physical utility $r_i \in [0,1]$. A top-score selector samples $N$ distinct candidates uniformly without replacement and selects a uniformly random member among sampled candidates with maximal score.
 
-\begin{theorem}[Tie-aware finite \bon{} law]
+\begin{theorem}[Tie-aware finite score-tail law]
 For candidate $i$, let $e_i = |\{j:s_j=s_i\}|$ and $\ell_i=|\{j:s_j<s_i\}|$. Its exact selection probability is
 \[
 p_i(N)=\frac{1}{e_i}\sum_{k=\max(1,N-\ell_i)}^{\min(e_i,N)}
@@ -141,19 +140,19 @@ In the TailGuard stress setting, raw fixed high-$N$ selection has utility $0.460
 \includegraphics[width=0.48\linewidth]{../../results/figures/figure17_component_ablation.png}
 \includegraphics[width=0.48\linewidth]{../../results/figures/figure18_failure_honesty.png}
 \end{center}
-\caption{Ablations and failure honesty. The controller is evaluated by whether it keeps controlled utility high and violations low, and by whether it falls back or abstains in unsupported regimes.}
+\caption{Ablations and failure honesty. The controller is evaluated by whether it keeps controlled utility high and violations low, and by whether it falls back or abstains in unsupported regimes. The right panel indexes rows from \texttt{failure\_honesty\_summary.csv}.}
 \label{fig:ablation}
 \end{figure}
 
 \subsection{External boundary}
 
-The external benchmark runner is artifact-gated. The current RoboCasa status records an attempted \texttt{robocasa/PickPlaceCounterToCabinet} reset/step probe that timed out before reward or success metrics. The LIBERO row records import/status information only and no guarded reset/step wrapper. The SmoLVLA artifact records synthetic CPU action emission, not physical success. These artifacts support integration-status statements only. They do not support external simulator performance, TailGuard method success on external benchmarks, or hardware-outcome statements.
+The external benchmark runner is artifact-gated. The current RoboCasa status records an attempted PickPlaceCounterToCabinet reset/step probe that timed out before reward or success metrics. The LIBERO row records import/status information only and no guarded reset/step wrapper. The SmoLVLA artifact records synthetic CPU action emission, not physical success. These artifacts support integration-status statements only. They do not support external simulator performance, TailGuard method success on external benchmarks, or hardware-outcome statements.
 
 \section{Limits, Reproducibility, and Ethics}
 
 The strongest limitation is evidence scope. The experiments are controlled, including rendered scenes and simulator-style geometry. The learned models are VLA-style semantic scorers, not deployed robot foundation models. The certificates cover only modeled predicates; unmodeled perception errors, dynamics, contact, calibration, and hardware failures are outside the guarantee. Pilot labels are assumed to measure real utility for the controlled scenes, and confidence bounds depend on selected-tail coverage. A controller that abstains may be operationally inconvenient, but in this setting abstention is the correct output when high-$N$ evidence is weak.
 
-The repository includes scripts for the core audit: \texttt{pytest -q}, \texttt{bash scripts/run\_claim\_audit.sh}, and guarded external status checks. The paper-critical tables are generated from \texttt{results/claims\_status.json}, \texttt{results/tailguard\_summary.csv}, \texttt{results/component\_ablation\_summary.csv}, and related CSV/JSON artifacts. Code can be provided as anonymous supplementary material. This work should not be used as a hardware safety guarantee; it is a diagnostic and controller study for controlled VLA-style selected-tail failures. A separate LLM usage disclosure appears in Appendix~\ref{app:llm}.
+Reproduction uses \texttt{pytest}, the claim-audit script, and guarded external status checks. The paper-critical tables are generated from the claims, TailGuard, ablation, and related CSV/JSON artifacts under \texttt{results/}. Code can be provided as anonymous supplementary material. This work should not be used as a hardware safety guarantee; it is a diagnostic and controller study for controlled VLA-style selected-tail failures. A separate LLM usage disclosure appears in Appendix~\ref{app:llm}.
 
 \label{page:maintextend}
 \bibliographystyle{iclr2026_conference}
@@ -183,7 +182,7 @@ Construct two finite pools with identical semantic scores and identical nonseman
 \toprule
 Statement & Status & Artifact boundary \\
 \midrule
-Exact finite \bon{} law & Supported & \texttt{src/vla\_best\_of\_n/theory.py}; \texttt{tests/test\_theory.py}. \\
+Exact finite score-tail law & Supported & \texttt{theory.py}; \texttt{test\_theory.py}. \\
 Semantic affordance over-selection & Supported & Controlled, learned, and rendered summary CSVs show semantic score rising while utility drops or violations rise. \\
 \method{} controlled repair & Supported & \texttt{tailguard\_summary.csv}: controlled utility $1.000$, violation $0.000$ in the supported TailGuard row. \\
 Component necessity & Supported & \texttt{component\_ablation\_summary.csv}: each named removal fails at least one stress regime. \\

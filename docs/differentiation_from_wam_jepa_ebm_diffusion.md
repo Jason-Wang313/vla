@@ -1,4 +1,4 @@
-# Differentiation From Other Best-of-N Projects
+# Differentiation From Other score-tail Projects
 
 ## Core Distinction
 
@@ -24,11 +24,11 @@ EBM studies energy functions over actions or trajectories. Its failure is low-en
 
 ## Not Diffusion
 
-Diffusion-policy work studies stochastic trajectory generators and critic-selected outliers. Its failure emphasizes diversity-selection tradeoffs. This project uses Best-of-N selection pressure only as a finite selection law and focuses on language/object binding, semantic distractors, and physical feasibility failures.
+Diffusion-policy work studies stochastic trajectory generators and critic-selected outliers. Its failure emphasizes diversity-selection tradeoffs. This project uses score-tail selection pressure only as a finite selection law and focuses on language/object binding, semantic distractors, and physical feasibility failures.
 
 ## Not-Clone Checklist
 
-- Reused math: only the finite tie-aware Best-of-N law.
+- Reused math: only the finite tie-aware score-tail law.
 - New scientific object: VLA-style language, observation, action, semantic score, physical utility stack.
 - New failure: semantic affordance over-selection.
 - New experiments: language-conditioned object/receptacle scenes, distractors, reachability, collision, wrong-object and wrong-target failures.

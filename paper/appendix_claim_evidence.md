@@ -2,9 +2,9 @@
 
 | Statement | Status | Artifact | Acceptance condition |
 |---|---|---|---|
-| Exact finite tie-aware Best-of-N law applies to fixed finite candidate pools. | Supported | `src/vla_best_of_n/theory.py`, `tests/test_theory.py` | The theorem tests pass and exact-law prediction error remains small in summary CSVs. |
+| Exact finite tie-aware score-tail law applies to fixed finite candidate pools. | Supported | `src/vla_tailguard_audit/theory.py`, `tests/test_theory.py` | The theorem tests pass and exact-law prediction error remains small in summary CSVs. |
 | Semantic affordance over-selection appears in controlled VLA-style scenes. | Supported | `results/controlled_summary.csv`, `results/learned_summary.csv` | Selected semantic score rises with `N` while utility drops or violations rise. |
-| Certified TailGuard-BoN repairs controlled high-N failure when certificates cover the modeled failure modes. | Supported | `results/tailguard_summary.csv`, `results/tailguard_artifact.json` | Utility is at least `0.98` and violation is at most `0.01` in the controlled TailGuard row. |
+| Certified TailGuard repairs controlled high-N failure when certificates cover the modeled failure modes. | Supported | `results/tailguard_summary.csv`, `results/tailguard_artifact.json` | Utility is at least `0.98` and violation is at most `0.01` in the controlled TailGuard row. |
 | Each named TailGuard component has ablation coverage. | Supported | `results/component_ablation_summary.csv` | Ablations cover certificates, verifier score, pilot labels, lower bounds, adaptive `N`, and fallback/abstention, with each named removal failing the controlled threshold in at least one stress regime. |
 | Calibration sample complexity and confidence-radius behavior are measured. | Supported | `results/calibration_sample_complexity.csv` | Multiple budget and noise levels are present, and scarce selected-tail evidence can trigger label collection. |
 | Failure-honesty regimes are recorded. | Supported | `results/failure_honesty_summary.csv` | At least one stress family falls back or abstains. |
