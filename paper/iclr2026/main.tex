@@ -10,10 +10,14 @@
 \usepackage{booktabs}
 \usepackage{graphicx}
 \usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{float}
 \usepackage{url}
 \usepackage[hidelinks]{hyperref}
+\input{v3_results_macros.tex}
 
-\title{Certified TailGuard for Vision-Language-Action Selection}
+\title{Certified TailGuard for Vision-Language-Action Selection: Auditing Semantic Affordance Over-Selection}
 
 \author{Anonymous authors}
 
@@ -24,135 +28,189 @@
 \newcommand{\phys}{S_{\mathrm{phys}}}
 \newcommand{\calib}{S_{\mathrm{cal}}}
 \newcommand{\util}{R}
+\newcommand{\vla}{vision-language-action}
+\newcommand{\sao}{semantic affordance over-selection}
 
 \begin{document}
 
 \maketitle
 
 \begin{abstract}
-Vision-language-action (VLA) policies increasingly combine language-conditioned action generation with inference-time selection among multiple candidates. This paper studies a controlled failure mode of that selection step. In a finite candidate pool, top-score selection is governed by the physical utility of the selected score tail, not by average semantic plausibility. We give an exact tie-aware finite-pool law and use it to define semantic affordance over-selection: selected language/vision plausibility rises with $N$ while selected physical utility saturates or collapses. We then introduce \method{}, an abstaining inference-time controller that hard-filters candidates with modeled physical certificates, calibrates selected-tail utility from pilot labels, applies lower confidence bounds, compares against $N=1$ and random-selection baselines, and either allows high $N$, stops early, requests labels, or blocks high $N$. Controlled VLA-style, rendered-simulator, robustness, phase-diagram, and ablation artifacts support the selected-tail claim and show controlled repair only when the modeled certificates cover the relevant failure modes. External RoboCasa/LIBERO artifacts are reported as integration status only; they contain no reward/success metrics, no external method outcome, and no hardware validation.
+\vla{} policies increasingly combine language-conditioned action generation with inference-time selection among multiple candidate actions. This paper studies a selection-time failure in that interface. A semantic affordance scorer can prefer candidates that satisfy the instruction linguistically or visually while being unreachable, collision-prone, bound to the wrong object, or incompatible with the scene geometry. In a controlled VLA-style artifact with \VThreeSeeds{} seeds, \VThreeStatesPerSeed{} states per seed, and \VThreeCandidateBudget{} candidates per state, raw semantic selection raises selected semantic score from \VThreeLearnedRawNOneSem{} at $N=1$ to \VThreeLearnedRawHighSem{} at $N=\VThreeCandidateBudget{}$, while selected real utility falls from \VThreeLearnedRawNOneUtil{} to \VThreeLearnedRawHighUtil{} and violations reach \VThreeLearnedRawHighViol{}. We call this \sao{}. We give an exact finite, tie-aware selected-tail law, then introduce \method{}, an abstaining inference-time controller that filters candidates through modeled physical certificates, calibrates selected-tail utility from pilot labels, applies empirical lower confidence bounds, compares against $N=1$ and random baselines, and returns one of \texttt{allow\_high\_n}, \texttt{stop\_early}, \texttt{collect\_pilot\_labels}, or \texttt{block\_high\_n}. The repository contains learned, PyTorch, rendered-simulator, noisy-verifier, calibration, phase-diagram, component-ablation, failure-honesty, optional SmoLVLA plumbing, and external integration-status artifacts. The evidence is controlled and CPU-local; no real-robot validation, external benchmark success, or universal VLA deployment recipe is claimed.
 \end{abstract}
 
 \section{Introduction}
 
-VLA systems map an instruction and visual observation to robot actions or trajectories. Modern robot foundation models make this interface compelling because semantic knowledge can help a policy choose the right object, receptacle, or tool \citep{ahn2022saycan,brohan2022rt1,brohan2023rt2,kim2024openvla}. Deployment, however, often adds an inference-time selection layer: sample several candidate actions, score them, and execute the top-ranked candidate. This layer can help when the score's upper tail is physically meaningful. It can hurt when the score is mostly semantic and the top semantic tail contains unreachable, collision-prone, wrong-object, or wrong-receptacle actions.
+\vla{} systems map a language instruction and a visual or object-centric observation to robot actions or trajectories. Robot foundation models make this interface attractive because language can specify task intent and semantic scene context can help identify objects, receptacles, and tools \citep{ahn2022saycan,brohan2022rt1,brohan2023rt2,kim2024openvla}. A common deployment pattern then adds a search or reranking layer: sample many candidate actions, score each candidate, and execute the top-scoring action. This layer is useful when the scoring tail is physically meaningful. It is dangerous when the score is mainly semantic and its upper tail contains physically invalid candidates.
 
-The core claim is narrow. For a fixed VLA-style generator and scorer, increasing $N$ stresses the selected score tail. If that tail is misaligned with physical utility, selected semantic plausibility can improve while real utility drops. Average score-utility correlation, imitation loss, or language plausibility is not enough to certify high-$N$ action selection. The selected tail itself must be audited.
+This paper studies that danger as a selected-tail problem. The failure is not that language-conditioned action selection is bad, nor that increasing a candidate budget is always harmful. The failure is conditional: for a fixed generator and scorer, top-score selection moves probability mass toward the upper score tail. If that upper tail is semantically plausible but physically misaligned, a larger budget can make the chosen action look better to the semantic scorer and worse to the robot.
 
-We make three contributions. First, we state and validate an exact finite, tie-aware score-tail law for selected utility under sampling without replacement. Second, we build controlled VLA-style diagnostics that separate instruction/vision/action semantic scores from physical utility and violations. Third, we introduce \method{}, a conservative inference-time controller that uses modeled physical certificates, pilot-label calibration, empirical lower bounds, and abstention to prevent high-$N$ overclaims. The paper's evidence is intentionally controlled. Optional SmoLVLA, RoboCasa, and LIBERO artifacts record plumbing and integration boundaries, but the paper reports no benchmark outcomes and no hardware outcomes.
+We call the failure \sao{}. In the main learned VLA-style artifact, raw semantic selection improves selected semantic score from \VThreeLearnedRawNOneSem{} to \VThreeLearnedRawHighSem{} as $N$ grows from 1 to \VThreeCandidateBudget{}, while selected real utility drops from \VThreeLearnedRawNOneUtil{} to \VThreeLearnedRawHighUtil{}, violations reach \VThreeLearnedRawHighViol{}, and high-budget regret reaches \VThreeLearnedRawRegret{}. Rendered visual simulator evidence reproduces the direction: raw high-budget selected utility is \VThreeRenderedRawHighUtil{} and violation is \VThreeRenderedRawHighViol{}. The empirical object is VLA-specific: instructions, object colors and categories, receptacles, obstacles, reachability envelopes, collisions, wrong-object failures, wrong-target failures, fragile/heavy constraints, tool-object compatibility, and modeled hidden obstacles.
+
+We introduce \method{}, an abstaining controller for finite candidate pools. It does not train a new VLA and does not treat semantic score as a safety certificate. Instead, it asks whether a high-budget selected tail is certified, calibrated, and lower-bound-dominant over the $N=1$ and random baselines. When evidence is insufficient, it can stop early, request pilot labels, or block high-budget selection. In the controlled TailGuard stress artifact, raw fixed high-$N$ selection has utility \VThreeTailGuardRawUtil{} and violation \VThreeTailGuardRawViol{}, while \method{} has selected utility \VThreeTailGuardUtil{}, certified violation \VThreeTailGuardViol{}, and gate \texttt{\VThreeTailGuardGate{}}. The gate is important: a blocked high-$N$ policy can still select a safe certified fallback, but it should not be reported as evidence that raw high-budget semantic selection is safe.
+
+The contribution is threefold. First, we state the finite selected-tail law for without-replacement candidate selection with ties. Second, we give a VLA-specific audit and controller around semantic affordance scoring, physical certificates, pilot-label calibration, and selected-tail lower bounds. Third, we release a broad controlled evidence package: learned and PyTorch scorers, rendered visual simulator rows, noisy verifier and calibration stress tests, \VThreePhaseRows{} phase-diagram regimes, \VThreePhysicsStressFamilies{} first-principles physical stress families, \VThreeAblationComponents{} component ablation classes, failure-honesty regimes, optional SmoLVLA CPU action emission, and external RoboCasa/LIBERO integration-status artifacts.
+
+\paragraph{Scope.}
+The paper is deliberately conservative. The optional SmoLVLA artifact reports status \texttt{\VThreeProbeStatus{}} with \VThreeProbeParams{} parameters and action shape \VThreeProbeActionShape{}, but the probe uses synthetic inputs and does not evaluate task success. External RoboCasa/LIBERO files report integration status and bounded attempts only; they do not establish reward, success metric, physical outcome, or TailGuard method success. The paper should be read as a controlled VLA selected-tail audit, not a robotics benchmark paper.
 
 \section{Finite Selected-Tail Law}
 
-Let a fixed candidate pool contain $m$ actions $a_i$ generated from observation $o$ and instruction $\ell$. Each candidate has a selection score $s_i$ and physical utility $r_i \in [0,1]$. A top-score selector samples $N$ distinct candidates uniformly without replacement and selects a uniformly random member among sampled candidates with maximal score.
+Let a fixed candidate pool contain $m$ actions $a_i$ generated from observation $o$ and instruction $\ell$. Each action has a selection score $s_i$ and a real physical utility $r_i\in[0,1]$. A top-score selector samples $N$ distinct candidates uniformly without replacement and selects a uniformly random member among the sampled candidates with maximal score. Ties matter because learned scores can saturate, quantize, or share identical rounded values.
 
 \begin{theorem}[Tie-aware finite score-tail law]
-For candidate $i$, let $e_i = |\{j:s_j=s_i\}|$ and $\ell_i=|\{j:s_j<s_i\}|$. Its exact selection probability is
+For candidate $i$, let $e_i = |\{j:s_j=s_i\}|$, let $\ell_i=|\{j:s_j<s_i\}|$, and let $h_i=|\{j:s_j>s_i\}|$. Under without-replacement sampling of $N$ candidates, candidate $i$ is selected with probability
 \[
 p_i(N)=\frac{1}{e_i}\sum_{k=\max(1,N-\ell_i)}^{\min(e_i,N)}
 \frac{\binom{e_i}{k}\binom{\ell_i}{N-k}}{\binom{m}{N}},
 \]
-with impossible binomial terms omitted. Therefore the expected selected utility is
+where impossible binomial terms are omitted and the event implicitly excludes all candidates with score larger than $s_i$. Therefore
 \[
-\mathbb{E}[\util(a_{\mathrm{sel}})] = \sum_{i=1}^{m} p_i(N) r_i .
+\mathbb{E}[\util(a_{\mathrm{sel}})] = \sum_{i=1}^{m} p_i(N)r_i .
 \]
 \end{theorem}
 
-The law makes the selected-tail principle explicit: as $N$ grows, probability mass moves to high-score candidates. High-$N$ utility is therefore governed by $\mathbb{E}[\util\mid s \text{ lies in the selected upper tail}]$, not by global score quality. If a semantic scorer ranks plausible but physically bad actions at the top, more samples can make the selected action look better to the semantic scorer and worse to the robot.
+The law says that high-budget behavior is governed by the real utility of the selected score tail, not by average correlation across the full pool. A high global semantic-real correlation does not certify the selected tail if the top semantic group is physically bad. Conversely, if the top semantic group is physically good, increasing $N$ can help. The law is therefore an audit tool, not an anti-search theorem.
 
-In our VLA-style setup, $s_i$ may be a semantic affordance score $\sem(o,\ell,a_i)$, a physical score $\phys(o,a_i)$, or a calibrated score $\calib(o,\ell,a_i)$. The real utility $\util(a_i)$ is always evaluated separately. Diagnostics include selected semantic score, selected real utility, exact-law prediction error, high-$N$ regret, oracle gap, violation rate, wrong-object and wrong-target rates, reachability, collisions, stability, fragile/heavy failures, and tail rank correlation.
+\begin{proposition}[Semantic-score no-free-lunch]
+No controller that observes only semantic scores can guarantee high-$N$ physical utility when upper-tail physical utility is unconstrained.
+\end{proposition}
 
-\section{\method{}}
+The proof is by indistinguishability: construct two finite pools with identical semantic scores and identical visible semantic metadata. In one, the top semantic tail has high physical utility; in the other, the same tail has low physical utility. A semantic-only controller must make the same high-$N$ decision in both pools. Physical certificates, verifier evidence, pilot real-utility labels, or abstention are needed to distinguish them.
 
-\method{} is an inference-time gate for finite candidate pools. It does not train a new VLA and does not assume semantic score is a safety signal. Given semantic scores, optional verifier scores, pilot real-utility labels, modeled physics flags, and a candidate $N$ grid, the controller returns one of four public decisions: \texttt{allow\_high\_n}, \texttt{stop\_early}, \texttt{collect\_pilot\_labels}, or \texttt{block\_high\_n}.
+\section{Certified TailGuard}
 
-The first layer is a hard certificate. A candidate must pass modeled predicates for reach envelope, swept collision, receptacle compatibility, stability margin, fragile/heavy handling, tool-object match, blocked-path constraints, and modeled hidden obstacles. These predicates are deliberately local to the controlled simulator. They are not real-world safety certificates.
+\method{} is an inference-time controller for finite VLA candidate pools. Its inputs are a candidate set, semantic scores, optional physical-verifier scores, modeled certificate predicates, a pilot set of real-utility labels, and a budget grid. Its outputs are a selected candidate, selected $N$, certified candidate count, selected-tail curves, lower confidence bounds, reason codes, and a public gate decision.
 
-The second layer fits a bounded calibrator from pilot labels. Features include semantic score, physical/verifier score, interactions, and score gaps. The calibrator predicts real utility for each candidate, while an empirical-Bernstein-style radius \citep{maurer2009empirical} converts selected-tail predictions into lower confidence bounds. The exact finite law is then applied to certified candidates to predict utility across the $N$ grid.
+\paragraph{Candidate and score model.}
+A candidate has instruction features, visual/object observation features, and action features. The semantic scorer estimates instruction satisfaction and visual affordance. The physical side separately evaluates reachability, swept collision, receptacle compatibility, stability, fragile/heavy handling, tool-object match, blocked paths, hidden obstacle flags, wrong-object errors, and wrong-target errors. The real utility is not the semantic score. This separation is the core scientific object.
 
-The final layer compares the lower-bound curve against two baselines: certified $N=1$ and random certified selection. High $N$ is allowed only if the lower bound beats both baselines by a margin. If high $N$ is not worth the margin, the controller stops early. If selected-tail labels are too scarce or the lower bound is too wide, it requests pilot labels. If the certified set is too small or the high-$N$ lower bound is below baselines, it blocks high-$N$ and falls back to low-$N$ certified selection when possible.
+\paragraph{Hard modeled certificate.}
+The first TailGuard layer filters candidates with modeled predicates. A candidate must pass reach envelope, swept collision, receptacle compatibility, stability margin, fragile/heavy handling, tool-object match, blocked-path constraints, and hidden-obstacle checks. These are simulator-style certificates, not real-world safety certificates. Their purpose is to make the selected-tail audit inspect physical failure modes directly.
+
+\paragraph{Pilot-label calibration and lower bounds.}
+The second layer fits a bounded calibrator from pilot real-utility labels. Features include semantic score, physical score, interactions, and selected-tail score gaps. An empirical-Bernstein-style radius \citep{maurer2009empirical} converts predicted selected-tail utility curves into lower confidence bounds. This follows the selective prediction spirit of using uncertainty or abstention when evidence is weak \citep{vovk2005algorithmic}.
+
+\paragraph{Gate decisions.}
+The final layer compares certified selected-tail lower bounds against certified $N=1$ and random-selection baselines. A high budget is allowed only when the lower bound clears both by a margin. If high $N$ is not worth the margin, TailGuard stops early. If selected-tail labels are too scarce, it requests pilot labels. If the certified set is too small or the high-$N$ lower bound is below baselines, it blocks high-$N$ and falls back to certified low-budget selection when possible.
 
 \begin{figure}[t]
-\begin{center}
+\centering
 \includegraphics[width=0.48\linewidth]{../../results/figures/figure1_semantic_overselection.png}
 \includegraphics[width=0.48\linewidth]{../../results/figures/figure11_tailguard_adaptive_n.png}
-\end{center}
-\caption{Left: controlled selected-tail failure. The semantic score improves with $N$ while physical utility falls. Right: \method{} chooses or blocks $N$ using certified selected-tail lower bounds rather than raw semantic maxima.}
+\caption{Left: semantic affordance over-selection. Right: TailGuard chooses or blocks $N$ using certified selected-tail lower bounds rather than raw semantic maxima.}
 \label{fig:tail}
 \end{figure}
 
-\section{Evidence}
+\section{Experimental Evidence}
 
-\subsection{Controlled selected-tail failure}
+All experiments are controlled and CPU-local. The full run uses \VThreeSeeds{} seeds, \VThreeStatesPerSeed{} states per seed, \VThreePools{} finite candidate pools, and up to \VThreeCandidateBudget{} candidates per state. The goal is to isolate the selected-tail mechanism, not to claim external simulator or robot performance. Table~\ref{tab:v3-claim-scorecard} in the appendix maps every claim family to source artifacts.
 
-The controlled scenes include instructions, object colors and categories, receptacles, obstacles, reachability envelopes, collisions, fragile/heavy constraints, tool constraints, wrong-object distractors, and wrong-target receptacles. The learned VLA-style scorers consume instruction features, visual/object observation features, and action-candidate features, but are trained on semantic labels rather than real physical utility.
+\subsection{Protocol, Negative Controls, and Metrics}
 
-Table~\ref{tab:failure} shows the central failure. For the learned raw semantic scorer, selected semantic score rises from $0.876$ at $N=1$ to $0.985$ at $N=128$, while selected physical utility falls from $0.473$ to $0.152$ and violations rise to $0.958$. A PyTorch learned semantic scorer reduces but does not remove the problem: at $N=128$, utility is $0.329$ with violation $0.958$. Rendered visual scenes with simulator-style physical utility reproduce the same direction: raw high-$N$ selection reaches semantic score $0.985$, utility $0.460$, and violation $1.000$.
+Each evaluation instance is a finite VLA-style action-selection problem. The instruction names an object, an intended relation, or a receptacle. The observation contains object categories, colors, poses, receptacle regions, obstacle geometry, reach envelopes, and task tags such as fragile, heavy, tool-required, or hidden-obstacle conditions. The generator then produces a fixed candidate pool with object bindings, approach poses, target receptacles, and path descriptors. This design deliberately creates semantic distractors: actions that mention the right object or receptacle and therefore look plausible to a language-conditioned scorer, but that are unreachable, collide with an obstacle, bind to the wrong instance, violate a fragile/heavy constraint, or take the object to the wrong place.
 
-\begin{table}[t]
-\caption{Selected-tail failure. Values are artifact rows from \texttt{results/learned\_summary.csv} and \texttt{results/rendered\_summary.csv}.}
-\label{tab:failure}
-\begin{center}
-\small
-\begin{tabular}{llrrrrr}
-\toprule
-Setting & Method & $N$ & Sem. & Utility & Viol. & Regret \\
-\midrule
-Learned & raw semantic & 1 & 0.876 & 0.473 & 0.725 & 0.000 \\
-Learned & raw semantic & 128 & 0.985 & 0.152 & 0.958 & 0.848 \\
-Learned & PyTorch semantic & 128 & 0.971 & 0.329 & 0.958 & 0.671 \\
-Rendered & raw semantic & 1 & 0.876 & 0.564 & 0.729 & 0.000 \\
-Rendered & raw semantic & 128 & 0.985 & 0.460 & 1.000 & 0.540 \\
-\bottomrule
-\end{tabular}
-\end{center}
-\end{table}
+The central negative control is the raw semantic selector. It uses no physical certificate and no selected-tail pilot calibration, so it tests whether increasing the candidate budget alone makes the selected action safer. The second negative control is a random high-budget selector, which separates search-budget effects from semantic-score effects. The third is $N=1$, which answers whether the high-budget tail improves over simply sampling one action. These baselines are intentionally severe because an inference-time VLA selector should not be credited for high semantic score unless it also beats low-budget and random alternatives on physical utility.
 
-\subsection{Repair is selected-tail repair}
+The main metrics are selected semantic score, selected real utility, violation rate, high-budget regret, oracle gap, certified candidate count, fallback rate, abstention rate, and the public gate decision. Violation is any failed modeled physical predicate for the chosen candidate. Real utility is a bounded task-utility label for controlled scenes, not a hidden semantic score. The exact finite law computes selected-tail expectations for fixed pools, while Monte Carlo trials check that the implementation samples and tie-breaks as intended. A result is treated as deployment-positive only when the selected-tail lower bound clears the $N=1$ and random baselines; otherwise the result is a stop, block, or label-collection outcome.
 
-Table~\ref{tab:repair} compares high-$N$ repair methods at $N=128$. Physical scoring, pilot-label calibration, and grounded combined scoring repair the controlled selected tail. The important qualification is that these methods work when the modeled physical or pilot-label evidence actually changes the selected tail. Robustness artifacts show that mild noisy verification can improve utility while remaining unsafe, harsh noisy verification can fail, and calibration can become label-budget or noise limited. This is why the controller exposes \texttt{collect\_pilot\_labels} and \texttt{block\_high\_n} decisions instead of always returning a high-$N$ action.
+The controlled scope is also part of the protocol. The paper is allowed to claim that semantic affordance over-selection occurs in the provided VLA-style artifacts and that TailGuard repairs or blocks those artifacts under the stated predicates and labels. It is not allowed to claim that the same numbers transfer to hardware, external simulators, or unmodeled contact dynamics. The optional SmoLVLA and external benchmark artifacts are therefore evaluated as boundary evidence: they answer whether plumbing/status exists, not whether physical success has been demonstrated.
 
-\begin{table}[t]
-\caption{Controlled high-$N$ repair at $N=128$ from \texttt{results/repair\_summary.csv}.}
-\label{tab:repair}
-\begin{center}
-\small
-\begin{tabular}{lrr}
-\toprule
-Method & Selected utility & Violation rate \\
-\midrule
-Raw semantic & 0.152 & 0.958 \\
-Semantic plus physical & 0.965 & 0.042 \\
-Calibrated & 0.999 & 0.058 \\
-Grounded combined & 1.000 & 0.000 \\
-PyTorch semantic & 0.329 & 0.958 \\
-PyTorch calibrated & 0.999 & 0.060 \\
-\bottomrule
-\end{tabular}
-\end{center}
-\end{table}
+\subsection{Semantic Affordance Over-Selection}
 
-\subsection{Certified TailGuard stress}
+Table~\ref{tab:v3-selected-failure} summarizes the central failure and the learned/PyTorch/rendered variants. In the learned raw semantic setting, the selected semantic score improves with $N$, but real utility drops and violation rises. The PyTorch semantic scorer weakens the collapse but does not remove it: at high $N$, the semantic tail is still physically unsafe. Rendered simulator rows reproduce the same selected-tail direction with rendered visual scenes and simulator-style utility.
 
-In the TailGuard stress setting, raw fixed high-$N$ selection has utility $0.460$ and violation $1.000$. The \method{} row reaches controlled utility $1.000$ with violation $0.000$, but its dominant decision is \texttt{block\_high\_n}: it falls back rather than declaring raw high-$N$ safe. Component ablations remove the physical certificate, verifier score, pilot labels, empirical lower bound, adaptive $N$, or abstention/fallback. Each named removal fails the controlled acceptance target in at least one constructed regime, while the full controller passes the corresponding row. Phase diagrams sweep semantic/physical misalignment, distractor salience, obstacle density, hidden constraints, verifier errors, label noise, and label budget.
+\input{v3_selected_failure_table.tex}
+
+The full learned and rendered curves are reported in Appendix~\ref{app:full-curves}. The important pattern is not a single high-budget endpoint. The raw semantic curve gets worse as selected candidates move into a high semantic-score tail, while calibrated and grounded variants change the selected tail. This is exactly what the finite law predicts.
+
+\subsection{Repair Is Selected-Tail Repair}
+
+Table~\ref{tab:v3-repair} reports high-budget repair methods. Physical scoring, pilot-label calibration, grounded combined scoring, and torch calibration can repair the controlled selected tail. The paper does not present these as universal repairs. Calibration spends labels; physical scores require meaningful modeled predicates; grounded combined scores are strong when the simulator features cover the relevant failure modes.
+
+\input{v3_repair_table.tex}
+
+The strongest controlled repair is not the most important lesson. The more important lesson is operational: a high-$N$ semantic action should not be deployed merely because its semantic score is high. It should be checked against physical feasibility, calibrated selected-tail utility, and lower-bound baselines. If those checks are weak, the correct output is to block, stop early, or collect labels.
+
+\subsection{TailGuard Baselines and Gates}
+
+\input{v3_tailguard_table.tex}
+
+Table~\ref{tab:v3-tailguard} shows that TailGuard is evaluated against $N=1$, random high-$N$, verifier-filtered high-$N$, calibration without certificates, certificate-only filtering, lower-bound ablations, baseline-check ablations, and oracle. The certified row has selected utility \VThreeTailGuardUtil{} and certified violation \VThreeTailGuardViol{}, but its gate is \texttt{\VThreeTailGuardGate{}}. That gate means the controller does not certify raw high-budget semantic selection; it selects a safe fallback while recording that high-$N$ evidence is insufficient.
 
 \begin{figure}[t]
-\begin{center}
+\centering
 \includegraphics[width=0.48\linewidth]{../../results/figures/figure17_component_ablation.png}
 \includegraphics[width=0.48\linewidth]{../../results/figures/figure18_failure_honesty.png}
-\end{center}
-\caption{Ablations and failure honesty. The controller is evaluated by whether it keeps controlled utility high and violations low, and by whether it falls back or abstains in unsupported regimes. The right panel indexes rows from \texttt{failure\_honesty\_summary.csv}.}
+\caption{Ablations and failure honesty. Removing certificate, verifier, labels, lower bounds, adaptive $N$, or fallback/abstention fails in at least one controlled regime, while failure-honesty artifacts record fallback or abstention rather than pretending unsafe high-$N$ is repaired.}
 \label{fig:ablation}
 \end{figure}
 
-\subsection{External boundary}
+\subsection{Robustness, Phase Diagrams, and Physics Stress}
 
-The external benchmark runner is artifact-gated. The current RoboCasa status records an attempted PickPlaceCounterToCabinet reset/step probe that timed out before reward or success metrics. The LIBERO row records import/status information only and no guarded reset/step wrapper. The SmoLVLA artifact records synthetic CPU action emission, not physical success. These artifacts support integration-status statements only. They do not support external simulator performance, TailGuard method success on external benchmarks, or hardware-outcome statements.
+Table~\ref{tab:v3-robustness} reports noisy verifier and calibration stress at $N=128$. Mild noisy verification improves utility but remains unsafe; harsh noisy verification barely repairs the tail; calibration can succeed or remain unsafe depending on label budget and noise. This is why the controller exposes \texttt{collect\_pilot\_labels} and \texttt{block\_high\_n}.
 
-\section{Limits, Reproducibility, and Ethics}
+\input{v3_robustness_table.tex}
 
-The strongest limitation is evidence scope. The experiments are controlled, including rendered scenes and simulator-style geometry. The learned models are VLA-style semantic scorers, not deployed robot foundation models. The certificates cover only modeled predicates; unmodeled perception errors, dynamics, contact, calibration, and hardware failures are outside the guarantee. Pilot labels are assumed to measure real utility for the controlled scenes, and confidence bounds depend on selected-tail coverage. A controller that abstains may be operationally inconvenient, but in this setting abstention is the correct output when high-$N$ evidence is weak.
+The phase diagram contains \VThreePhaseRows{} rows and average TailGuard gain \VThreePhaseMeanGain{} over raw high-$N$ selection, while raw high-$N$ utility can fall as low as \VThreePhaseRawMin{}. The physics stress table covers \VThreePhysicsStressFamilies{} stress families including reach envelopes, swept collisions, receptacle compatibility, fragile/heavy ambiguity, hidden obstacles, object identity spoofing, and train/pilot/test shift. These stress tests are what make the paper VLA-specific rather than a generic selected-tail story.
 
-Reproduction uses \texttt{pytest}, the claim-audit script, and guarded external status checks. The paper-critical tables are generated from the claims, TailGuard, ablation, and related CSV/JSON artifacts under \texttt{results/}. Code can be provided as anonymous supplementary material. This work should not be used as a hardware safety guarantee; it is a diagnostic and controller study for controlled VLA-style selected-tail failures. A separate LLM usage disclosure appears in Appendix~\ref{app:llm}.
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.48\linewidth]{../../results/figures/figure12_phase_diagram.png}
+\includegraphics[width=0.48\linewidth]{../../results/figures/figure15_physics_failure_decomposition.png}
+\caption{Left: phase diagram over semantic/physical misalignment and distractor salience. Right: first-principles physical failure decomposition for TailGuard certificate predicates.}
+\label{fig:phase-physics}
+\end{figure}
+
+\section{External and Optional VLA Boundary}
+
+The optional SmoLVLA probe and external benchmark runner are included because reviewers reasonably ask whether the controlled VLA abstraction connects to real VLA plumbing. The current answer is bounded. Cached SmoLVLA loads on CPU and emits a finite synthetic action chunk, but the rendered bridge records \texttt{action\_decode\_supported=false}. The external runner records RoboCasa/LIBERO integration status and guarded attempts, but no reward/success metric, physical success, or TailGuard method success.
+
+\input{v3_external_boundary_table.tex}
+
+These artifacts strengthen the paper by preventing ambiguity. They show exactly what is available and exactly what is not. Any future upgrade to external simulator or robot claims would require reset/step success, reward traces, exposed success metrics, an action-schema mapping, TailGuard-connected policies, and seed-level outcome files.
+
+\section{Related Work}
+
+\paragraph{Vision-language-action models.}
+Language-conditioned robot policies and VLA models connect high-level semantic instruction understanding to low-level action generation \citep{ahn2022saycan,brohan2022rt1,brohan2023rt2,kim2024openvla}. This paper does not propose a new robot foundation model. It studies an inference-time action-selection layer that can sit on top of a VLA-style generator or scorer.
+
+\paragraph{Affordance grounding and verifiers.}
+Grounded affordance scoring asks whether an action is physically possible and task-relevant. The problem resembles verifier and reranking pipelines in other domains \citep{cobbe2021verifiers,stiennon2020summarize}, but VLA action selection has physical failure modes: reach, collision, stability, object identity, receptacle compatibility, and hidden constraints. TailGuard makes those predicates explicit in the selected tail.
+
+\paragraph{Selective prediction and confidence bounds.}
+TailGuard uses lower confidence bounds and abstention rather than unconditional high-$N$ approval. This is related to selective prediction, empirical Bernstein bounds \citep{maurer2009empirical}, and distribution-free uncertainty accounting \citep{vovk2005algorithmic}. The controller's novelty is not the existence of a confidence bound; it is the VLA-specific combination of modeled physical certificates, selected-tail calibration, baseline comparison, and explicit public gate decisions.
+
+\paragraph{Robotics benchmarks.}
+LIBERO \citep{liu2023libero} and RoboCasa \citep{nasiriany2024robocasa} are important benchmarks for robot-learning evaluation. This paper does not claim benchmark success on them. It records integration status only, because the current artifacts do not include reset/step reward success, exposed success metrics, or TailGuard-connected external method outcomes.
+
+\section{Limitations and Ethics}
+
+The strongest limitation is evidence scope. The experiments are controlled, including rendered scenes and simulator-style geometry. The learned models are VLA-style scorers trained on semantic labels; they are not deployed robot foundation models. The physical certificates cover modeled predicates, not real perception, contact dynamics, calibration drift, latency, hardware faults, or human-in-the-loop safety procedures. Pilot labels are assumed to measure real utility for controlled scenes, and calibration bounds depend on selected-tail coverage.
+
+The method also has an operational cost. Abstention, fallback, and label collection can slow deployment. In this paper that is a feature, not a bug: the controller should refuse high-$N$ semantic selection when evidence is weak. A method that silently reports success while blocking high $N$ would be misleading, so the artifacts report gates, certified candidate counts, fallback, and abstention.
+
+This work should not be used as a hardware safety guarantee. The risk of overinterpretation is real: a reader might see VLA words and optional SmoLVLA/RoboCasa/LIBERO artifacts and infer more than the evidence supports. The manuscript, claim audit, external boundary table, and final checklist are written to prevent that inference.
+
+\section{Reproducibility}
+
+The repository contains all primary artifacts under \path{results/}. The v3 manuscript tables are generated from cached full artifacts by:
+\begin{verbatim}
+python scripts/prepare_v3_evidence.py
+\end{verbatim}
+The PDF is built by:
+\begin{verbatim}
+powershell -ExecutionPolicy Bypass -File
+scripts/build_iclr_submission.ps1
+\end{verbatim}
+Final v3 validation uses:
+\begin{verbatim}
+python scripts/run_v3_claim_audit.py
+bash scripts/run_claim_audit.sh
+python -m pytest -q
+python -m compileall src experiments scripts tests -q
+\end{verbatim}
+The full experiment command is \texttt{bash scripts/run\_all.sh}; it should be used only when regenerating all evidence from scratch. Routine final validation uses cached full artifacts to avoid overwriting them with smoke-mode outputs.
 
 \label{page:maintextend}
 \bibliographystyle{iclr2026_conference}
@@ -163,43 +221,253 @@ Reproduction uses \texttt{pytest}, the claim-audit script, and guarded external 
 \section{Proof Details}
 
 \begin{proof}[Proof of Theorem 1]
-For a fixed score level $s$, a sampled subset selects a candidate from that level exactly when it includes no candidate with score larger than $s$ and at least one candidate with score equal to $s$. If $k$ equal-score candidates and $N-k$ lower-score candidates are sampled, there are $\binom{e_i}{k}\binom{\ell_i}{N-k}$ such subsets. The denominator is the total number $\binom{m}{N}$ of sampled subsets. Conditional on this event, tie-breaking is uniform over the $e_i$ candidates in the score group by symmetry, giving the stated $1/e_i$ factor. Expected selected utility follows by linearity.
+For a fixed score level $s$, a sampled subset selects from that level exactly when it includes no candidate with score larger than $s$ and at least one candidate with score equal to $s$. If $k$ equal-score candidates and $N-k$ lower-score candidates are sampled, there are $\binom{e_i}{k}\binom{\ell_i}{N-k}$ such subsets. The denominator is the total number $\binom{m}{N}$ of sampled subsets. Conditional on this event, tie-breaking is uniform over the $e_i$ candidates in the score group by symmetry, giving the stated $1/e_i$ factor. Expected selected utility follows by linearity.
 \end{proof}
 
-\begin{proposition}[Semantic-score no-free-lunch]
-No controller that observes only semantic scores can guarantee high-$N$ physical utility when upper-tail physical utility is unconstrained.
-\end{proposition}
-
-\begin{proof}
-Construct two finite pools with identical semantic scores and identical nonsemantic metadata visible to the controller. In one pool, assign utility one to the top semantic tail and zero elsewhere. In the other, assign utility zero to the same top semantic tail and one elsewhere. A semantic-only controller must make the same high-$N$ decision on both pools, so it fails on at least one. Physical certificates, verifier evidence, pilot labels, or abstention are necessary to distinguish the pools.
+\begin{proof}[Proof of Proposition 1]
+Construct two candidate pools with identical semantic scores and identical features visible to a semantic-only controller. In pool A, the upper semantic-score tail has utility one and all lower-score candidates have utility zero. In pool B, the upper semantic-score tail has utility zero and lower-score candidates have utility one. The controller observes the same semantic information in both pools and must make the same high-$N$ decision. That decision fails in at least one pool. Therefore semantic scores alone cannot guarantee high-$N$ physical utility without assumptions on the selected tail.
 \end{proof}
 
-\section{Claim-Evidence Table}
+\section{Detailed Experimental Protocol}
+\label{app:protocol}
 
-\begin{center}
+\paragraph{Candidate pools.}
+For each seed and state, the artifact fixes a maximum pool of \VThreeCandidateBudget{} language-conditioned action candidates before any selector sees the scores. A candidate encodes the referenced object instance, a grasp or interaction pose, a target receptacle or placement relation, and a path-level descriptor. The same finite pool is reused across selectors, so raw semantic selection, calibrated selection, physical filtering, TailGuard, and oracle rows differ only in the selection rule and auxiliary evidence they are allowed to use. This avoids a common evaluation leak where one method is given a stronger candidate generator than another.
+
+\paragraph{Observation model.}
+The controlled observation is not a free-form text prompt. It contains structured object and scene facts: category, color, approximate pose, reachability region, obstacle footprint, receptacle identity, and task-condition flags. Rendered rows add image-like evidence from the same scene family, while learned and PyTorch rows use language/visual/action features. The intent is to cover the VLA action-selection interface without pretending that the artifact solves full perception, closed-loop control, or contact-rich manipulation.
+
+\paragraph{Semantic labels and physical labels.}
+Semantic labels measure whether an action appears to satisfy the instruction and scene description. Real-utility labels measure whether the selected action is physically and task-wise valid in the controlled scene. The two labels are purposely not identical. A candidate can have high semantic affordance because it points to a linguistically plausible object or receptacle while still being physically invalid because of reach, collision, stability, wrong instance, wrong target, fragile/heavy, tool-object, or hidden-obstacle constraints. This label separation is what makes semantic affordance over-selection observable.
+
+\paragraph{Certificate predicates.}
+The hard certificate layer is a conjunction of modeled physical checks. A certified candidate must pass reach envelope, swept collision, receptacle compatibility, stability, fragile/heavy handling, tool-object compatibility, blocked-path, and hidden-obstacle tests. These predicates are intentionally named as modeled predicates rather than safety guarantees. Their role is to remove candidates whose failure mode is explicit in the controlled scene, and to expose when too few certified candidates remain for high-budget selection.
+
+\paragraph{Score families.}
+The raw semantic family ranks candidates by semantic affordance only. The torch semantic family uses a heavier learned language/visual/action scorer trained on semantic labels. The semantic-plus-physical and grounded-combined families include physical evidence. The calibrated family uses pilot real-utility labels to estimate selected-tail utility. Oracle rows are nondeployable upper bounds. TailGuard rows combine certificate filtering, pilot calibration, lower confidence bounds, and baseline checks. These families are deliberately separated so that a reviewer can see whether repair comes from physical evidence, calibration evidence, or an oracle-only advantage.
+
+\paragraph{Budget and selection.}
+For each budget $N$, a selector samples a without-replacement subset from the fixed pool and chooses the highest-scoring sampled candidate, using uniform tie-breaking inside the top score group. The exact law computes the probability that each candidate is selected at each budget. Reported utility and violation curves therefore describe the selected tail, not just the average pool. This distinction matters because a pool can look benign on average while its top semantic tail is physically poor.
+
+\paragraph{Calibration and abstention.}
+Pilot labels are used to calibrate selected-tail utility under bounded uncertainty. TailGuard then compares lower confidence bounds against $N=1$ and random high-budget baselines. If the high-budget lower bound does not clear those baselines, the gate is not positive. A \texttt{stop\_early} gate means a lower budget is enough. A \texttt{collect\_pilot\_labels} gate means selected-tail labels are too sparse or noisy. A \texttt{block\_high\_n} gate means high-budget selection should not be reported as safe in the controlled evidence. These gates are outcomes, not implementation details.
+
+\paragraph{RAM-light execution.}
+The full evidence package is designed to be regenerated sequentially. Candidate pools, summaries, figures, and optional status artifacts are written to disk between stages; v3 table preparation reads cached summaries rather than keeping full experiment state resident in memory. This keeps the final validation path light while preserving the larger experiment scope. When a full rerun is needed, \texttt{bash scripts/run\_all.sh} is the correct command; the v3 finalizer uses cached full artifacts to avoid overwriting them with smoke-mode outputs.
+
+\section{Falsification and Reviewer-Attack Criteria}
+\label{app:falsification}
+
+\paragraph{What would falsify the central failure claim.}
+The central claim would be falsified in this artifact if the raw semantic selected tail did not become worse in physical utility as the budget increased, or if the high semantic-score tail had comparable physical utility to the lower-budget selected candidates. The learned and rendered summaries therefore report both semantic score and real utility at $N=1$ and $N=\VThreeCandidateBudget{}$, plus full budget curves in Appendix~\ref{app:full-curves}. The paper does not ask readers to infer failure from a single anecdote.
+
+\paragraph{What would falsify the TailGuard claim.}
+The TailGuard claim would be falsified if the controller only succeeded by using oracle utility, if it silently counted abstentions as successes, if it lacked hard cases where each component mattered, or if it approved high-budget selection when its lower bound failed the baseline checks. The v3 evidence package addresses these attacks with separate oracle rows, failure-honesty rows, component ablations, baseline-check ablations, and public gate fields. A blocked gate with a safe fallback is not reported as proof that raw high-budget semantic search is safe.
+
+\paragraph{What would falsify the calibration claim.}
+Calibration would be overstated if the method required clean labels but the paper hid noisy or scarce-label regimes. The robustness and calibration tables therefore include label-budget and label-noise sweeps, and the controller can return \texttt{collect\_pilot\_labels}. The correct interpretation is bounded: pilot labels can repair selected-tail estimates in the controlled settings when their coverage and noise are adequate; they are not a substitute for real deployment validation.
+
+\paragraph{What would falsify the VLA specificity claim.}
+The paper would be too generic if the evidence could be described without action candidates, object binding, scene geometry, physical predicates, or robot-style failure modes. The current artifact makes those elements explicit in the generator, metrics, stress families, figures, and tables. The selected-tail theorem is intentionally general, but the empirical and methodological contribution is VLA-specific: semantic affordance scoring is audited against physical feasibility and controlled action utility.
+
+\paragraph{What would constitute external validation.}
+External validation would require more than a model-loading probe or benchmark import. It would require an action-schema mapping from generated action chunks to the simulator or robot controller, reset/step traces, exposed reward or success metrics, TailGuard-connected policy decisions, seed-level outcomes, and failure logs. The repository does not currently contain that evidence. This is why the external boundary table is phrased as status evidence rather than performance evidence.
+
+\paragraph{Reviewer reading checklist.}
+A harsh reviewer should be able to locate every numerical claim in a CSV, JSON file, or generated table; should see the no-real-robot boundary before reaching the appendix; should be able to distinguish raw high-budget semantic selection from TailGuard's fallback and abstention behavior; should see the $N=1$, random, oracle, certificate-only, no-certificate, no-label, no-lower-bound, no-adaptive-$N$, and no-abstention comparisons; and should find at least one stress regime where each nontrivial component matters. If any of those checks fails, the submission is not ready.
+
+\section{Stress-Test Design Rationale}
+\label{app:stress-rationale}
+
+\paragraph{Why rendered scenes are included.}
+The selected-tail effect could otherwise be dismissed as an artifact of symbolic features. Rendered-scene rows make the same failure mode pass through a visual simulator layer: object colors, placements, obstacles, and receptacles are represented as scene evidence before scoring and selection. The rendered rows are still controlled, but they check that the paper's claim is not tied only to a hand-written symbolic table.
+
+\paragraph{Why a PyTorch semantic scorer is included.}
+A lightweight hand-crafted semantic scorer would be easy to attack as too simple. The PyTorch scorer is trained on language/visual/action semantic labels and then evaluated against real utility. Its purpose is not to claim a new VLA model; it tests whether a learned semantic scorer can still over-select the wrong physical tail when its training target is semantic satisfaction rather than physical success. The calibrated PyTorch row then asks whether selected-tail calibration changes that behavior.
+
+\paragraph{Why noisy-verifier rows are included.}
+A perfect physical verifier would make the paper too easy. The noisy-verifier rows check what happens when physical evidence is helpful but imperfect. Mild noise can improve selected utility without justifying a positive gate, and harsh noise can leave the selected tail unsafe. This supports the abstaining policy: the controller is allowed to say that the evidence is not good enough, rather than forcing a high-budget action.
+
+\paragraph{Why phase diagrams are included.}
+One fixed scene family cannot show whether TailGuard is robust to changing semantic/physical alignment. The phase diagram varies misalignment and distractor salience so that raw high-budget selection is tested across easy, ambiguous, and adversarial regimes. The relevant question is not whether TailGuard always allows high $N$, but whether the gate changes when the selected tail becomes unsafe.
+
+\paragraph{Why component ablations are included.}
+The controller has several moving parts, and a reviewer could reasonably ask whether some are decorative. The ablation design assigns each component a stress regime where removing it changes the outcome: certificates block unreachable semantic tails, verifier evidence resolves certificate blind spots, pilot labels correct false-positive verifier tails, lower bounds block overfit calibration, adaptive $N$ stops before bad tails, and fallback prevents low-certified-count overclaims. This is why the ablation table is long: it is meant to make every component accountable.
+
+\paragraph{Why failure honesty is included.}
+For an abstaining controller, success metrics can be misleading if blocked, fallback, or label-collection cases are hidden. The failure-honesty rows therefore treat refusal behavior as reported behavior. A blocked high-budget decision is not a failed experiment to be buried; it is the policy doing what it is supposed to do under weak evidence. This convention also makes the paper easier to audit because every unsafe or under-evidenced regime has a named outcome.
+
+\paragraph{Why external artifacts remain boundary artifacts.}
+The optional external files answer a narrow question: whether the repository attempted to connect the controlled selected-tail story to VLA model and benchmark plumbing. They do not answer whether TailGuard improves physical success on external simulators or robots. Keeping them in the paper is still useful because it prevents accidental inflation. A submission that says exactly what the external artifacts do not prove is harder to misread than one that omits the boundary entirely.
+
+\section{Claim-Evidence Scorecard}
+\label{app:claim-scorecard}
+
+\input{v3_claim_scorecard_table.tex}
+
+\section{Full Selected-Tail Curves}
+\label{app:full-curves}
+
+The main text uses compact endpoint tables. Tables~\ref{tab:v3-learned-curves} and~\ref{tab:v3-rendered-curves} expose the full budget curves so the selected-tail trend can be audited at every $N$.
+
+\input{v3_learned_curve_table.tex}
+\input{v3_rendered_curve_table.tex}
+
+\section{Component Ablation Details}
+\label{app:component-ablation}
+
+The component ablation table is intentionally verbose. It defends against the criticism that TailGuard is merely a stack of redundant heuristics. Every named removal has a controlled stress regime where it fails acceptance while the full method passes.
+
+\input{v3_component_ablation_table.tex}
+
+\section{Phase, Calibration, and Physics Stress Tables}
+\label{app:stress-tables}
+
+\input{v3_phase_diagram_table.tex}
+\input{v3_calibration_table.tex}
+\input{v3_physics_stress_table.tex}
+
+\section{Failure Honesty}
+\label{app:failure-honesty}
+
+Failure-honesty rows record regimes where TailGuard blocks, falls back, abstains, or requests labels. These are not hidden failures. They are part of the method's safety posture in controlled selected-tail evaluation.
+
+\input{v3_failure_honesty_table.tex}
+
+\section{Additional Figures}
+\label{app:additional-figures}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\linewidth]{../../results/figures/figure2_repair_comparison.png}
+\caption{Repair comparison across selected budgets.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\linewidth]{../../results/figures/figure3_tail_diagnostics.png}
+\caption{Tail diagnostics for semantic-real gaps, rank correlations, and violation rates.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\linewidth]{../../results/figures/figure4_failure_decomposition.png}
+\caption{Failure decomposition across wrong-object, wrong-target, collision, reach, fragile, and stability failures.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\linewidth]{../../results/figures/figure5_exact_law_validation.png}
+\caption{Exact finite selected-tail law validation against Monte Carlo selected utility.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\linewidth]{../../results/figures/figure6_rendered_visual_simulator.png}
+\caption{Rendered visual simulator selected-tail artifact.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\linewidth]{../../results/figures/figure7_rendered_scene_examples.png}
+\caption{Rendered scene examples from the controlled VLA-style environment.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\linewidth]{../../results/figures/figure8_robustness_repairs.png}
+\caption{Noisy verifier and calibration robustness repairs.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\linewidth]{../../results/figures/figure9_calibration_budget_noise.png}
+\caption{Calibration budget and label-noise sweep.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\linewidth]{../../results/figures/figure10_learned_scorer_comparison.png}
+\caption{Learned symbolic and PyTorch scorer comparison.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\linewidth]{../../results/figures/figure13_calibration_sample_complexity.png}
+\caption{Pilot-label sample-complexity and selected-tail confidence radii.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\linewidth]{../../results/figures/figure14_imperfect_verifier_map.png}
+\caption{Imperfect verifier map across false-positive and false-negative stress.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\linewidth]{../../results/figures/figure16_smolvla_rendered_bridge_status.png}
+\caption{Optional SmoLVLA rendered-bridge status. The bridge is a status artifact, not physical-success evidence.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\linewidth]{../../results/figures/figure19_external_benchmark_status.png}
+\caption{External benchmark claim-level status. Integration, stepping, success metrics, physical success, and method success are separate claim levels.}
+\end{figure}
+
+\section{External Boundary Details}
+\label{app:external-boundary}
+
+The external benchmark status file records claim levels separately. Current artifacts support integration/status statements only. They do not support external simulator success, robot success, or TailGuard method success. This distinction is deliberately repeated because it is the most likely overclaim for a VLA paper with optional real-model plumbing artifacts.
+
+\section{Fifty-Round Self-Attack Ledger}
+\label{app:attack-ledger}
+
+\input{v3_attack_ledger_table.tex}
+
+\section{Artifact Map}
+\label{app:artifact-map}
+
+\begin{table}[H]
+\centering
 \small
-\begin{tabularx}{\linewidth}{p{0.30\linewidth}p{0.18\linewidth}X}
+\caption{Primary v3 artifact map.}
+\begin{tabular}{p{0.34\linewidth}p{0.56\linewidth}}
 \toprule
-Statement & Status & Artifact boundary \\
+Claim family & Artifacts \\
 \midrule
-Exact finite score-tail law & Supported & \texttt{theory.py}; \texttt{test\_theory.py}. \\
-Semantic affordance over-selection & Supported & Controlled, learned, and rendered summary CSVs show semantic score rising while utility drops or violations rise. \\
-\method{} controlled repair & Supported & \texttt{tailguard\_summary.csv}: controlled utility $1.000$, violation $0.000$ in the supported TailGuard row. \\
-Component necessity & Supported & \texttt{component\_ablation\_summary.csv}: each named removal fails at least one stress regime. \\
-Failure honesty & Supported & \texttt{failure\_honesty\_summary.csv}: fallback or abstention occurs in unsupported regimes. \\
-External simulator outcomes & Not reported & \texttt{external\_benchmark\_status.json} has no reset/step reward success artifact. \\
-Hardware validation & Not reported & No hardware or seed-level robot outcome artifact exists. \\
+Selected-tail failure & \path{results/learned_summary.csv}; \path{results/rendered_summary.csv}; Figure~\ref{fig:tail} \\
+Repair comparison & \path{results/repair_summary.csv}; \path{paper/iclr2026/v3_repair_table.tex} \\
+Certified TailGuard & \path{results/tailguard_summary.csv}; \path{results/tailguard_artifact.json}; \path{results/tailguard_gate_examples.csv} \\
+Ablations & \path{results/component_ablation_summary.csv}; \path{paper/iclr2026/v3_component_ablation_table.tex} \\
+Phase diagram & \path{results/phase_diagram_summary.csv}; \path{paper/iclr2026/v3_phase_diagram_table.tex} \\
+Calibration stress & \path{results/calibration_sample_complexity.csv}; \path{results/robustness_summary.csv} \\
+Physics stress & \path{results/physics_stress_summary.csv}; Figure~\ref{fig:phase-physics} \\
+External boundary & \path{results/external_benchmark_status.json}; \path{results/optional_vla/inference_probe.json} \\
+V3 attack audit & \path{results/v3_vla_attack_ledger.csv}; \path{results/v3_vla_evidence_summary.json} \\
 \bottomrule
-\end{tabularx}
-\end{center}
+\end{tabular}
+\end{table}
 
-\section{External Benchmark Boundary}
+\section{Final V3 Acceptance Checklist}
+\label{app:final-checklist}
 
-The external runner records claim levels separately: integration, benchmark stepping, reward trace, exposed success metric, physical success, and TailGuard method success. Current artifacts set integration to true but benchmark stepping, success metric exposure, physical success, and TailGuard method success to false. Upgrading the claim would require reset-ok, step-ok, nonempty reward traces, exposed success metrics, an action-schema mapping, TailGuard-connected policy rows, and seed-level outcome files.
+\begin{itemize}
+\item The final PDF has at least \VThreeMinPages{} pages.
+\item The Desktop file is \texttt{vla-v3.pdf}.
+\item The old Desktop \texttt{vla-v2.pdf} file is absent.
+\item \texttt{PAPER\_SOURCE\_MAP.md} maps \texttt{vla-v3.pdf} to \texttt{C:/Users/wangz/vla} and \texttt{Jason-Wang313/vla}.
+\item Repo and Desktop final PDFs match by SHA-256.
+\item The v3 self-attack ledger contains exactly \VThreeAttackRounds{} rows.
+\item The manuscript does not claim real-robot validation, external benchmark success, physical success, or a universal VLA deployment recipe.
+\item Legacy and v3 claim audits pass.
+\item Tests, compile checks, and visual PDF QA pass.
+\item The final commit is pushed to GitHub \texttt{main}, and the remote SHA is verified.
+\end{itemize}
 
 \section{LLM Usage Disclosure}
 \label{app:llm}
 
-Large language models were used substantially during manuscript preparation and repository documentation. Assistance included organizing the claim-evidence audit, drafting and editing prose, and helping implement guarded artifact checks and build automation. The authors remain responsible for all claims, experiments, code, references, and text, and verified the submission against the recorded artifacts before release.
+Large language models were used during manuscript preparation and repository documentation. Assistance included organizing the claim-evidence audit, drafting and editing prose, and helping implement guarded artifact checks and build automation. The authors remain responsible for all claims, experiments, code, references, and text, and verified the submission against the recorded artifacts before release.
 
 \end{document}

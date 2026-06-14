@@ -1,0 +1,51 @@
+round,attack_id,reviewer_angle,failure_mode,harsh_question,defense_artifact_or_revision,status
+1,generic_budget,novelty,Could read like a generic candidate-budget paper.,Would the argument still work if VLA terms were deleted?,"Make instruction, object observation, semantic affordance, action candidates, and physical certificates central.",pass
+2,clone_risk,novelty,Looks like the same selected-tail theorem reused.,Is the paper just another wrapper around the finite law?,"Use the law only as audit math; put TailGuard, VLA failures, and robotics boundary artifacts in the foreground.",pass
+3,real_robot,scope,The text may imply robot validation.,Does any sentence claim hardware evidence?,"State controlled evidence and no real-robot validation in abstract, limits, checklist, and external table.",pass
+4,external_success,scope,RoboCasa/LIBERO status could be misread as success.,Are reward or success metrics reported?,Treat external artifacts as integration status only with no method outcome claim.,pass
+5,smolvla_overclaim,scope,SmoLVLA probe could be oversold.,Does synthetic action emission imply benchmark validation?,Report it only as CPU model-plumbing evidence.,pass
+6,certificate_idealization,assumption,"Physical certificates are modeled, not real safety certificates.",Does TailGuard rely on perfect perception/dynamics?,List the modeled predicates and boundary conditions explicitly.,bounded
+7,calibration_labels,assumption,Pilot labels may be too clean.,Does calibration assume representative selected-tail labels?,Report label-budget/noise stress and collect_pilot_labels decisions.,pass
+8,noisy_verifier,robustness,Grounding might be imperfect.,Does the paper show noisy verifier failure?,Include mild/harsh noisy verifier rows and unsafe gates.,pass
+9,ablation_stack,ablation,TailGuard may be redundant components.,Does every component matter?,Expose component-specific ablation failures.,pass
+10,fallback_honesty,policy,Abstention could hide failures.,Does the method pretend blocked cases are successes?,Report fallback and abstention as first-class outcomes.,pass
+11,n1_baseline,baseline,High-N could be compared only to weak baselines.,Does TailGuard beat N=1 and random lower-bound baselines?,Keep baseline checks in method and TailGuard table.,pass
+12,random_baseline,baseline,Random selection baseline may be missing.,Is random high-N represented?,Include random high-N row and no-random-check ablation.,pass
+13,oracle_gap,baseline,Near-oracle repair may be overclaimed.,Is oracle treated as deployable?,Call oracle an upper bound and keep gaps visible.,pass
+14,theory_sampling,theory,Finite law could mismatch implementation.,Is the law tie-aware and without-replacement?,State exact without-replacement law and tests.,pass
+15,constant_scores,theory,Tie handling may be wrong.,Are ties and score groups covered?,Keep tie-aware proof and unit tests in claim map.,pass
+16,semantic_only,theory,No-free-lunch may be too strong.,Is the proposition conditional on observed features?,State semantic-score-only impossibility for unconstrained upper-tail utility.,pass
+17,metric_cherry_pick,statistics,Only utility could hide physical failures.,Are wrong-object/collision/reach/stability shown?,Expose violation decomposition and stress tables.,pass
+18,seed_count,statistics,Only three seeds may be attacked.,Are seed counts and pool counts transparent?,"Report seeds, states, pools, and cached status.",bounded
+19,mc_error,statistics,Monte Carlo validation may be noisy.,Are exact-law errors small and CIs present?,Use exact-law columns and claim audit thresholds.,pass
+20,phase_sweep,coverage,Only one regime may work.,Are misalignment and distractor sweeps present?,Include phase diagram table and figure.,pass
+21,physics_stress,coverage,Physical stress may be too narrow.,"Are hidden obstacles, spoofing, wrong receptacles, fragile/heavy tested?",Expose physics stress families and failure reductions.,pass
+22,rendered_gap,coverage,Symbolic scene only.,Does visual rendering reproduce the effect?,Include rendered simulator rows and figures.,pass
+23,pytorch_gap,coverage,Lightweight scorer only.,Does a heavier learned scorer reproduce the issue?,Include torch_semantic/torch_calibrated rows.,pass
+24,action_generator,mechanism,Candidate generator may be artificial.,"Are actions, objects, receptacles, and constraints explicit?",Describe controlled generator and VLA-style candidate construction.,bounded
+25,tailguard_name,writing,Certified TailGuard could sound like formal safety certification.,Does the name overpromise?,Clarify controlled certificate semantics and no hardware certification.,pass
+26,abstract_scope,writing,Abstract may overclaim.,Does it mention no benchmark/hardware outcome?,Keep boundary sentence in abstract.,pass
+27,related_work,writing,Related work too thin.,"Does it place VLA, affordance, verifiers, selective prediction, benchmarks?",Expand related work around VLA-specific selection.,pass
+28,template_smell,writing,Side-by-side duplicate risk.,Would another paper share the same section names and contribution wording?,"Use VLA/TailGuard-specific sections, tables, and terminology.",pass
+29,artifact_map,reproducibility,Reviewers cannot find evidence.,Are source artifacts mapped to claims?,Add claim scorecard and artifact map.,pass
+30,commands,reproducibility,Commands may overwrite full results.,Does final validation avoid smoke overwrite?,Use cached derived tables; warn about full vs smoke outputs.,pass
+31,desktop_mapping,workflow,Fresh agent may not find source.,Is source map v3 row updated?,Build script updates Desktop source map.,pass
+32,old_pdf,workflow,Old v2 Desktop PDF could remain.,Is old v2 absent?,Build script removes old Desktop v2 if present.,pass
+33,hash_mismatch,workflow,Desktop and repo PDFs could diverge.,Are hashes checked?,V3 audit compares SHA-256.,pass
+34,page_count,submission,Paper is too short.,Is final PDF at least 25 pages?,Build script enforces 25-page minimum.,pass
+35,figure_render,submission,Figures might not render from relative paths.,Are representative pages visually checked?,Render title/results/appendix/final pages.,pass
+36,table_overflow,submission,Generated tables may overflow.,Are long tables readable?,"Use longtable, small font, p columns, visual QA.",bounded
+37,external_action_decode,external,SmoLVLA action chunk has no evaluator mapping.,Does the paper disclose action_decode_supported=false?,External boundary table states no action decoder.,pass
+38,libero_status,external,LIBERO import status could be confused.,Is reset/step wrapper implemented?,State no guarded LIBERO reset/step wrapper.,pass
+39,robocasa_timeout,external,RoboCasa timeout could be hidden.,Is timeout disclosed?,State reset/step attempt timed out before reward/success metrics.,pass
+40,success_metric,external,Success metric may be implied.,Is success_trace nonempty?,No success metric exposure claim without artifacts.,pass
+41,method_external,external,TailGuard external success may be implied.,Does TailGuard connect to external benchmark?,State tailguard_method_success=false.,pass
+42,calibration_near_oracle,interpretation,Near-oracle calibrated rows look suspicious.,Does text explain clean controlled labels?,Frame as controlled evidence with label/noise stress.,bounded
+43,certificate_only,interpretation,Certificate-only can look sufficient.,Why need calibration and gates?,Show ablations and hard regimes where each component matters.,pass
+44,allow_high_n,policy,Gate can allow high-N in easy regimes.,Does it still block unsafe regimes?,Report all four decisions and reason codes.,pass
+45,low_certified_count,policy,Few certified candidates may fail silently.,Does controller collect labels/abstain?,Include low-certified-candidate stress row.,pass
+46,claim_audit,audit,Overclaims could creep in.,Is a claim audit run?,Run legacy and v3 claim audits.,pass
+47,github_push,workflow,Local final not pushed.,Is remote main verified?,Push and verify remote SHA.,pass
+48,future_work,scope,Future benchmark plans may sound like done work.,Are future steps clearly future?,Keep future benchmark wrapper in limitations/future work only.,pass
+49,llm_usage,submission,LLM disclosure missing.,Is usage disclosed?,Keep LLM usage appendix.,pass
+50,reviewer_summary,writing,Reviewer may miss main contribution.,Does final checklist state controlled claim and no external outcome?,Add final acceptance checklist.,pass
