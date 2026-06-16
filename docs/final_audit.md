@@ -1,5 +1,42 @@
 # Final Audit
 
+## V4 Submission Addendum
+
+Current repository path: `C:\Users\wangz\vla`.
+
+Final v4 artifact:
+
+- repo PDF: `paper/final/vla-v4.pdf`
+- Desktop PDF: `C:\Users\wangz\OneDrive\Desktop\vla-v4.pdf`
+- pages: `29`
+- SHA-256: `786742db18ea2c2b4c97d1ac4cd94241a38690a82fc5fd090b36339a3dc8556f`
+- source-map row:
+
+```text
+| `vla-v4.pdf` | `C:\Users\wangz\vla` | `Jason-Wang313/vla` |
+```
+
+V4 hardening additions:
+
+- cached v4 evidence generator: `experiments/v4_cached_evidence.py`
+- v4 finalizer: `scripts/build_v4_paper.py`
+- v4 final-state audit: `scripts/run_v4_claim_audit.py`
+- scorecard, protocol-freeze gates, rubric map, and 60-round reviewer attack ledger under `results/`
+- manuscript tables and macros under `paper/iclr2026/v4_*.tex`
+
+Final checks run in the v4 pass:
+
+| Command | Status | Notes |
+|---|---:|---|
+| `python scripts\build_v4_paper.py` | PASS | Built repo and Desktop `vla-v4.pdf`; removed old Desktop VLA PDFs; updated source map. |
+| `python scripts\run_v4_claim_audit.py` | PASS | Verified 29 pages, SHA, source map, 60 attack rounds, boundaries, and v4 PDF markers. |
+| `bash scripts/run_claim_audit.sh` | PASS | Legacy claim audit passed in the final v4 state. |
+| `python -m compileall src experiments scripts tests -q` | PASS | Compile check passed. |
+| `python -m pytest -q` | PASS | 39 tests passed. |
+| Visual PDF render QA | PASS | Checked title, v4 scorecard/protocol page, attack-ledger page, and final checklist page. |
+
+Final scope remains controlled and explicit: the paper is a VLA selected-tail audit with optional SmoLVLA model-plumbing and RoboCasa/LIBERO integration-status artifacts. It does not claim hardware results, external simulator outcomes, or universal deployment.
+
 Repository path at latest audit: `C:\Users\wangz\score-tail vla`.
 
 Git checkpoint: `7a8cc45` (`Initial paper-quality VLA score-tail checkpoint`). The repository was initialized during the resumability pass.

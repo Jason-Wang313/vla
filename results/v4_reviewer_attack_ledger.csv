@@ -1,0 +1,61 @@
+round,reviewer_angle,attack,defense,status
+1,novelty,Could read like a generic candidate-budget paper.,"Make instruction, object observation, semantic affordance, action candidates, and physical certificates central.",pass
+2,novelty,Looks like the same selected-tail theorem reused.,"Use the law only as audit math; put TailGuard, VLA failures, and robotics boundary artifacts in the foreground.",pass
+3,scope,The text may imply robot validation.,"State controlled evidence and no real-robot validation in abstract, limits, checklist, and external table.",pass
+4,scope,RoboCasa/LIBERO status could be misread as success.,Treat external artifacts as integration status only with no method outcome claim.,pass
+5,scope,SmoLVLA probe could be oversold.,Report it only as CPU model-plumbing evidence.,pass
+6,assumption,"Physical certificates are modeled, not real safety certificates.",List the modeled predicates and boundary conditions explicitly.,bounded
+7,assumption,Pilot labels may be too clean.,Report label-budget/noise stress and collect_pilot_labels decisions.,pass
+8,robustness,Grounding might be imperfect.,Include mild/harsh noisy verifier rows and unsafe gates.,pass
+9,ablation,TailGuard may be redundant components.,Expose component-specific ablation failures.,pass
+10,policy,Abstention could hide failures.,Report fallback and abstention as first-class outcomes.,pass
+11,baseline,High-N could be compared only to weak baselines.,Keep baseline checks in method and TailGuard table.,pass
+12,baseline,Random selection baseline may be missing.,Include random high-N row and no-random-check ablation.,pass
+13,baseline,Near-oracle repair may be overclaimed.,Call oracle an upper bound and keep gaps visible.,pass
+14,theory,Finite law could mismatch implementation.,State exact without-replacement law and tests.,pass
+15,theory,Tie handling may be wrong.,Keep tie-aware proof and unit tests in claim map.,pass
+16,theory,No-free-lunch may be too strong.,State semantic-score-only impossibility for unconstrained upper-tail utility.,pass
+17,statistics,Only utility could hide physical failures.,Expose violation decomposition and stress tables.,pass
+18,statistics,Only three seeds may be attacked.,"Report seeds, states, pools, and cached status.",bounded
+19,statistics,Monte Carlo validation may be noisy.,Use exact-law columns and claim audit thresholds.,pass
+20,coverage,Only one regime may work.,Include phase diagram table and figure.,pass
+21,coverage,Physical stress may be too narrow.,Expose physics stress families and failure reductions.,pass
+22,coverage,Symbolic scene only.,Include rendered simulator rows and figures.,pass
+23,coverage,Lightweight scorer only.,Include torch_semantic/torch_calibrated rows.,pass
+24,mechanism,Candidate generator may be artificial.,Describe controlled generator and VLA-style candidate construction.,bounded
+25,writing,Certified TailGuard could sound like formal safety certification.,Clarify controlled certificate semantics and no hardware certification.,pass
+26,writing,Abstract may overclaim.,Keep boundary sentence in abstract.,pass
+27,writing,Related work too thin.,Expand related work around VLA-specific selection.,pass
+28,writing,Side-by-side duplicate risk.,"Use VLA/TailGuard-specific sections, tables, and terminology.",pass
+29,reproducibility,Reviewers cannot find evidence.,Add claim scorecard and artifact map.,pass
+30,reproducibility,Commands may overwrite full results.,Use cached derived tables; warn about full vs smoke outputs.,pass
+31,workflow,Fresh agent may not find source.,Build script updates Desktop source map.,pass
+32,workflow,Old v2 Desktop PDF could remain.,Build script removes old Desktop v2 if present.,pass
+33,workflow,Desktop and repo PDFs could diverge.,V3 audit compares SHA-256.,pass
+34,submission,Paper is too short.,Build script enforces 25-page minimum.,pass
+35,submission,Figures might not render from relative paths.,Render title/results/appendix/final pages.,pass
+36,submission,Generated tables may overflow.,"Use longtable, small font, p columns, visual QA.",bounded
+37,external,SmoLVLA action chunk has no evaluator mapping.,External boundary table states no action decoder.,pass
+38,external,LIBERO import status could be confused.,State no guarded LIBERO reset/step wrapper.,pass
+39,external,RoboCasa timeout could be hidden.,State reset/step attempt timed out before reward/success metrics.,pass
+40,external,Success metric may be implied.,No success metric exposure claim without artifacts.,pass
+41,external,TailGuard external success may be implied.,State tailguard_method_success=false.,pass
+42,interpretation,Near-oracle calibrated rows look suspicious.,Frame as controlled evidence with label/noise stress.,bounded
+43,interpretation,Certificate-only can look sufficient.,Show ablations and hard regimes where each component matters.,pass
+44,policy,Gate can allow high-N in easy regimes.,Report all four decisions and reason codes.,pass
+45,policy,Few certified candidates may fail silently.,Include low-certified-candidate stress row.,pass
+46,audit,Overclaims could creep in.,Run legacy and v3 claim audits.,pass
+47,workflow,Local final not pushed.,Push and verify remote SHA.,pass
+48,scope,Future benchmark plans may sound like done work.,Keep future benchmark wrapper in limitations/future work only.,pass
+49,submission,LLM disclosure missing.,Keep LLM usage appendix.,pass
+50,writing,Reviewer may miss main contribution.,Add final acceptance checklist.,pass
+51,protocol,Final protocol changed during reporting.,"Freeze code, seeds, tasks, metrics, baselines, stress conditions, thresholds, and claim gates before the v4 PDF.",pass
+52,rubric,ICLR-style evidence is implicit.,"Add a rubric map covering novelty, soundness, empirical rigor, baselines, scope, reproducibility, and presentation.",pass
+53,source firewall,Other papers could share phrasing or claims.,"Add a source firewall focused on VLA actions, semantic affordance, physical certificates, and external-status boundaries.",pass
+54,baseline pressure,A reviewer asks whether strong baselines taught the method anything.,"State that raw, random, verifier, certificate-only, lower-bound, adaptive-N, fallback, and oracle failures drove the controller.",pass
+55,stress pressure,A reviewer asks where the method fails.,"Report sparse labels, noisy labels, noisy verifiers, hidden constraints, fallback, abstention, and blocked gates as measured outcomes.",pass
+56,external boundary,Integration files could be mistaken for benchmark success.,"Keep integration status only, action_decode_supported=false, tailguard_method_success=false, no real-robot validation, and no physical success visible.",pass
+57,layout,New v4 tables could become unreadable.,"Use compact artifact labels, longtable columns, and visual QA after final build.",pass
+58,citations,Citation surface is too sparse or visually missing.,"Keep in-text citations for VLA models, robotics benchmarks, verifier/reranking, selective prediction, and empirical Bernstein bounds.",pass
+59,claim gate,A strong claim could sneak into a caption or checklist.,"Run legacy and v4 audits over manuscript text, generated tables, source map, and final PDF.",pass
+60,remote,Final PDF could be local only.,"Commit, push, and verify remote main equals local HEAD before closing the paper.",pass

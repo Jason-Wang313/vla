@@ -6,7 +6,7 @@ This repository studies a VLA-style failure mode: sampling more language-conditi
 
 The core claim is conditional and controlled: for a fixed VLA-style generator/scorer stack, score-tail selection stresses the high semantic-score tail. If that tail is misaligned with physical feasibility, selected actions can look more instruction-relevant while becoming less reachable, more collision-prone, or bound to the wrong object. Physical verification and pilot-label calibration can repair the selected tail in these toy settings.
 
-The v2 headline repair is **Certified TailGuard** (`TailGuard` in code), an abstaining inference-time controller. It hard-filters candidates through modeled physical certificates, calibrates selected-tail utility from pilot labels, chooses `N`, returns one of `allow_high_n`, `stop_early`, `collect_pilot_labels`, or `block_high_n`, and only allows high-N when a lower confidence bound beats the `N=1` and random-selection baselines by a margin.
+The current headline repair is **Certified TailGuard** (`TailGuard` in code), an abstaining inference-time controller. It hard-filters candidates through modeled physical certificates, calibrates selected-tail utility from pilot labels, chooses `N`, returns one of `allow_high_n`, `stop_early`, `collect_pilot_labels`, or `block_high_n`, and only allows high-N when a lower confidence bound beats the `N=1` and random-selection baselines by a margin.
 
 Near-100% repair claims are limited to controlled/simulator regimes where the modeled certificate covers the relevant failure modes. Otherwise the method is expected to fall back or abstain.
 
@@ -77,6 +77,19 @@ powershell -ExecutionPolicy Bypass -File scripts\build_iclr_submission.ps1
 
 The script builds `paper/iclr2026/main.tex` and copies the PDF to `C:\Users\wangz\Downloads\certified-tailguard-vla-iclr-submission.pdf`.
 
+Final v4 submission build and audits:
+
+```powershell
+python experiments\v4_cached_evidence.py
+python scripts\build_v4_paper.py
+python scripts\run_v4_claim_audit.py
+bash scripts/run_claim_audit.sh
+python -m pytest -q
+python -m compileall src experiments scripts tests -q
+```
+
+The v4 finalizer writes `paper/final/vla-v4.pdf`, copies `vla-v4.pdf` to the Desktop, removes older Desktop VLA PDFs, and updates `PAPER_SOURCE_MAP.md` to point at this folder and `Jason-Wang313/vla`.
+
 ## Key Outputs
 
 - `results/controlled_summary.csv`
@@ -101,6 +114,10 @@ The script builds `paper/iclr2026/main.tex` and copies the PDF to `C:\Users\wang
 - `results/external_benchmark_status.json`
 - `results/external_benchmark_summary.csv`
 - `results/external_benchmark_seed_level/`
+- `results/v4_vla_submission_scorecard.csv`
+- `results/v4_protocol_freeze_gates.csv`
+- `results/v4_iclr_style_rubric_map.csv`
+- `results/v4_reviewer_attack_ledger.csv`
 - `docs/final_audit.md`
 
 Paper-critical figures:
@@ -124,12 +141,17 @@ Paper-critical figures:
 - `results/figures/figure17_component_ablation.png`
 - `results/figures/figure18_failure_honesty.png`
 - `results/figures/figure19_external_benchmark_status.png` when the external runner is run
+- `results/figures/figure20_v4_vla_evidence_matrix.png`
+- `results/figures/figure21_v4_protocol_freeze.png`
+- `results/figures/figure22_v4_iclr_rubric.png`
+- `results/figures/figure23_v4_attack_coverage.png`
+- `results/figures/figure24_v4_source_firewall.png`
 
 ## Claim Boundaries
 
 Supported claims are controlled VLA-style, learned VLA-style, Certified TailGuard, phase-diagram, calibration sample-complexity, component-ablation, failure-honesty, first-principles physics stress-test, optional model-plumbing, and guarded external-integration claims. The learned scorer consumes instruction, visual/object observation, and action candidate features, but it is still a CPU-friendly controlled model.
 
-Unsupported in v1:
+Unsupported:
 
 - real-robot validation
 - large real VLA benchmark validation

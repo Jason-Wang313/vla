@@ -1,0 +1,62 @@
+# V4 Reviewer Attack Ledger
+
+- 1. novelty: Could read like a generic candidate-budget paper. -> pass
+- 2. novelty: Looks like the same selected-tail theorem reused. -> pass
+- 3. scope: The text may imply robot validation. -> pass
+- 4. scope: RoboCasa/LIBERO status could be misread as success. -> pass
+- 5. scope: SmoLVLA probe could be oversold. -> pass
+- 6. assumption: Physical certificates are modeled, not real safety certificates. -> bounded
+- 7. assumption: Pilot labels may be too clean. -> pass
+- 8. robustness: Grounding might be imperfect. -> pass
+- 9. ablation: TailGuard may be redundant components. -> pass
+- 10. policy: Abstention could hide failures. -> pass
+- 11. baseline: High-N could be compared only to weak baselines. -> pass
+- 12. baseline: Random selection baseline may be missing. -> pass
+- 13. baseline: Near-oracle repair may be overclaimed. -> pass
+- 14. theory: Finite law could mismatch implementation. -> pass
+- 15. theory: Tie handling may be wrong. -> pass
+- 16. theory: No-free-lunch may be too strong. -> pass
+- 17. statistics: Only utility could hide physical failures. -> pass
+- 18. statistics: Only three seeds may be attacked. -> bounded
+- 19. statistics: Monte Carlo validation may be noisy. -> pass
+- 20. coverage: Only one regime may work. -> pass
+- 21. coverage: Physical stress may be too narrow. -> pass
+- 22. coverage: Symbolic scene only. -> pass
+- 23. coverage: Lightweight scorer only. -> pass
+- 24. mechanism: Candidate generator may be artificial. -> bounded
+- 25. writing: Certified TailGuard could sound like formal safety certification. -> pass
+- 26. writing: Abstract may overclaim. -> pass
+- 27. writing: Related work too thin. -> pass
+- 28. writing: Side-by-side duplicate risk. -> pass
+- 29. reproducibility: Reviewers cannot find evidence. -> pass
+- 30. reproducibility: Commands may overwrite full results. -> pass
+- 31. workflow: Fresh agent may not find source. -> pass
+- 32. workflow: Old v2 Desktop PDF could remain. -> pass
+- 33. workflow: Desktop and repo PDFs could diverge. -> pass
+- 34. submission: Paper is too short. -> pass
+- 35. submission: Figures might not render from relative paths. -> pass
+- 36. submission: Generated tables may overflow. -> bounded
+- 37. external: SmoLVLA action chunk has no evaluator mapping. -> pass
+- 38. external: LIBERO import status could be confused. -> pass
+- 39. external: RoboCasa timeout could be hidden. -> pass
+- 40. external: Success metric may be implied. -> pass
+- 41. external: TailGuard external success may be implied. -> pass
+- 42. interpretation: Near-oracle calibrated rows look suspicious. -> bounded
+- 43. interpretation: Certificate-only can look sufficient. -> pass
+- 44. policy: Gate can allow high-N in easy regimes. -> pass
+- 45. policy: Few certified candidates may fail silently. -> pass
+- 46. audit: Overclaims could creep in. -> pass
+- 47. workflow: Local final not pushed. -> pass
+- 48. scope: Future benchmark plans may sound like done work. -> pass
+- 49. submission: LLM disclosure missing. -> pass
+- 50. writing: Reviewer may miss main contribution. -> pass
+- 51. protocol: Final protocol changed during reporting. -> pass
+- 52. rubric: ICLR-style evidence is implicit. -> pass
+- 53. source firewall: Other papers could share phrasing or claims. -> pass
+- 54. baseline pressure: A reviewer asks whether strong baselines taught the method anything. -> pass
+- 55. stress pressure: A reviewer asks where the method fails. -> pass
+- 56. external boundary: Integration files could be mistaken for benchmark success. -> pass
+- 57. layout: New v4 tables could become unreadable. -> pass
+- 58. citations: Citation surface is too sparse or visually missing. -> pass
+- 59. claim gate: A strong claim could sneak into a caption or checklist. -> pass
+- 60. remote: Final PDF could be local only. -> pass
