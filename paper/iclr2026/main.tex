@@ -16,6 +16,7 @@
 \usepackage{url}
 \usepackage[hidelinks]{hyperref}
 \input{v3_results_macros.tex}
+\input{v4_results_macros.tex}
 
 \title{Certified TailGuard for Vision-Language-Action Selection: Auditing Semantic Affordance Over-Selection}
 
@@ -36,7 +37,7 @@
 \maketitle
 
 \begin{abstract}
-\vla{} policies increasingly combine language-conditioned action generation with inference-time selection among multiple candidate actions. This paper studies a selection-time failure in that interface. A semantic affordance scorer can prefer candidates that satisfy the instruction linguistically or visually while being unreachable, collision-prone, bound to the wrong object, or incompatible with the scene geometry. In a controlled VLA-style artifact with \VThreeSeeds{} seeds, \VThreeStatesPerSeed{} states per seed, and \VThreeCandidateBudget{} candidates per state, raw semantic selection raises selected semantic score from \VThreeLearnedRawNOneSem{} at $N=1$ to \VThreeLearnedRawHighSem{} at $N=\VThreeCandidateBudget{}$, while selected real utility falls from \VThreeLearnedRawNOneUtil{} to \VThreeLearnedRawHighUtil{} and violations reach \VThreeLearnedRawHighViol{}. We call this \sao{}. We give an exact finite, tie-aware selected-tail law, then introduce \method{}, an abstaining inference-time controller that filters candidates through modeled physical certificates, calibrates selected-tail utility from pilot labels, applies empirical lower confidence bounds, compares against $N=1$ and random baselines, and returns one of \texttt{allow\_high\_n}, \texttt{stop\_early}, \texttt{collect\_pilot\_labels}, or \texttt{block\_high\_n}. The repository contains learned, PyTorch, rendered-simulator, noisy-verifier, calibration, phase-diagram, component-ablation, failure-honesty, optional SmoLVLA plumbing, and external integration-status artifacts. The evidence is controlled and CPU-local; no real-robot validation, external benchmark success, or universal VLA deployment recipe is claimed.
+\vla{} policies increasingly combine language-conditioned action generation with inference-time selection among multiple candidate actions. This paper studies a selection-time failure in that interface. A semantic affordance scorer can prefer candidates that satisfy the instruction linguistically or visually while being unreachable, collision-prone, bound to the wrong object, or incompatible with the scene geometry. In a controlled VLA-style artifact with \VThreeSeeds{} seeds, \VThreeStatesPerSeed{} states per seed, and \VThreeCandidateBudget{} candidates per state, raw semantic selection raises selected semantic score from \VThreeLearnedRawNOneSem{} at $N=1$ to \VThreeLearnedRawHighSem{} at $N=\VThreeCandidateBudget{}$, while selected real utility falls from \VThreeLearnedRawNOneUtil{} to \VThreeLearnedRawHighUtil{} and violations reach \VThreeLearnedRawHighViol{}. We call this \sao{}. We give an exact finite, tie-aware selected-tail law, then introduce \method{}, an abstaining inference-time controller that filters candidates through modeled physical certificates, calibrates selected-tail utility from pilot labels, applies empirical lower confidence bounds, compares against $N=1$ and random baselines, and returns one of \texttt{allow\_high\_n}, \texttt{stop\_early}, \texttt{collect\_pilot\_labels}, or \texttt{block\_high\_n}. The v4 evidence package freezes \VFourScorecardRows{} scorecard gates, \VFourProtocolGates{} protocol gates, \VFourRubricAxes{} rubric axes, and a \VFourAttackRounds{}-round reviewer attack ledger before final reporting. The repository contains learned, PyTorch, rendered-simulator, noisy-verifier, calibration, phase-diagram, component-ablation, failure-honesty, optional SmoLVLA plumbing, and external integration-status artifacts. The evidence is controlled and CPU-local; no real-robot validation, external benchmark success, or universal VLA deployment recipe is claimed.
 \end{abstract}
 
 \section{Introduction}
@@ -49,7 +50,7 @@ We call the failure \sao{}. In the main learned VLA-style artifact, raw semantic
 
 We introduce \method{}, an abstaining controller for finite candidate pools. It does not train a new VLA and does not treat semantic score as a safety certificate. Instead, it asks whether a high-budget selected tail is certified, calibrated, and lower-bound-dominant over the $N=1$ and random baselines. When evidence is insufficient, it can stop early, request pilot labels, or block high-budget selection. In the controlled TailGuard stress artifact, raw fixed high-$N$ selection has utility \VThreeTailGuardRawUtil{} and violation \VThreeTailGuardRawViol{}, while \method{} has selected utility \VThreeTailGuardUtil{}, certified violation \VThreeTailGuardViol{}, and gate \texttt{\VThreeTailGuardGate{}}. The gate is important: a blocked high-$N$ policy can still select a safe certified fallback, but it should not be reported as evidence that raw high-budget semantic selection is safe.
 
-The contribution is threefold. First, we state the finite selected-tail law for without-replacement candidate selection with ties. Second, we give a VLA-specific audit and controller around semantic affordance scoring, physical certificates, pilot-label calibration, and selected-tail lower bounds. Third, we release a broad controlled evidence package: learned and PyTorch scorers, rendered visual simulator rows, noisy verifier and calibration stress tests, \VThreePhaseRows{} phase-diagram regimes, \VThreePhysicsStressFamilies{} first-principles physical stress families, \VThreeAblationComponents{} component ablation classes, failure-honesty regimes, optional SmoLVLA CPU action emission, and external RoboCasa/LIBERO integration-status artifacts.
+The contribution is threefold. First, we state the finite selected-tail law for without-replacement candidate selection with ties. Second, we give a VLA-specific audit and controller around semantic affordance scoring, physical certificates, pilot-label calibration, and selected-tail lower bounds. Third, we release a broad controlled evidence package: learned and PyTorch scorers, rendered visual simulator rows, noisy verifier and calibration stress tests, \VThreePhaseRows{} phase-diagram regimes, \VThreePhysicsStressFamilies{} first-principles physical stress families, \VThreeAblationComponents{} component ablation classes, failure-honesty regimes, optional SmoLVLA CPU action emission, and external RoboCasa/LIBERO integration-status artifacts. The v4 revision adds an explicit source firewall: every central claim must mention VLA instruction, visual/object observation, action candidates, semantic affordance, modeled physical certificates, TailGuard gates, or external status boundaries, so the paper remains distinguishable when read beside other selected-tail audits.
 
 \paragraph{Scope.}
 The paper is deliberately conservative. The optional SmoLVLA artifact reports status \texttt{\VThreeProbeStatus{}} with \VThreeProbeParams{} parameters and action shape \VThreeProbeActionShape{}, but the probe uses synthetic inputs and does not evaluate task success. External RoboCasa/LIBERO files report integration status and bounded attempts only; they do not establish reward, success metric, physical outcome, or TailGuard method success. The paper should be read as a controlled VLA selected-tail audit, not a robotics benchmark paper.
@@ -104,7 +105,7 @@ The final layer compares certified selected-tail lower bounds against certified 
 
 \section{Experimental Evidence}
 
-All experiments are controlled and CPU-local. The full run uses \VThreeSeeds{} seeds, \VThreeStatesPerSeed{} states per seed, \VThreePools{} finite candidate pools, and up to \VThreeCandidateBudget{} candidates per state. The goal is to isolate the selected-tail mechanism, not to claim external simulator or robot performance. Table~\ref{tab:v3-claim-scorecard} in the appendix maps every claim family to source artifacts.
+All experiments are controlled and CPU-local. The full run uses \VThreeSeeds{} seeds, \VThreeStatesPerSeed{} states per seed, \VThreePools{} finite candidate pools, and up to \VThreeCandidateBudget{} candidates per state. The goal is to isolate the selected-tail mechanism, not to claim external simulator or robot performance. Table~\ref{tab:v3-claim-scorecard} in the appendix maps every claim family to source artifacts, and Table~\ref{tab:v4-scorecard} adds the final v4 VLA submission scorecard.
 
 \subsection{Protocol, Negative Controls, and Metrics}
 
@@ -170,6 +171,30 @@ The optional SmoLVLA probe and external benchmark runner are included because re
 
 These artifacts strengthen the paper by preventing ambiguity. They show exactly what is available and exactly what is not. Any future upgrade to external simulator or robot claims would require reset/step success, reward traces, exposed success metrics, an action-schema mapping, TailGuard-connected policies, and seed-level outcome files.
 
+\section{Protocol Freeze and Rubric Gates}
+
+The v4 evidence is deliberately split into development evidence and final measurement. During development, the baselines and stress tests act as adversarial teachers: raw semantic selection, random high-$N$, $N=1$, verifier filtering, certificate-only filtering, missing lower bounds, missing adaptive $N$, missing fallback, sparse/noisy pilot labels, noisy physical verifiers, and oracle upper bounds all expose different ways the selected tail can fail. Final reporting then freezes the protocol rather than using the reported test set as feedback.
+
+\input{v4_scorecard_table.tex}
+
+The source firewall in Table~\ref{tab:v4-scorecard} is not cosmetic. It forces the paper's mechanism to remain VLA-specific: language-conditioned action candidates are selected by semantic affordance scores, audited by modeled physical certificates, calibrated by pilot real-utility labels, and reported with public TailGuard gates. That firewall also keeps external evidence in the correct lane: SmoLVLA is model-plumbing evidence, RoboCasa/LIBERO files are integration status only, \texttt{action\_decode\_supported=false}, \texttt{tailguard\_method\_success=false}, and the paper remains a controlled VLA selected-tail audit, not a robotics benchmark paper.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.48\linewidth]{../../results/figures/figure20_v4_vla_evidence_matrix.png}
+\includegraphics[width=0.48\linewidth]{../../results/figures/figure24_v4_source_firewall.png}
+\caption{V4 hardening summary. Left: evidence gates separate pass and bounded claims. Right: the source firewall keeps semantic scores, real utility, and physical violation outcomes separate.}
+\label{fig:v4-firewall}
+\end{figure}
+
+\input{v4_protocol_gate_table.tex}
+
+Table~\ref{tab:v4-protocol-gates} freezes code, seeds, tasks, metrics, baselines, stress conditions, thresholds, and claim gates before final reporting. The final evidence is measurement, not further training feedback. A result can support the paper only if it passes the corresponding gate and stays inside the declared scope.
+
+\input{v4_rubric_table.tex}
+
+Table~\ref{tab:v4-rubric} maps the submission to an ICLR-style review surface. The paper is strongest when the reviewer reads it as: existing semantic action selection fails for a precise selected-tail reason; TailGuard fixes that reason in controlled finite candidate pools; and the fix survives fair baselines, ablations, stress tests, negative controls, and scoped claims.
+
 \section{Related Work}
 
 \paragraph{Vision-language-action models.}
@@ -198,14 +223,19 @@ The repository contains all primary artifacts under \path{results/}. The v3 manu
 \begin{verbatim}
 python scripts/prepare_v3_evidence.py
 \end{verbatim}
+The v4 scorecard, protocol gates, rubric map, figures, and \VFourAttackRounds{}-round attack ledger are generated from the same cached evidence by:
+\begin{verbatim}
+python experiments/v4_cached_evidence.py
+\end{verbatim}
 The PDF is built by:
 \begin{verbatim}
 powershell -ExecutionPolicy Bypass -File
 scripts/build_iclr_submission.ps1
 \end{verbatim}
-Final v3 validation uses:
+Final v4 validation uses:
 \begin{verbatim}
-python scripts/run_v3_claim_audit.py
+python scripts/build_v4_paper.py
+python scripts/run_v4_claim_audit.py
 bash scripts/run_claim_audit.sh
 python -m pytest -q
 python -m compileall src experiments scripts tests -q
@@ -304,6 +334,17 @@ The optional external files answer a narrow question: whether the repository att
 \label{app:claim-scorecard}
 
 \input{v3_claim_scorecard_table.tex}
+
+\section{V4 Submission Gates}
+\label{app:v4-gates}
+
+\input{v4_attack_ledger_table.tex}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\linewidth]{../../results/figures/figure23_v4_attack_coverage.png}
+\caption{Coverage of the \VFourAttackRounds{}-round v4 reviewer attack ledger.}
+\end{figure}
 
 \section{Full Selected-Tail Curves}
 \label{app:full-curves}
@@ -431,7 +472,7 @@ The external benchmark status file records claim levels separately. Current arti
 \begin{table}[H]
 \centering
 \small
-\caption{Primary v3 artifact map.}
+\caption{Primary v4 artifact map.}
 \begin{tabular}{p{0.34\linewidth}p{0.56\linewidth}}
 \toprule
 Claim family & Artifacts \\
@@ -445,22 +486,24 @@ Calibration stress & \path{results/calibration_sample_complexity.csv}; \path{res
 Physics stress & \path{results/physics_stress_summary.csv}; Figure~\ref{fig:phase-physics} \\
 External boundary & \path{results/external_benchmark_status.json}; \path{results/optional_vla/inference_probe.json} \\
 V3 attack audit & \path{results/v3_vla_attack_ledger.csv}; \path{results/v3_vla_evidence_summary.json} \\
+V4 hardening & \path{results/v4_vla_submission_scorecard.csv}; \path{results/v4_protocol_freeze_gates.csv}; \path{results/v4_reviewer_attack_ledger.csv} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\section{Final V3 Acceptance Checklist}
+\section{Final V4 Acceptance Checklist}
 \label{app:final-checklist}
 
 \begin{itemize}
-\item The final PDF has at least \VThreeMinPages{} pages.
-\item The Desktop file is \texttt{vla-v3.pdf}.
-\item The old Desktop \texttt{vla-v2.pdf} file is absent.
-\item \texttt{PAPER\_SOURCE\_MAP.md} maps \texttt{vla-v3.pdf} to \texttt{C:/Users/wangz/vla} and \texttt{Jason-Wang313/vla}.
+\item The final PDF has at least \VFourMinPages{} pages.
+\item The Desktop file is \texttt{vla-v4.pdf}.
+\item The old Desktop \texttt{vla-v3.pdf} and \texttt{vla-v2.pdf} files are absent.
+\item \texttt{PAPER\_SOURCE\_MAP.md} maps \texttt{vla-v4.pdf} to \texttt{C:/Users/wangz/vla} and \texttt{Jason-Wang313/vla}.
 \item Repo and Desktop final PDFs match by SHA-256.
-\item The v3 self-attack ledger contains exactly \VThreeAttackRounds{} rows.
+\item The v4 self-attack ledger contains exactly \VFourAttackRounds{} rows.
+\item The v4 scorecard has \VFourScorecardRows{} gates, \VFourProtocolGates{} protocol gates, and \VFourRubricAxes{} rubric axes.
 \item The manuscript does not claim real-robot validation, external benchmark success, physical success, or a universal VLA deployment recipe.
-\item Legacy and v3 claim audits pass.
+\item Legacy and v4 claim audits pass in the final v4 source-map state.
 \item Tests, compile checks, and visual PDF QA pass.
 \item The final commit is pushed to GitHub \texttt{main}, and the remote SHA is verified.
 \end{itemize}

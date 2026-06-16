@@ -1,0 +1,13 @@
+gate,evidence,hard_check,measured_value,artifact
+failure,pass,semantic rises while utility falls from N=1 to N=128,sem 0.876->0.985; util 0.473->0.152,results/learned_summary.csv
+visual,pass,rendered visual scenes reproduce unsafe selected tail,rendered util 0.460; viol 1.000,results/rendered_summary.csv
+learned,pass,PyTorch semantic scorer and calibrated scorer are both reported,torch util 0.329; calibrated 0.999,results/learned_summary.csv
+repair,pass,physical and calibrated repair is compared to raw high-N,grounded util 1.000; viol 0.000,results/repair_summary.csv
+controller,pass,"TailGuard reports gate, fallback, certified utility, and certified violation",gate block_high_n; cert util 1.000; cert viol 0.000,results/tailguard_summary.csv
+baselines,pass,"N=1, random, verifier, certificate-only, no-bound, and oracle comparisons are present",11 TailGuard rows,results/tailguard_summary.csv
+ablations,pass,component removals expose at least one controlled failure each,7 failed components,results/component_ablation_summary.csv
+stress,pass,phase and physics sweeps include adversarial physical conditions,20 phase rows; 15 physics families,results/phase_diagram_summary.csv
+calibration,pass,pilot-label budget and label-noise failures are explicit,24 calibration rows,results/calibration_sample_complexity.csv
+honesty,pass,"blocked, fallback, and label-collection cases are measured outcomes",block 17; allow 2; stop 1,results/failure_honesty_summary.csv
+external,bounded,RoboCasa/LIBERO files are status evidence only,integration=True; success_metric=False,results/external_benchmark_status.json
+model-plumbing,bounded,SmoLVLA CPU probe is separated from benchmark or physical claims,probe pass; decode=false,results/optional_vla/inference_probe.json
