@@ -70,7 +70,12 @@ def contains_marker(text: str, phrase: str) -> bool:
 
 def update_source_map() -> None:
     text = SOURCE_MAP.read_text(encoding="utf-8")
-    lines = text.splitlines()
+    if "## V4 Verification Ledger" in text:
+        lookup_text, ledger_text = text.split("## V4 Verification Ledger", 1)
+        ledger_text = "## V4 Verification Ledger" + ledger_text
+    else:
+        lookup_text, ledger_text = text, ""
+    lines = lookup_text.splitlines()
     replaced = False
     out: list[str] = []
     for line in lines:
@@ -81,7 +86,10 @@ def update_source_map() -> None:
             out.append(line)
     if not replaced:
         raise RuntimeError("could not find existing vla source-map row")
-    SOURCE_MAP.write_text("\n".join(out) + "\n", encoding="utf-8")
+    updated = "\n".join(out).rstrip() + "\n"
+    if ledger_text:
+        updated += "\n" + ledger_text.rstrip() + "\n"
+    SOURCE_MAP.write_text(updated, encoding="utf-8")
 
 
 def validate_pdf_text() -> None:

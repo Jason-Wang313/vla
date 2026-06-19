@@ -34,7 +34,7 @@ round,attack_id,reviewer_angle,failure_mode,harsh_question,defense_artifact_or_r
 33,hash_mismatch,workflow,Desktop and repo PDFs could diverge.,Are hashes checked?,V3 audit compares SHA-256.,pass
 34,page_count,submission,Paper is too short.,Is final PDF at least 25 pages?,Build script enforces 25-page minimum.,pass
 35,figure_render,submission,Figures might not render from relative paths.,Are representative pages visually checked?,Render title/results/appendix/final pages.,pass
-36,table_overflow,submission,Generated tables may overflow.,Are long tables readable?,"Use longtable, small font, p columns, visual QA.",bounded
+36,table_overflow,submission,Generated tables may overflow.,Are long tables readable?,"Use chunked fixed tables, small font, p columns, and visual QA.",pass
 37,external_action_decode,external,SmoLVLA action chunk has no evaluator mapping.,Does the paper disclose action_decode_supported=false?,External boundary table states no action decoder.,pass
 38,libero_status,external,LIBERO import status could be confused.,Is reset/step wrapper implemented?,State no guarded LIBERO reset/step wrapper.,pass
 39,robocasa_timeout,external,RoboCasa timeout could be hidden.,Is timeout disclosed?,State reset/step attempt timed out before reward/success metrics.,pass

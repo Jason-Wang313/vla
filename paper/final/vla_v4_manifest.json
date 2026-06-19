@@ -1,12 +1,12 @@
 {
   "paper": "vla",
   "version": "v4",
-  "built_at_utc": "2026-06-16T06:29:12.411657+00:00",
+  "built_at_utc": "2026-06-19T05:14:13.463851+00:00",
   "min_pages": 25,
-  "pages": 29,
+  "pages": 33,
   "repo_pdf": "C:\\Users\\wangz\\vla\\paper\\final\\vla-v4.pdf",
   "desktop_pdf": "C:\\Users\\wangz\\OneDrive\\Desktop\\vla-v4.pdf",
-  "sha256": "786742db18ea2c2b4c97d1ac4cd94241a38690a82fc5fd090b36339a3dc8556f",
+  "sha256": "fa6269b145b580586b835bf379c8c719acadc115675a13c8445cd596ae59b719",
   "source_map": "C:\\Users\\wangz\\OneDrive\\Desktop\\PAPER_SOURCE_MAP.md",
   "source_map_row": "| `vla-v4.pdf` | `C:\\Users\\wangz\\vla` | `Jason-Wang313/vla` |"
 }
