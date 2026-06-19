@@ -8,8 +8,8 @@ Final v4 artifact:
 
 - repo PDF: `paper/final/vla-v4.pdf`
 - Desktop PDF: `C:\Users\wangz\OneDrive\Desktop\vla-v4.pdf`
-- pages: `29`
-- SHA-256: `786742db18ea2c2b4c97d1ac4cd94241a38690a82fc5fd090b36339a3dc8556f`
+- pages: `33`
+- SHA-256: `fa6269b145b580586b835bf379c8c719acadc115675a13c8445cd596ae59b719`
 - source-map row:
 
 ```text
@@ -23,23 +23,27 @@ V4 hardening additions:
 - v4 final-state audit: `scripts/run_v4_claim_audit.py`
 - scorecard, protocol-freeze gates, rubric map, and 60-round reviewer attack ledger under `results/`
 - manuscript tables and macros under `paper/iclr2026/v4_*.tex`
+- visible citation/reference boxes in the ICLR PDF, enabled by `hyperref` without `hidelinks`
+- chunked fixed-width evidence tables replacing fragile longtable output
 
 Final checks run in the v4 pass:
 
 | Command | Status | Notes |
 |---|---:|---|
-| `python scripts\build_v4_paper.py` | PASS | Built repo and Desktop `vla-v4.pdf`; removed old Desktop VLA PDFs; updated source map. |
-| `python scripts\run_v4_claim_audit.py` | PASS | Verified 29 pages, SHA, source map, 60 attack rounds, boundaries, and v4 PDF markers. |
+| `python scripts\build_v4_paper.py` | PASS | Built repo and Desktop `vla-v4.pdf`; removed old Desktop VLA PDFs; updated source map; guarded against stale LaTeX PDFs. |
+| `python scripts\run_v4_claim_audit.py` | PASS | Verified 33 pages, SHA, source map, 60 attack rounds, boundaries, and v4 PDF markers. |
 | `bash scripts/run_claim_audit.sh` | PASS | Legacy claim audit passed in the final v4 state. |
 | `python -m compileall src experiments scripts tests -q` | PASS | Compile check passed. |
 | `python -m pytest -q` | PASS | 39 tests passed. |
-| Visual PDF render QA | PASS | Checked title, v4 scorecard/protocol page, attack-ledger page, and final checklist page. |
+| Strict LaTeX log scan | PASS | No undefined references/citations, duplicate destinations, overfull boxes, longtable warnings, infinite glue, or fatal errors in `paper/iclr2026/main.log`. |
+| Repository/Desktop PDF hash equality | PASS | `paper/final/vla-v4.pdf` and Desktop `vla-v4.pdf` have identical SHA-256. |
+| Visual PDF render QA | PASS | Rendered all 33 pages and checked title, evidence tables, scorecards, attack ledger, references, and final checklist pages. |
 
 Final scope remains controlled and explicit: the paper is a VLA selected-tail audit with optional SmoLVLA model-plumbing and RoboCasa/LIBERO integration-status artifacts. It does not claim hardware results, external simulator outcomes, or universal deployment.
 
-Repository path at latest audit: `C:\Users\wangz\score-tail vla`.
+Repository path at latest audit: `C:\Users\wangz\vla`.
 
-Git checkpoint: `7a8cc45` (`Initial paper-quality VLA score-tail checkpoint`). The repository was initialized during the resumability pass.
+Git checkpoint: the external Desktop source-map ledger records the exact final GitHub head for this v4 artifact after push.
 
 ## V2 TailGuard Addendum
 
@@ -127,7 +131,7 @@ Component-ablation strengthening: `results/component_ablation_summary.csv` now i
 
 Intermediate note: plain `pytest` initially failed because `scripts` was not importable from the standalone pytest path. This was fixed by adding `scripts/__init__.py` and setting `pythonpath = ["src", "."]` in `pyproject.toml`; the final standalone `pytest` pass above is from the fixed state.
 
-Rename note: the repository was later renamed from `C:\Users\wangz\vla-score-tail` to `C:\Users\wangz\score-tail vla`. The command table above reflects checks run from the renamed path.
+Rename note: the repository was later normalized to `C:\Users\wangz\vla`. The v4 addendum above reflects the current source-of-truth path used for the final Desktop artifact.
 
 ## 2. Artifact Inventory
 
@@ -399,5 +403,5 @@ Judgment: paper-worthy v1 as a controlled diagnostic repository with optional re
 ## 10. Current Git State
 
 - Repository initialized: yes.
-- Initial checkpoint commit: `7a8cc45`.
-- Commit message: `Initial paper-quality VLA score-tail checkpoint`.
+- Current repository path: `C:\Users\wangz\vla`.
+- Final v4 GitHub checkpoint: recorded in `C:\Users\wangz\OneDrive\Desktop\PAPER_SOURCE_MAP.md` after push.

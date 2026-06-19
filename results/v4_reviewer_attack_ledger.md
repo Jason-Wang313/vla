@@ -35,7 +35,7 @@
 - 33. workflow: Desktop and repo PDFs could diverge. -> pass
 - 34. submission: Paper is too short. -> pass
 - 35. submission: Figures might not render from relative paths. -> pass
-- 36. submission: Generated tables may overflow. -> bounded
+- 36. submission: Generated tables may overflow. -> pass
 - 37. external: SmoLVLA action chunk has no evaluator mapping. -> pass
 - 38. external: LIBERO import status could be confused. -> pass
 - 39. external: RoboCasa timeout could be hidden. -> pass

@@ -15,6 +15,12 @@ New-Item -ItemType Directory -Force -Path $downloads | Out-Null
 
 Push-Location $paperDir
 try {
+    foreach ($artifact in @("main.pdf", "main.aux", "main.out", "main.log", "main.bbl", "main.blg", "main.fls", "main.fdb_latexmk")) {
+        if (Test-Path -LiteralPath $artifact) {
+            Remove-Item -LiteralPath $artifact -Force
+        }
+    }
+
     function Invoke-PdfLatexFallback {
         & pdflatex -interaction=nonstopmode -halt-on-error main.tex
         if ($LASTEXITCODE -ne 0) { throw "pdflatex failed on first pass" }

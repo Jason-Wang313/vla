@@ -34,7 +34,7 @@ round,reviewer_angle,attack,defense,status
 33,workflow,Desktop and repo PDFs could diverge.,V3 audit compares SHA-256.,pass
 34,submission,Paper is too short.,Build script enforces 25-page minimum.,pass
 35,submission,Figures might not render from relative paths.,Render title/results/appendix/final pages.,pass
-36,submission,Generated tables may overflow.,"Use longtable, small font, p columns, visual QA.",bounded
+36,submission,Generated tables may overflow.,"Use chunked fixed tables, small font, p columns, and visual QA.",pass
 37,external,SmoLVLA action chunk has no evaluator mapping.,External boundary table states no action decoder.,pass
 38,external,LIBERO import status could be confused.,State no guarded LIBERO reset/step wrapper.,pass
 39,external,RoboCasa timeout could be hidden.,State reset/step attempt timed out before reward/success metrics.,pass
@@ -55,7 +55,7 @@ round,reviewer_angle,attack,defense,status
 54,baseline pressure,A reviewer asks whether strong baselines taught the method anything.,"State that raw, random, verifier, certificate-only, lower-bound, adaptive-N, fallback, and oracle failures drove the controller.",pass
 55,stress pressure,A reviewer asks where the method fails.,"Report sparse labels, noisy labels, noisy verifiers, hidden constraints, fallback, abstention, and blocked gates as measured outcomes.",pass
 56,external boundary,Integration files could be mistaken for benchmark success.,"Keep integration status only, action_decode_supported=false, tailguard_method_success=false, no real-robot validation, and no physical success visible.",pass
-57,layout,New v4 tables could become unreadable.,"Use compact artifact labels, longtable columns, and visual QA after final build.",pass
+57,layout,New v4 tables could become unreadable.,"Use compact artifact labels, chunked fixed tables, and visual QA after final build.",pass
 58,citations,Citation surface is too sparse or visually missing.,"Keep in-text citations for VLA models, robotics benchmarks, verifier/reranking, selective prediction, and empirical Bernstein bounds.",pass
 59,claim gate,A strong claim could sneak into a caption or checklist.,"Run legacy and v4 audits over manuscript text, generated tables, source map, and final PDF.",pass
 60,remote,Final PDF could be local only.,"Commit, push, and verify remote main equals local HEAD before closing the paper.",pass
